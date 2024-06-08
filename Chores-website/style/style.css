@@ -9,15 +9,22 @@ body {
   background-size: cover;
   height: 100vh; /* Full height */
   margin: 0;
+  padding: 60px;
 }
 
 .container {
+  margin: auto;
   padding: 20px;
+  /*padding: 20px;
+  background-color: rgba(221, 221, 221, 0.88);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+*/}
+.all_style{
   background-color: rgba(221, 221, 221, 0.88);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .btn {
   margin-top: 20px;
 }

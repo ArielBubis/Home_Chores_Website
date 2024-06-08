@@ -9,8 +9,23 @@
   <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 <body>
-  <div class="container text-center d-flex flex-column justify-content-center align-items-center " style="max-width: 500px;">
-    <h2 class="text-center w-100">Chores Inc</h2>
+  <header>
+    <nav class="navbar all_style fixed-top bg-body-tertiary" >
+        <div class="container-fluid">
+            <h3>Chores Inc.</h3>
+            <div class="nav nav-underline">
+                <a class="nav-link" href="mainpage.html">Home</a>
+                <a class="nav-link" href="loginscreen.html">Login</a>
+                <!--change this to the current page to show active-->
+                <a class="navbar-brand nav-link active" aria-current="Sign up" href="signupscreen.html">Sign up</a>
+              </div>
+        </div>
+    </nav>
+
+</header>
+
+  <div class="container all_style text-center d-flex flex-column justify-content-center align-items-center " style="max-width: 500px;">
+    <h2 class="text-center w-100">Chores Inc.</h2>
     <form id="signInForm" class="form-signin w-100">
       <div class="text-center mb-4">
         <img src="img/logo.png" class="img-fluid mx-auto d-block mb-4" alt="Logo" width="250" height="250">
