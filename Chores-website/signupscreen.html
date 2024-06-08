@@ -8,49 +8,52 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="style/style.css">
-
     <title>Sign up</title>
-
 </head>
 
 <body>
-        <div class="container" style="max-width: 500px;">
-            <h2 class="text-center w-100">Chores Inc</h2>
-            <img src="img/logo.png" class="img-fluid mx-auto d-block mb-4" alt="Logo" width="250" height="250">
-            <h2 class="mb-4 text-center">Register to our site</h2>
-            <form>
-                <div class="row mb-3">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="First name" aria-label="First name"
-                            required>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Last name" aria-label="Last name" required>
-                    </div>
+    <div class="container" style="max-width: 500px;">
+        <h2 class="text-center w-100">Chores Inc</h2>
+        <img src="img/logo.png" class="img-fluid mx-auto d-block mb-4" alt="Logo" width="250" height="250">
+        <h2 class="mb-4 text-center">Register to our site</h2>
+        <form id = "signUpForm">
+            <div class="row mb-3">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="First name" aria-label="First name" required>
                 </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <input type="email" class="form-control" placeholder="Email" aria-label="Email" required>
-                    </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name" required>
                 </div>
-                <div class="row mb-4">
-                    <div class="col-12 col-md-6 mb-3 mb-md-0">
-                        <input type="password" class="form-control" placeholder="Password" aria-label="Password"
-                            required>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <input type="password" class="form-control" placeholder="Confirm Password"
-                            aria-label="Confirm Password" required>
-                    </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" required>
                 </div>
-                <div class="row">
-                    <div class="col d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary btn-small">Sign Up</button>
-                    </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-12 col-md-6 mb-3 mb-md-0">
+                    <input type="password" class="form-control" placeholder="Password" aria-label="Password" required>
                 </div>
-            </form>
-            <p class="mt-5 mb-3 text-muted text-center">© Ariel & Narkis 2024</p>
-        </div>
+                <div class="col-12 col-md-6">
+                    <input type="password" class="form-control" placeholder="Confirm Password"
+                        aria-label="Confirm Password" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-small">Sign Up</button>
+                </div>
+            </div>
+        </form>
+        <p class="mt-5 mb-3 text-muted text-center">© Ariel & Narkis 2024</p>
+    </div>
+      
 </body>
+<script>
+    document.getElementById('signUpForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+        window.location.href = 'mainpage.html';
+    });
+</script>
 
 </html>
