@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +8,10 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
-
 <body>
   <div class="container min-w-100">
-    <h2 class="text-start w-100">Chores Inc</h2>
-    <form class="form-signin w-100">
+    <h2 class="text-center w-100">Chores Inc</h2>
+    <form id="signInForm" class="form-signin w-100">
       <div class="text-center mb-4">
         <img src="img/logo.png" class="img-fluid" alt="Logo" width="250" height="250">
       </div>
@@ -28,14 +26,19 @@
         <input type="checkbox" class="form-check-input" id="rememberMe">
         <label class="form-check-label" for="rememberMe">Remember me</label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block w-100" type="submit">Sign in</button>
+      <button id="signInButton" class="btn btn-lg btn-primary w-100" type="submit">Sign in</button>
       <div class="signup-section">
-        <p>New here? <a href="#">Sign up here</a></p>
+        <p>New here? <a href="signup screen.html">Sign up here</a></p>
       </div>
     </form>
     <p class="mt-5 mb-3 text-muted text-center">© Ariel & Narkis 2024</p>
   </div>
 
+  <script>
+    document.getElementById('signInForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+      window.location.href = 'signup screen.html';
+    });
+  </script>
 </body>
-
 </html>
