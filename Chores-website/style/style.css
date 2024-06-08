@@ -1,5 +1,7 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,24 +11,26 @@ body {
   background-size: cover;
   height: 100vh; /* Full height */
   margin: 0;
-  padding: 60px;
+  padding: 95px;
 }
 
 .container {
   margin: auto;
   padding: 20px;
+  border-radius: 10px;
   /*padding: 20px;
   background-color: rgba(221, 221, 221, 0.88);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 */}
+
+.company_title{
+  letter-spacing: .7rem;
+  font-weight: 350;
+}
 .all_style{
   background-color: rgba(221, 221, 221, 0.88);
-  border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.btn {
-  margin-top: 20px;
 }
 
 .signup-section {
