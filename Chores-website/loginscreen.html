@@ -9,13 +9,13 @@
   <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 <body>
-  <div class="container d-flex flex-column justify-content-center align-items-center " style="max-width: 500px;">
+  <div class="container text-center d-flex flex-column justify-content-center align-items-center " style="max-width: 500px;">
     <h2 class="text-center w-100">Chores Inc</h2>
     <form id="signInForm" class="form-signin w-100">
       <div class="text-center mb-4">
-        <img src="img/logo.png" class="img-fluid" alt="Logo" width="250" height="250">
+        <img src="img/logo.png" class="img-fluid mx-auto d-block mb-4" alt="Logo" width="250" height="250">
       </div>
-      <h3 class="h3 mb-3">Please sign in</h3>
+      <h2 class="mb-4 text-center">Sign in to our site</h2>
       <div class="form-group mb-3">
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
       </div>
@@ -28,7 +28,7 @@
       </div>
       <button id="signInButton" class="btn btn-lg btn-primary w-100" type="submit">Sign in</button>
       <div class="signup-section">
-        <p>New here? <a href="signup screen.html">Sign up here</a></p>
+        <p>New here? <a href="signupscreen.html">Sign up here</a></p>
       </div>
     </form>
     <p class="mt-5 mb-3 text-muted text-center">© Ariel & Narkis 2024</p>
@@ -37,7 +37,7 @@
   <script>
     document.getElementById('signInForm').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent the default form submission
-      window.location.href = 'signup screen.html';
+      window.location.href = 'signupscreen.html';
     });
   </script>
 </body>
