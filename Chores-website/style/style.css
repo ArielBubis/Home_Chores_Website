@@ -18,14 +18,8 @@ body {
   border-radius: 10px;
   max-height: 80vh;
   align-self:center;
-  max-width: 100%;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  /* margin-top: 20px; */
-  /*padding: 20px;
-  background-color: rgba(221, 221, 221, 0.88);
-  border-radius: 10px;
-*/}
+}
 
 
 .logo {
@@ -48,11 +42,11 @@ body {
   font-weight: bold;
   font-size: 1.2em;
 }
+
 .signup-section a {
   color: #ff4500;
   text-decoration: none;
 }
-
 .signup-section a:hover {
   text-decoration: underline;
 }
@@ -81,7 +75,6 @@ h2 {
     background-size: var(--s) var(--s);
 /* Made by" https://support.temani-afif.com/ */
 
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
   }
 
 /* .all_style{
