@@ -7,17 +7,18 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  height: 100vh; 
+  height: 100vh;
   /* margin: 0; */
   /* padding-top: 95px; */
 }
 
-.container,.table-responsive{
+.container,
+.table-responsive {
   margin: auto;
   padding: 20px;
   border-radius: 10px;
   max-height: 80vh;
-  align-self:center;
+  align-self: center;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -27,7 +28,7 @@ body {
   height: 200px;
 }
 
-.company_title{
+.company_title {
   letter-spacing: .7rem;
   font-weight: 350;
 }
@@ -47,6 +48,7 @@ body {
   color: #ff4500;
   text-decoration: none;
 }
+
 .signup-section a:hover {
   text-decoration: underline;
 }
@@ -56,26 +58,25 @@ h2 {
   width: 100%;
 }
 
-.all_style{
-/*Credit: https://css-pattern.com/overlapping-circles/  */
-    --s: 89px;
-    --c1: #fff6eb;
-    --c2: #ededed;
-    
-    --_g: 
-       var(--c1) 0%  5% ,var(--c2) 6%  15%,var(--c1) 16% 25%,var(--c2) 26% 35%,var(--c1) 36% 45%,
-       var(--c2) 46% 55%,var(--c1) 56% 65%,var(--c2) 66% 75%,var(--c1) 76% 85%,var(--c2) 86% 95%,
-       #0000 96%;
-    background:
-      radial-gradient(50% 50% at 100% 0,var(--_g)),
-      radial-gradient(50% 50% at 0 100%,var(--_g)),
-      radial-gradient(50% 50%,var(--_g)),
-      radial-gradient(50% 50%,var(--_g)) calc(var(--s)/2) calc(var(--s)/2)
-      var(--c1);
-    background-size: var(--s) var(--s);
-/* Made by" https://support.temani-afif.com/ */
+.all_style {
+  /*Credit: https://css-pattern.com/overlapping-circles/  */
+  --s: 89px;
+  --c1: #fff6eb;
+  --c2: #ededed;
 
-  }
+  --_g:
+    var(--c1) 0% 5%, var(--c2) 6% 15%, var(--c1) 16% 25%, var(--c2) 26% 35%, var(--c1) 36% 45%,
+    var(--c2) 46% 55%, var(--c1) 56% 65%, var(--c2) 66% 75%, var(--c1) 76% 85%, var(--c2) 86% 95%,
+    #0000 96%;
+  background:
+    radial-gradient(50% 50% at 100% 0, var(--_g)),
+    radial-gradient(50% 50% at 0 100%, var(--_g)),
+    radial-gradient(50% 50%, var(--_g)),
+    radial-gradient(50% 50%, var(--_g)) calc(var(--s)/2) calc(var(--s)/2) var(--c1);
+  background-size: var(--s) var(--s);
+  /* Made by" https://support.temani-afif.com/ */
+
+}
 
 /* .all_style{
   background-color: rgba(221, 221, 221, 0.88);
