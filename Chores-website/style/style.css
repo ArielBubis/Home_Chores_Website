@@ -24,6 +24,11 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 */}
 
+.logo {
+  width: 200px;
+  height: 200px;
+}
+
 .company_title{
   letter-spacing: .7rem;
   font-weight: 350;
@@ -59,3 +64,4 @@ h2 {
 #site-navbar {
   background-color : aqua;
 }
+
