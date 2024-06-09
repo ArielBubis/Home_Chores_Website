@@ -30,43 +30,48 @@
 
 
   <div class="container all_style">
-    <h3 class="company_title">Chores List: </h3>
+    <h3 class="company_title">Chores categories:</h3>
 
-    <table class="table align-middle mb-0" style="border-radius: 10px;">
+    <table class="table table-responsive align-middle mb-0" style="border-radius: 10px;">
       <thead class="bg-light">
         <tr>
-          <th>Chore Title</th>
-          <th>Title</th>
+          <th>Category title</th>
+          <th>Due date</th>
+          <th>User in charge</th>
           <th>Status</th>
-          <th>Position</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>
             <div class="d-flex align-items-center">
-              <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px"
-                class="rounded-circle" />
+              <!--house icon-->
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#38b6ff"
+                class="bi bi-house-heart-fill" viewBox="0 0 16 16">
+                <path
+                  d="M7.293 1.5a1 1 0 0 1 1.414 0L11 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l2.354 2.353a.5.5 0 0 1-.708.707L8 2.207 1.354 8.853a.5.5 0 1 1-.708-.707z" />
+                <path
+                  d="m14 9.293-6-6-6 6V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5zm-6-.811c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.691 0-5.018" />
+              </svg>
               <div class="ms-3">
-                <p class="fw-bold mb-1">John Doe</p>
-                <p class="text-muted mb-0">john.doe@gmail.com</p>
+                <p class="fw-bold mb-1">House Chores</p>
+                <p class="mb-0">Make house chores more fun!</p>
               </div>
             </div>
           </td>
           <td>
-            <p class="fw-normal mb-1">Software engineer</p>
-            <p class="text-muted mb-0">IT department</p>
+            <p class="fw-normal mb-1">10/07/2024</p>
           </td>
           <td>
-            <span class="badge badge-success rounded-pill d-inline">Active</span>
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px"
+                class="rounded-circle mb-2" />
+              <div>
+                <p class="mb-1">Bro</p>
+              </div>
+            </div>
           </td>
           <td>Senior</td>
-          <td>
-            <button type="button" class="btn btn-link btn-sm btn-rounded">
-              Edit
-            </button>
-          </td>
         </tr>
         <tr>
           <td>
@@ -87,11 +92,6 @@
             <span class="badge badge-primary rounded-pill d-inline">Onboarding</span>
           </td>
           <td>Junior</td>
-          <td>
-            <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark">
-              Edit
-            </button>
-          </td>
         </tr>
         <tr>
           <td>
@@ -112,26 +112,21 @@
             <span class="badge badge-warning rounded-pill d-inline">Awaiting</span>
           </td>
           <td>Senior</td>
-          <td>
-            <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark">
-              Edit
-            </button>
-          </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-    <footer class="bg-light bg-gradient d-flex flex-wrap justify-content-between align-items-center">
-      <p class="col-md-4 mb-0 text-body-secondary">© 2024 Ariel & Narkis,Chores Inc</p>
-      <ul class="nav col-md-4 justify-content-end">
-        <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">Home</a></li>
-        <li class="nav-item"><a href="signupscreen.html" class="nav-link px-2 text-body-secondary">Sign Up</a></li>
-        <li class="nav-item"><a href="http://www.google.com" class="nav-link px-2 text-body-secondary">Google</a></li>
-        <li class="nav-item"><a href="http://www.facebook.com" class="nav-link px-2 text-body-secondary">Facebook</a>
-        </li>
-      </ul>
-    </footer>
+  <footer class="bg-light bg-gradient d-flex flex-wrap justify-content-between align-items-center">
+    <p class="col-md-4 mb-0 text-body-secondary">© 2024 Ariel & Narkis,Chores Inc</p>
+    <ul class="nav col-md-4 justify-content-end">
+      <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">Home</a></li>
+      <li class="nav-item"><a href="signupscreen.html" class="nav-link px-2 text-body-secondary">Sign Up</a></li>
+      <li class="nav-item"><a href="http://www.google.com" class="nav-link px-2 text-body-secondary">Google</a></li>
+      <li class="nav-item"><a href="http://www.facebook.com" class="nav-link px-2 text-body-secondary">Facebook</a>
+      </li>
+    </ul>
+  </footer>
 
   <script>
     document.getElementById('addUserButton').addEventListener('click', function (event) {
