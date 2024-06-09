@@ -34,7 +34,7 @@
         <h2 class="text-center company_title w-100">Chores Inc.</h2>
         <img src="img/logo.png" class="logo img-fluid mx-auto d-block mb-4" alt="Logo">
         <h2 class="mb-4 text-center">Register to our site</h2>
-        <form id="signUpForm">
+        <form action="index.html" id="signUpForm" class="form-signin w-100">
             <div class="row mb-3">
                 <div class="col">
                     <input type="text" class="form-control" placeholder="First name" aria-label="First name" required>
@@ -77,12 +77,5 @@
             </li>
         </ul>
     </footer>
-
-    <script>
-        document.getElementById('signUpForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the default form submission
-            window.location.href = 'index.html';
-        });
-    </script>
 
 </html>

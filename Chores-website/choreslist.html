@@ -11,25 +11,22 @@
 </head>
 
 <body>
-  <header> <!--=navigation bar-->
-    <nav class="navbar all_style bg-body-tertiary">
+  <header>
+    <nav class="navbar bg-light bg-gradient">
       <div class="container-fluid">
         <h3 class="company_title">Chores Inc.</h3>
         <div class="nav nav-underline">
-          <a class="navbar-brand nav-link active " href="index.html">Home</a>
-          <a class="nav-link" href="loginscreen.html">Login</a>
-          <!--change this to the current page to show active-->
-          <a class="nav-link" aria-current="Sign up" href="signupscreen.html">Sign up</a>
+          <a class="nav-link text-black" href="index.html">Home</a>
+          <a class="nav-link text-black" href="loginscreen.html">Login</a>
+          <a class="nav-link text-black" href="signupscreen.html">Sign up</a>
         </div>
       </div>
     </nav>
+  </header>
 
-  </header> <!--end of navigation bar-->
-
-  <!--page content-->
-  <div class="container all_style">
+  <div class="table-responsive all_style">
     <h3 class="company_title">To do list:</h3>
-    <table class="table table-responsive align-middle mb-0" style="border-radius: 10px;">
+    <table class="table text-center align-middle mb-0" style="border-radius: 10px;">
       <thead class="bg-light">
         <tr>
           <th class="text-center">Chore title</th>
@@ -41,17 +38,18 @@
       <tbody>
         <tr>
           <td>
-              <div class="ms-6 text-center">
-                <p class="fw-bold mb-1">Clean the house</p>
-                <p class="text-muted text-wrap mb-0 table-title-column">Before guest comes on friday</p>
-              </div>
+            <div class="ms-6 text-center">
+              <p class="fw-bold mb-1">Clean the house</p>
+              <p class="text-muted text-wrap mb-0 table-title-column">Before guest comes on friday</p>
+            </div>
           </td>
           <td class="text-center">
             <p>07/06/2024</p>
           </td>
           <td class="text-center">
             <div class="d-flex flex-column align-items-center justify-content-center">
-              <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle mb-2" />
+              <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px"
+                class="img-fluid rounded-circle mb-2" />
               <div>
                 <p class="mb-1">Bro</p>
               </div>
@@ -63,17 +61,18 @@
         </tr>
         <tr>
           <td>
-              <div class="ms-6 text-center">
-                <p class="fw-bold mb-1">Organize the closet</p>
-                <p class="text-muted text-wrap mb-0 table-title-column">Clean laundry just landed</p>
-              </div>
+            <div class="ms-6 text-center">
+              <p class="fw-bold mb-1">Organize the closet</p>
+              <p class="text-muted text-wrap mb-0 table-title-column">Clean laundry just landed</p>
+            </div>
           </td>
           <td class="text-center">
             <p class="fw-normal mb-1">08/06/2024</p>
           </td>
           <td class="text-center">
             <div class="d-flex flex-column align-items-center justify-content-center">
-              <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle mb-2" />
+              <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" alt="" style="width: 45px; height: 45px"
+                class="img-fluid rounded-circle mb-2" />
               <div>
                 <p class="mb-1">Princessa</p>
               </div>
@@ -85,17 +84,18 @@
         </tr>
         <tr>
           <td>
-              <div class="ms-6 text-center">
-                <p class="fw-bold mb-1">Washing dishes</p>
-                <p class="text-muted mb-0">The sink needs a shower</p>
-              </div>
+            <div class="ms-6 text-center">
+              <p class="fw-bold mb-1">Washing dishes</p>
+              <p class="text-muted mb-0">The sink needs a shower</p>
+            </div>
           </td>
           <td class="text-center">
             <p class="fw-normal mb-1">08/06/2024</p>
           </td>
           <td class="text-center">
             <div class="d-flex flex-column align-items-center justify-content-center">
-              <img src="https://mdbootstrap.com/img/new/avatars/7.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle mb-2" />
+              <img src="https://mdbootstrap.com/img/new/avatars/7.jpg" alt="" style="width: 45px; height: 45px"
+                class="img-fluid rounded-circle mb-2" />
               <div>
                 <p class="mb-1">LolaMarsh</p>
               </div>
@@ -108,6 +108,17 @@
       </tbody>
     </table>
   </div>
+
+  <footer class="bg-light bg-gradient d-flex flex-wrap justify-content-between align-items-center ">
+    <p class="col-md-4 mb-0 text-body-secondary">© 2024 Ariel & Narkis,Chores Inc</p>
+    <ul class="nav col-md-4 justify-content-end">
+      <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">Home</a></li>
+      <li class="nav-item"><a href="signupscreen.html" class="nav-link px-2 text-body-secondary">Sign Up</a></li>
+      <li class="nav-item"><a href="http://www.google.com" class="nav-link px-2 text-body-secondary">Google</a></li>
+      <li class="nav-item"><a href="http://www.facebook.com" class="nav-link px-2 text-body-secondary">Facebook</a></li>
+    </ul>
+  </footer>
+
 </body>
 
 </html>
