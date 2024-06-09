@@ -10,8 +10,8 @@ body {
   background-attachment: fixed;
   background-size: cover;
   height: 100vh; /* Full height */
-  margin: 0;
-  padding-top: 95px;
+  /* margin: 0; */
+  /* padding-top: 95px; */
 }
 
 .container {

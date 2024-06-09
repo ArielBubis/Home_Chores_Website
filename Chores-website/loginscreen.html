@@ -13,12 +13,12 @@
   
 </head>
 <body>
-  <header>
+  <header style="margin-bottom: 20px;">
     <nav class="navbar all_style fixed-top bg-body-tertiary" >
         <div class="container-fluid">
             <h3 class="company_title">Chores Inc.</h3>
             <div class="nav nav-underline">
-                <a class="nav-link" href="mainpage.html">Home</a>
+                <a class="nav-link" href="index.html">Home</a>
                 <a class="navbar-brand nav-link active" href="loginscreen.html">Login</a>
                 <!--change this to the current page to show active-->
                 <a class="nav-link" aria-current="Sign up" href="signupscreen.html">Sign up</a>
@@ -28,7 +28,7 @@
 
 </header>
 
-  <div class="container all_style text-center d-flex flex-column justify-content-center align-items-center " style="max-width: 500px;">
+  <div class="container all_style text-center d-flex flex-column justify-content-center align-items-center " style="max-width: 500px; max-height: min-content;">
     <h2 class="text-center company_title w-100">Chores Inc.</h2>
     <form id="signInForm" class="form-signin w-100">
       <div class="text-center mb-4">
@@ -50,13 +50,12 @@
         <p>New here? <a href="signupscreen.html">Sign up here</a></p>
       </div>
     </form>
-    <p class="mt-5 mb-3 text-muted text-center">© Ariel & Narkis 2024</p>
   </div>
 
   <script>
     document.getElementById('signInForm').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent the default form submission
-      window.location.href = 'mainpage.html';
+      window.location.href = 'index.html';
     });
   </script>
 </body>
