@@ -11,7 +11,7 @@ body {
   background-size: cover;
   height: 100vh; /* Full height */
   margin: 0;
-  padding: 95px;
+  padding-top: 95px;
 }
 
 .container {
