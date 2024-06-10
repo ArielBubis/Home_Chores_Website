@@ -130,17 +130,17 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body all_style">
-          <form>
+          <form id="newUserForm">
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email">
+              <input type="email" class="form-control" id="email" required>
             </div>
-          </form>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Add user</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success">Add user</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
