@@ -20,7 +20,7 @@
   <header>
     <nav class="navbar bg-light bg-gradient">
       <div class="container-fluid">
-        <h3 class="company_title">Chores Inc.</h3>
+        <h3 class="company_title mb-1">Chores Inc.</h3>
         <div class="nav nav-underline">
           <a class="nav-link text-black active" href="index.html">Home</a>
           <a class="nav-link text-black" href="loginscreen.html">Login</a>
@@ -50,38 +50,104 @@
             </thead>
             <tbody>
               <tr>
-                <td class="text-center">
-                  <div class="ms-6">
-                    <p class="fw-bold mb-1"><a href="choreslist.html">House Chores</a></p>
-                  </div>
+                <td>
+                  <p class="fw-bold mb-1"><a href="choreslist.html">House Chores</a></p>
                 </td>
                 <td class="text-center">
-                  <p>07/06/2024</p>
+                  <p class="text-break mb-1">07/06/2024</p>
                 </td>
                 <td class="text-center">
                   <div class="d-flex flex-column align-items-center justify-content-center">
                     <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px"
-                      class="img-fluid rounded-circle mb-2" />
-                    <div>
-                      <p class="mb-1">Bro</p>
-                    </div>
+                      class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                    <p class="mb-1">Bro</p>
                   </div>
                 </td>
                 <td class="text-center">
-                  <span class="badge text-bg-danger">Not finished</span>
+                  <span class="badge text-wrap text-bg-danger" style="height: 20px;">
+                    <p class="d-none d-sm-block">Not Finished</p>
+                  </span>
                 </td>
               </tr>
-              <!-- Add more rows as needed -->
+              <tr>
+                <td>
+                  <p class="fw-bold mb-1"><a href="choreslist.html">Shopping</a></p>
+                </td>
+                <td class="text-center">
+                  <p class="text-break mb-1">08/06/2024</p>
+                </td>
+                <td class="text-center">
+                  <div class="d-flex flex-column align-items-center justify-content-center">
+                    <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" alt="" style="width: 45px; height: 45px"
+                      class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                    <p class="mb-1">Princessa</p>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <span class="badge text-wrap text-bg-success" style="height: 20px;">
+                    <p class="d-none d-sm-block">Finished</p>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p class="fw-bold mb-1"><a href="choreslist.html">Car stuff</a></p>
+                </td>
+                <td class="text-center">
+                  <p class="text-break mb-1">09/06/2024</p>
+                </td>
+                <td class="text-center">
+                  <div class="d-flex flex-column align-items-center justify-content-center">
+                    <img src="https://mdbootstrap.com/img/new/avatars/7.jpg" alt="" style="width: 45px; height: 45px"
+                      class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                    <p class="mb-1">LolaMarsh</p>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <span class="badge text-wrap text-bg-success" style="height: 20px;">
+                    <p class="d-none d-sm-block">Finished</p>
+                  </span>
+                </td>
+              </tr>
             </tbody>
           </table>
+        </div>
+
+      </div>
+    </div>
+    <div class="text-center">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newUserModal">
+        Add New User
+      </button>
+    </div>
+
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newUserModalLabel">New User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body all_style">
+          <form>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success">Add user</button>
         </div>
       </div>
     </div>
   </div>
-
-
   <footer class="bg-light bg-gradient d-flex flex-wrap justify-content-between align-items-center">
-    <p class="col-md-4 mb-0 text-body-secondary">© 2024 Ariel & Narkis,Chores Inc</p>
+    <p class="col-md-4 mb-0 text-body-secondary">© 2024 Ariel & Narkis, Chores Inc</p>
     <ul class="nav col-md-4 justify-content-end">
       <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">Home</a></li>
       <li class="nav-item"><a href="signupscreen.html" class="nav-link px-2 text-body-secondary">Sign Up</a></li>
@@ -91,11 +157,11 @@
     </ul>
   </footer>
 
-  <script>
-    document.getElementById('addUserButton').addEventListener('click', function (event) {
-      // Add your logic here to add a user to the household
-    });
-  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
 </body>
 
 </html>

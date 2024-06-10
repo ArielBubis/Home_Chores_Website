@@ -8,19 +8,23 @@ body {
   background-attachment: fixed;
   background-size: cover;
   height: 100vh;
-  /* margin: 0; */
-  /* padding-top: 95px; */
 }
 
-.container,
-.table-responsive {
+.container {
   margin: auto;
   padding: 20px;
-  border-radius: 10px;
   max-height: 80vh;
   align-self: center;
+  overflow: auto;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
 }
+
+.table-responsive{
+  border-radius: 10px;
+  width: 100%;
+  margin: auto;
+  }
 
 
 .logo {
@@ -75,7 +79,7 @@ h2 {
     radial-gradient(50% 50%, var(--_g)) calc(var(--s)/2) calc(var(--s)/2) var(--c1);
   background-size: var(--s) var(--s);
   /* Made by" https://support.temani-afif.com/ */
-
+  border-radius: 10px;
 }
 
 /* .all_style{
