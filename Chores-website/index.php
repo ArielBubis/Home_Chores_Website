@@ -17,18 +17,8 @@
 </head>
 
 <body>
-  <header>
-    <nav class="navbar bg-light bg-gradient">
-      <div class="container-fluid">
-        <h3 class="company_title mb-1"><a class="nav-link" href="index.html">Chores Inc.</a></h3>
-        <div class="nav nav-underline">
-          <a class="nav-link text-black active" href="index.html">Home</a>
-          <a class="nav-link text-black" href="loginscreen.html">Login</a>
-          <a class="nav-link text-black" href="signupscreen.html">Sign up</a>
-        </div>
-      </div>
-    </nav>
-  </header>
+  <!-- import navbar from header.php -->
+  <?php require_once('header.php');?>
 
   <div class="container all_style">
     <div class="row">
@@ -144,17 +134,9 @@
       </div>
     </div>
   </div>
-  <footer class="bg-light bg-gradient d-flex flex-wrap justify-content-between align-items-center">
-    <p class="col-md-4 mb-0 text-body-secondary">© 2024 Ariel & Narkis, Chores Inc</p>
-    <ul class="nav col-md-4 justify-content-end">
-      <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">Home</a></li>
-      <li class="nav-item"><a href="signupscreen.html" class="nav-link px-2 text-body-secondary">Sign Up</a></li>
-      <li class="nav-item"><a href="http://www.google.com" class="nav-link px-2 text-body-secondary">Google</a></li>
-      <li class="nav-item"><a href="http://www.facebook.com" class="nav-link px-2 text-body-secondary">Facebook</a>
-      </li>
-    </ul>
-  </footer>
 
+  <!-- import footer from footer.php -->
+  <?php require_once('footer.php');?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

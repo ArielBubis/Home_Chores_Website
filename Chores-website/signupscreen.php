@@ -7,8 +7,7 @@
     <title>Chores Inc | Sign up</title>
     <link rel="icon" type="image/x-icon" href="img/logo.png">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -19,18 +18,8 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar bg-light bg-gradient">
-            <div class="container-fluid">
-                <h3 class="company_title mb-1"><a class="nav-link" href="index.html">Chores Inc.</a></h3>
-                <div class="nav nav-underline">
-                    <a class="nav-link text-black" href="index.html">Home</a>
-                    <a class="nav-link text-black" href="loginscreen.html">Login</a>
-                    <a class="nav-link text-black active" href="signupscreen.html">Sign up</a>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <!-- import navbar from header.php -->
+    <?php require_once('header.php'); ?>
 
     <div class="container all_style" style="max-width: 500px; max-height: min-content;">
         <h2 class="text-center company_title w-100">Chores Inc.</h2>
@@ -55,8 +44,7 @@
                     <input type="password" class="form-control" placeholder="Password" aria-label="Password" required>
                 </div>
                 <div class="col-12 col-md-6">
-                    <input type="password" class="form-control" placeholder="Confirm Password"
-                        aria-label="Confirm Password" required>
+                    <input type="password" class="form-control" placeholder="Confirm Password" aria-label="Confirm Password" required>
                 </div>
             </div>
             <div class="row">
@@ -67,18 +55,9 @@
         </form>
     </div>
 
-    <footer class="bg-light bg-gradient d-flex flex-wrap justify-content-between align-items-center ">
-        <p class="col-md-4 mb-0 text-body-secondary">© 2024 Ariel & Narkis,Chores Inc</p>
-        <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">Home</a></li>
-            <li class="nav-item"><a href="signupscreen.html" class="nav-link px-2 text-body-secondary">Sign Up</a></li>
-            <li class="nav-item"><a href="http://www.google.com" class="nav-link px-2 text-body-secondary">Google</a>
-            </li>
-            <li class="nav-item"><a href="http://www.facebook.com"
-                    class="nav-link px-2 text-body-secondary">Facebook</a>
-            </li>
-        </ul>
-    </footer>
+    <!-- import footer from footer.php -->
+    <?php require_once('footer.php'); ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </html>
