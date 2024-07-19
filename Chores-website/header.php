@@ -21,9 +21,9 @@
             <div class="container-fluid">
                 <h3 class="company_title mb-1"><a class="nav-link" href="index.php">Chores Inc.</a></h3>
                 <div class="nav nav-underline">
-                    <a class="nav-link text-black <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
-                    <a class="nav-link text-black <?php echo ($current_page == 'loginscreen.php') ? 'active' : ''; ?>" href="loginscreen.php">Login</a>
-                    <a class="nav-link text-black <?php echo ($current_page == 'signupscreen.php') ? 'active' : ''; ?>" href="signupscreen.php">Sign up</a>
+                    <a id="homepage" class="nav-link text-black <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
+                    <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'loginscreen.php') ? 'active' : ''; ?>" href="loginscreen.php">Login</a>
+                    <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'signupscreen.php') ? 'active' : ''; ?>" href="signupscreen.php">Sign up</a>
 
                     <!-- <a class="nav-link text-black active" href="index.html">Home</a>
             <a class="nav-link text-black" href="loginscreen.html">Login</a>

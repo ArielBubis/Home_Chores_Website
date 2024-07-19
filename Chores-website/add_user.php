@@ -16,7 +16,7 @@
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            echo "Email already exists. Please use a different email.";
+            echo json_encode(array('success' => 0));
         } else {
             // Proceed with signup
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -26,7 +26,7 @@
             $stmt->bind_param('ssss', $email, $first_name, $last_name, $password_hash);
             $stmt->execute();
 
-            echo "Signup successful!";
+            echo json_encode(array('success' => 1));
         }
         $stmt->close();
     }
