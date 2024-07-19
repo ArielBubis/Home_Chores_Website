@@ -1,3 +1,5 @@
+<?php require("db.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,8 +9,7 @@
   <title>Chores Inc | Main</title>
   <link rel="icon" type="image/x-icon" href="img/logo.png">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -18,7 +19,7 @@
 
 <body>
   <!-- import navbar from header.php -->
-  <?php require_once('header.php');?>
+  <?php require_once('header.php'); ?>
 
   <div class="container all_style">
     <div class="row">
@@ -39,66 +40,43 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <p class="fw-bold mb-1"><a href="choreslist.php">House Chores</a></p>
-                </td>
-                <td class="text-center">
-                  <p class="text-break mb-1">07/06/2024</p>
-                </td>
-                <td class="text-center">
-                  <div class="d-flex flex-column align-items-center justify-content-center">
-                    <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px"
-                      class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
-                    <p class="mb-1">Bro</p>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <span class="badge text-wrap text-bg-danger" style="height: 20px;">
-                    <p class="d-none d-sm-block">Not Finished</p>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p class="fw-bold mb-1"><a href="choreslist.php">Shopping</a></p>
-                </td>
-                <td class="text-center">
-                  <p class="text-break mb-1">08/06/2024</p>
-                </td>
-                <td class="text-center">
-                  <div class="d-flex flex-column align-items-center justify-content-center">
-                    <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" alt="" style="width: 45px; height: 45px"
-                      class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
-                    <p class="mb-1">Princessa</p>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <span class="badge text-wrap text-bg-success" style="height: 20px;">
-                    <p class="d-none d-sm-block">Finished</p>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p class="fw-bold mb-1"><a href="choreslist.php">Car stuff</a></p>
-                </td>
-                <td class="text-center">
-                  <p class="text-break mb-1">09/06/2024</p>
-                </td>
-                <td class="text-center">
-                  <div class="d-flex flex-column align-items-center justify-content-center">
-                    <img src="https://mdbootstrap.com/img/new/avatars/7.jpg" alt="" style="width: 45px; height: 45px"
-                      class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
-                    <p class="mb-1">LolaMarsh</p>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <span class="badge text-wrap text-bg-success" style="height: 20px;">
-                    <p class="d-none d-sm-block">Finished</p>
-                  </span>
-                </td>
-              </tr>
+              <?php
+              $sql = "SELECT Users.first_name, Users.last_name, Responsible_For_List.user_id, Chores_List.list_title, Chores_List.due_date, Chores_List.status 
+                FROM Users
+                INNER JOIN Responsible_For_List ON Users.user_id = Responsible_For_List.user_id 
+                INNER JOIN Chores_List ON Chores_List.list_id = Responsible_For_List.list_id;
+                ";
+              $results = $conn->query($sql);
+
+              ?>
+              <?php while ($row = $results->fetch_assoc()) : ?>
+                <tr>
+                  <td>
+                    <p class="fw-bold mb-1"><a href="choreslist.php"><?= $row['list_title']; ?></a></p>
+                  </td>
+                  <td class="text-center">
+                    <p class="text-break mb-1"><?= $row['due_date']; ?></p>
+                  </td>
+                  <td class="text-center">
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                      <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                      <p class="mb-1"><?= $row['first_name'] . " " . $row['last_name']; ?></p>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <?php if ($row['status']) : ?>
+                      <span class="badge text-wrap text-bg-success" style="height: 20px;">
+                        <p class="d-none d-sm-block">Finished</p>
+                      </span>
+                    <?php else : ?>
+                      <span class="badge text-wrap text-bg-danger" style="height: 20px;">
+                        <p class="d-none d-sm-block">Not Finished</p>
+                      </span>
+                    <?php endif; ?>
+                    </span>
+                  </td>
+                </tr>
+              <?php endwhile; ?>
             </tbody>
           </table>
         </div>
@@ -136,11 +114,9 @@
   </div>
 
   <!-- import footer from footer.php -->
-  <?php require_once('footer.php');?>
+  <?php require_once('footer.php'); ?>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 

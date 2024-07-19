@@ -59,7 +59,12 @@
             </thead>
             <tbody>
               <?php
-              $sql = "SELECT * FROM Chores";
+              $sql = "SELECT Users.first_name, Users.last_name, Responsible_For_List.list_id, Chores.chore_title, Chores.date_added, Chores.finished, Chores.chore_num 
+                FROM Users 
+                INNER JOIN Responsible_For_List ON Users.user_id = Responsible_For_List.user_id 
+                INNER JOIN Chores_List ON Responsible_For_List.list_id = Chores_List.list_id
+                INNER JOIN Chores ON Chores_List.list_id = Chores.list_id;
+                ";
               $result = $conn->query($sql);
               ?>
               <?php while ($row = $result->fetch_assoc()) : ?>
@@ -76,8 +81,7 @@
                     <div class="d-flex flex-column align-items-center justify-content-center">
                       <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
                       <div>
-                        <p class="mb-1"><?= $row['user_id']; ?></p> <!-- Assuming 'user_id' is the field you want to display -->
-                      </div>
+                      <p class="mb-1"><?= $row['first_name'] . " " . $row['last_name']; ?></p>                      </div>
                     </div>
                   </td>
                   <?php if ($row['finished'] == 1) : ?>
