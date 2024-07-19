@@ -3,6 +3,8 @@ $(document).ready(function() {
     $('#signUpForm').submit(function(e) {
         e.preventDefault(); // Prevent default form submission
         var formData = $(this).serialize(); // Serialize form data
+        $('#logInLink').attr('hidden', 'hidden').hide();
+        $('#signUpError').attr('hidden', 'hidden').hide();
 
         $.ajax({
             url: 'add_user.php',
@@ -10,6 +12,7 @@ $(document).ready(function() {
             data: formData,
             dataType: 'json',
             success: function(response) {
+                $('#logInLink').attr('hidden', 'hidden').hide();
                 // console.log("scriptjs", response);
                 if(response.success == '0') {
                     console.log(response.message);
@@ -20,9 +23,9 @@ $(document).ready(function() {
 
                 } else {
                     $('#signUpError').attr('hidden', 'hidden').hide();
-                    $('#logInLink').removeAttr('hidden').show();
-
+                    $('#logInLink').attr('hidden', 'hidden').hide();
                     alert('Signup successful!');
+                    window.location.href = 'loginscreen.php';
                 }
             }, 
             error: function(xhr, status, error) {
