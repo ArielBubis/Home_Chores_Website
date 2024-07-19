@@ -41,7 +41,7 @@
             <tbody>
               <tr>
                 <td>
-                  <p class="fw-bold mb-1"><a href="choreslist.html">House Chores</a></p>
+                  <p class="fw-bold mb-1"><a href="choreslist.php">House Chores</a></p>
                 </td>
                 <td class="text-center">
                   <p class="text-break mb-1">07/06/2024</p>
