@@ -61,7 +61,7 @@
               </tr>
               <tr>
                 <td>
-                  <p class="fw-bold mb-1"><a href="choreslist.html">Shopping</a></p>
+                  <p class="fw-bold mb-1"><a href="choreslist.php">Shopping</a></p>
                 </td>
                 <td class="text-center">
                   <p class="text-break mb-1">08/06/2024</p>
@@ -81,7 +81,7 @@
               </tr>
               <tr>
                 <td>
-                  <p class="fw-bold mb-1"><a href="choreslist.html">Car stuff</a></p>
+                  <p class="fw-bold mb-1"><a href="choreslist.php">Car stuff</a></p>
                 </td>
                 <td class="text-center">
                   <p class="text-break mb-1">09/06/2024</p>
