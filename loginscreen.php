@@ -11,7 +11,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" type="text/css" href="style/style.css">
 
 </head>
@@ -22,23 +21,23 @@
 
   <div class="container all_style" style="max-width: 500px; max-height: min-content;">
     <h2 class="text-center company_title w-100">Chores Inc.</h2>
-    <form action="index.html" id="signInForm" class="form-signin w-100">
+    <form action="login_db.php" method="post" id="signInForm" class="form-signin w-100">
       <div class="text-center mb-4">
         <img src="img/logo.png" class="logo img-fluid mx-auto d-block mb-4" alt="Logo">
       </div>
       <h2 class="mb-4 text-center">Sign in to our site</h2>
       <div class="form-group mb-3">
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
       </div>
       <div class="form-group mb-3">
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
       </div>
       <div class="form-check mb-3">
         <input type="checkbox" class="form-check-input" id="rememberMe">
         <label class="form-check-label" for="rememberMe">Remember me</label>
       </div>
       <div class="col d-flex justify-content-center">
-        <button type="submit" class="btn btn-success btn-lg">Log In</button>
+        <button type="submit" id="login-btn" class="btn btn-success btn-lg">Log In</button>
       </div>
 
       <div class="signup-section">
