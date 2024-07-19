@@ -1,38 +1,38 @@
 $(document).ready(function() {
-    
-    $('#signupPage').click(function(e) {
-        $('#emailError').css('visibility', 'hidden');
-    });
 
     $('#signUpForm').submit(function(e) {
         e.preventDefault(); // Prevent default form submission
-        var email = $('#email').val();
+        var formData = $(this).serialize(); // Serialize form data
 
         $.ajax({
             url: 'add_user.php',
             type: 'POST',
-            data: { email: email },
+            data: formData,
             dataType: 'json',
             success: function(response) {
-                var jsonData = JSON.parse(response);
-                if(jsonData.success == '0') {
-                    $('#emailError').show();
+                // console.log("scriptjs", response);
+                if(response.success == '0') {
+                    console.log(response.message);
+                    $('#signUpError').text(response.message).removeAttr('hidden').show();
+                    if(response.message == 'Email already exists.') {
+                    $('#logInLink').removeAttr('hidden').show();
+                    }
+
                 } else {
-                    $('#emailError').hide();
+                    $('#signUpError').attr('hidden', 'hidden').hide();
+                    $('#logInLink').removeAttr('hidden').show();
+
                     alert('Signup successful!');
                 }
             }, 
             error: function(xhr, status, error) {
-            console.error("AJAX error:", status, error);
+                console.error("AJAX error:", status, error);
+                console.log(xhr.responseText, error);
             }
+            
         });
     });
 
-    // $('#signUpForm').on('submit', function(e) {
-    //     if ($('#emailError').is(':visible')) {
-    //         e.preventDefault();
-    //     }
-    // });
 
 
 });
