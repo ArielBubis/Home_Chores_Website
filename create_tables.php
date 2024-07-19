@@ -23,7 +23,7 @@
             list_id INT AUTO_INCREMENT PRIMARY KEY,
             list_title VARCHAR(255) NOT NULL,
             due_date DATE, # Defult format: YYYY-MM-DD 
-            status ENUM('open', 'close') NOT NULL
+            status BOOLEAN NOT NULL DEFAULT 0
         );";
         if($conn->query($sql)) {
             echo "The table 'Chores_List' created successfully <br>";
@@ -45,7 +45,7 @@
             chore_title VARCHAR(255) NOT NULL,
             date_added DATE NOT NULL,
             user_id INT, 
-            finished ENUM('yes', 'no') NOT NULL,
+            finished BOOLEAN NOT NULL DEFAULT 0,
             FOREIGN KEY (user_id) REFERENCES Users(user_id),
             FOREIGN KEY (list_id) REFERENCES Chores_List(list_id) ON DELETE CASCADE,
             PRIMARY KEY (chore_num, list_id)

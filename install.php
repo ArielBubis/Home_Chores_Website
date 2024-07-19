@@ -46,8 +46,8 @@
     // Add chores lists records
     $sql = "INSERT INTO Chores_List(list_title, due_date, status)
     VALUES
-        ('House chores', '2024-06-07', 'open'),
-        ('Shopping' ,'2024-06-08', 'close')";
+        ('House chores', '2024-06-07', 0),
+        ('Shopping' ,'2024-06-08', 1)";
     if($conn->query($sql)) {
         echo "2 Chores lists added successfully<br>";
     }
@@ -70,13 +70,13 @@
     // Add chores to chores lists 
     $sql = "INSERT INTO Chores(list_id, chore_title, date_added, user_id, finished)
     VALUES
-        (1, 'Clean the house', '2024-06-07', 1, 'no'),
-        (1, 'Organize the closet' ,'2024-06-07', 1, 'no'),
-        (1, 'Washing dishes', '2024-06-07', 1, 'no'),
-        (1, 'Paint the wall', '2024-06-09', 1, 'no'),
-        (1, 'Buy milk', '2024-06-08', 1, 'no'),
-        (1, 'Buy wall paint' ,'2024-06-09', 1, 'no'),
-        (1, 'Buy paintbrush', '2024-06-09', 1, 'no')";
+        (1, 'Clean the house', '2024-06-07', 1, 0),
+        (1, 'Organize the closet' ,'2024-06-07', 1, 0),
+        (1, 'Washing dishes', '2024-06-07', 1, 0),
+        (1, 'Paint the wall', '2024-06-09', 1, 0),
+        (1, 'Buy milk', '2024-06-08', 1, 0),
+        (1, 'Buy wall paint' ,'2024-06-09', 1, 0),
+        (1, 'Buy paintbrush', '2024-06-09', 1, 0)";
 
     if($conn->query($sql)) {
         echo "Chores added successefully to chores lists";
