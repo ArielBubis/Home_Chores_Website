@@ -42,7 +42,7 @@
       </div>
 
       <div class="signup-section">
-        <p>New here? <a href="signupscreen.html">Sign up here</a></p>
+        <p>New here? <a href="signupscreen.php">Sign up here</a></p>
       </div>
     </form>
   </div>
