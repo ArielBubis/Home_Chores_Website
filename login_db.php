@@ -45,8 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Handle "remember me" functionality
                 if (isset($_POST['rememberMe'])) {
-                    setcookie('email', $email, time() + (86400 * 30), "/");
-                    setcookie('password', $password_hash, time() + (86400 * 30), "/");
+                    setcookie('email', $email, time() + (86400 * 14), "/");
+                    setcookie('password', $password_hash, time() + (86400 * 14), "/");
                 }
 
                 header("Location: index.php");
