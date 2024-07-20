@@ -47,12 +47,29 @@ $(document).ready(function() {
     //         dataType: 'json',
     //         success: function(response) {
     //             if(response.success == 0) {
-    //                 if($(location).attr('loginscreen.php')) {
-    //                     window.location.replace('logout.php');
-    //                 }
+    //                 window.location.href = 'index.php';
+    //             }
+    //             else {
+    //                 alert(response.message);
     //             }
     //         }
     //     });
+    // });
+
+    // $('#homepage').on('click', function() {
+    //     $.ajax({
+    //         url: "index.php", 
+    //         type: "POST",
+    //         success: function (response) {
+    //             if(response.success == true) {
+    //                 window.location('index.php');
+    //                 exit;
+    //             }
+    //             else {
+    //                 alert('You must login first');
+    //             }
+    //         }
+    //     })
     // });
 
 });
