@@ -36,6 +36,23 @@ $(document).ready(function() {
         });
     });
 
+    // $('#loginForm').submit(function(e) {
+    //     e.preventDefault(); // Prevent default form submission
+    //     var loginFormData = $(this).serialize(); // Serialize form data
 
+    //     $.ajax({
+    //         url: 'login_db.php',
+    //         type: 'POST',
+    //         data: loginFormData,
+    //         dataType: 'json',
+    //         success: function(response) {
+    //             if(response.success == 0) {
+    //                 if($(location).attr('loginscreen.php')) {
+    //                     window.location.replace('logout.php');
+    //                 }
+    //             }
+    //         }
+    //     });
+    // });
 
 });

@@ -1,3 +1,8 @@
+<?php
+session_start(); 
+$current_page = basename($_SERVER['PHP_SELF']); // Save current page
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,17 +18,20 @@
 </head>
 
 <body>
-    <!-- define curret page vairable to find what page we on -->
-    <?php $current_page = basename($_SERVER['PHP_SELF']);?>
-
     <header> <!-- navbar -->
         <nav class="navbar bg-light bg-gradient">
             <div class="container-fluid">
                 <h3 class="company_title mb-1"><a class="nav-link" href="index.php">Chores Inc.</a></h3>
                 <div class="nav nav-underline">
                     <a id="homepage" class="nav-link text-black <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
-                    <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'loginscreen.php') ? 'active' : ''; ?>" href="loginscreen.php">Login</a>
-                    <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'signupscreen.php') ? 'active' : ''; ?>" href="signupscreen.php">Sign up</a>
+                    
+                    <?php if (isset($_SESSION['userLoggedIn'])): ?>
+                        <!-- <span class="nav-link text-black">Welcome!</span> -->
+                        <a action="logout.php" id="logoutPage" class="nav-link text-black" href="logout.php">Logout</a>
+                    <?php else: ?>
+                        <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'loginscreen.php') ? 'active' : ''; ?>" href="loginscreen.php">Login</a>
+                        <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'signupscreen.php') ? 'active' : ''; ?>" href="signupscreen.php">Sign up</a>
+                    <?php endif; ?>
 
                     <!-- <a class="nav-link text-black active" href="index.html">Home</a>
             <a class="nav-link text-black" href="loginscreen.html">Login</a>

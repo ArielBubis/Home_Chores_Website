@@ -10,7 +10,7 @@ if (!isset($_SESSION['userLoggedIn']) && isset($_COOKIE['email']) && isset($_COO
     $_SESSION['userLoggedIn'] = true;
     $_SESSION['email'] = $email;
 
-    header("Location: index.php");
+    // header("Location: index.php");
     exit;
 }
 
@@ -28,15 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $stmt->get_result();
         $user_record = $result->fetch_assoc();
 
-        if ($user_record) { // User exists
+        if ($user_record) { // User exists in database 
             $email = $user_record['email'];
             $password_hash = $user_record['password'];
             $verify = password_verify($password_entered, $password_hash);
-            // $password = $user_record['password'];
-
-            // Debugging: Check if the password hash is retrieved
-            echo "Password hash from database: $password_hash<br>";
-            echo "Password from user: $password_entered<br>";
 
             if ($verify) {
             // if ($password_hash === $password_entered) {
@@ -48,9 +43,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     setcookie('email', $email, time() + (86400 * 14), "/");
                     setcookie('password', $password_hash, time() + (86400 * 14), "/");
                 }
+                // header("Location: index.php");
 
-                header("Location: index.php");
+                echo $_SESSION['userLoggedIn'] . " " . $_SESSION['email'] . "<br>";
+                echo "email= " . $_COOKIE['email'] . " password= " . $_COOKIE['password']. "<br>";
                 exit;
+
             } else {
                 echo "Incorrect password. Please try again.";
             }
