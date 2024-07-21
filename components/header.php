@@ -24,7 +24,6 @@ $current_page = basename($_SERVER['PHP_SELF']); // Save current page
                 <h3 class="company_title mb-1"><a class="nav-link" href="index.php">Chores Inc.</a></h3>
                 <div class="nav nav-underline">
                     <a id="homepage" class="nav-link text-black <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
-
                     <?php if (isset($_SESSION['userLoggedIn'])) : ?>
                         <?php
                         // Use prepared statements to prevent SQL injection
@@ -42,9 +41,6 @@ $current_page = basename($_SERVER['PHP_SELF']); // Save current page
                         <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'signupscreen.php') ? 'active' : ''; ?>" href="signupscreen.php">Sign up</a>
                     <?php endif; ?>
 
-                    <!-- <a class="nav-link text-black active" href="index.html">Home</a>
-            <a class="nav-link text-black" href="loginscreen.html">Login</a>
-            <a class="nav-link text-black" href="signupscreen.html">Sign up</a> -->
                 </div>
             </div>
         </nav>

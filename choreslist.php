@@ -1,4 +1,4 @@
-<?php require("db.php"); ?>
+<?php require("API/db.php"); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,20 +18,8 @@
 </head>
 
 <body>
-  <!-- <header>
-    <nav class="navbar bg-light bg-gradient">
-      <div class="container-fluid">
-        <h3 class="company_title mb-1"><a class="nav-link" href="index.html">Chores Inc.</a></h3>
-        <div class="nav nav-underline">
-          <a class="nav-link text-black" href="index.html">Home</a>
-          <a class="nav-link text-black" href="loginscreen.html">Login</a>
-          <a class="nav-link text-black" href="signupscreen.html">Sign up</a>
-        </div>
-      </div>
-    </nav>
-  </header> -->
   <!-- import navbar from header.php -->
-  <?php require_once('header.php'); ?>
+  <?php require_once('components/header.php'); ?>
 
 
   <div class="container all_style">
@@ -100,7 +88,7 @@
   </div>
 
   <!-- import footer from footer.php -->
-  <?php require_once('footer.php'); ?>
+  <?php require_once('components/footer.php'); ?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
