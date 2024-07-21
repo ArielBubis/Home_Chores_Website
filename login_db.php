@@ -21,7 +21,6 @@ if (!isset($_SESSION['userLoggedIn']) && isset($_COOKIE['email']) && isset($_COO
 
 // login authentication 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the submitted form data
     if (empty($email_entered) || empty($password_entered)) {
         $response['message'] = 'All fields are required';
     } else {
@@ -55,9 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 } else {
                     $response['message'] = 'Incorrect password. Please try again';
+                    header("Location: loginscreen.php"); // Redirect back to the login page
+
                 }
             } else {
                 $response['message'] = 'User not found. Please check your details';
+                header("Location: loginscreen.php"); // Redirect back to the login page
+
             }
         }
         $stmt->close();
@@ -65,5 +68,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
-echo json_encode($response);
+// echo json_encode($response);
 
