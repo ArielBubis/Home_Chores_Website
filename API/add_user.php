@@ -55,3 +55,4 @@ if (empty($email) || empty($firstName) || empty($lastName) || empty($password) |
 
 $conn->close();
 echo json_encode($response);
+?>

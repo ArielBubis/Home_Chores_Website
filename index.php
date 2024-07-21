@@ -1,4 +1,4 @@
-<?php require("API/db.php"); ?>
+<?php require "API/db.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +47,6 @@
                 INNER JOIN Chores_List ON Chores_List.list_id = Responsible_For_List.list_id;
                 ";
               $results = $conn->query($sql);
-
               ?>
               <?php while ($row = $results->fetch_assoc()) : ?>
                 <tr>

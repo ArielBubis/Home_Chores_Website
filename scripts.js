@@ -6,7 +6,7 @@ $(document).ready(function() {
         $('#signUpError').attr('hidden', 'hidden').hide();
 
         $.ajax({
-            url: 'add_user.php',
+            url: 'API/add_user.php',
             type: 'POST',
             data: formData,
             dataType: 'json',
@@ -23,8 +23,8 @@ $(document).ready(function() {
                 } else {
                     $('#signUpError').attr('hidden', 'hidden').hide();
                     $('#logInLink').attr('hidden', 'hidden').hide();
-                    alert('Signup successful!');
-                    window.location.href = 'loginscreen.php';
+                    // alert('Signup successful!');
+                    window.location.href = 'loginscreen.php?sign_up=true';
                 }
             }, 
             error: function(xhr, status, error) {
@@ -40,7 +40,7 @@ $(document).ready(function() {
         var loginFormData = $(this).serialize(); // Serialize form data
         
         $.ajax({
-            url: 'login_db.php',
+            url: 'API/login_db.php',
             type: 'POST',
             data: loginFormData,
             dataType: 'json',
@@ -54,7 +54,6 @@ $(document).ready(function() {
                     alert('Login successful!');
                     // Login successful
                     window.location.href = 'index.php';
-
                 }
             },
             error: function(xhr, status, error) {
@@ -63,45 +62,16 @@ $(document).ready(function() {
             }
         });
     });
-    // $('#loginForm').submit(function(e) {
-    //     e.preventDefault(); // Prevent default form submission
-    //     var loginFormData = $(this).serialize(); // Serialize form data
-
-    //     $.ajax({
-    //         url: 'login_db.php',
-    //         type: 'POST',
-    //         data: loginFormData,
-    //         dataType: 'json',
-    //         success: function(response) {
-    //             if(response.success == 0) {
-    //                 window.location.href = 'index.php';
-    //             }
-    //             else {
-    //                 alert(response.message);
-    //             }
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.error("AJAX error:", status, error);
-    //             console.log(xhr.responseText, error);
-    //         }
-
-    //     });
-    // });
-
-    // $('#homepage').on('click', function() {
-    //     $.ajax({
-    //         url: "index.php", 
-    //         type: "POST",
-    //         success: function (response) {
-    //             if(response.success == true) {
-    //                 window.location('index.php');
-    //                 exit;
-    //             }
-    //             else {
-    //                 alert('You must login first');
-    //             }
-    //         }
-    //     })
-    // });
 
 });
+
+
+$(document).ready(function() {
+    // Check if the logged_out parameter is set in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('logged_out')) {
+      // Show the logout modal
+      var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'), {});
+      logoutModal.show();
+    }
+  });

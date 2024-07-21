@@ -1,6 +1,8 @@
 <?php
 session_start();
 $current_page = basename($_SERVER['PHP_SELF']); // Save current page
+require "API/db.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +37,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Save current page
                         $row = $result->fetch_assoc();
                         ?>
                         <span class="navbar-text text-black">Welcome, <?= htmlspecialchars($row['first_name']) ?>!</span>
-                        <a id="logoutPage" class="nav-link text-black" href="logout.php">Logout</a>
+                        <a id="logoutPage" class="nav-link text-black" href="API/logout.php">Logout</a>
                     <?php else : ?>
                         <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'loginscreen.php') ? 'active' : ''; ?>" href="loginscreen.php">Login</a>
                         <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'signupscreen.php') ? 'active' : ''; ?>" href="signupscreen.php">Sign up</a>

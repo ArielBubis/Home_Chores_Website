@@ -13,8 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style/style.css">
 
-
-
 </head>
 
 <body>
@@ -26,7 +24,7 @@
         <h2 class="text-center company_title w-100">Chores Inc.</h2>
         <img src="img/logo.png" class="logo img-fluid mx-auto d-block mb-2 d-none d-sm-block" alt="Logo">
         <h2 class="mb-4 text-center">Register to our site</h2>
-        <form action="add_user.php" method="post" id="signUpForm" class="form-signin w-100">
+        <form action="API/add_user.php" method="post" id="signUpForm" class="form-signin w-100">
             <div class="row mb-3">
                 <div hidden class="alert alert-danger text-center" id="signUpError" role="alert" >Email already exists. Please use a different email</div>
                 <div hidden class="alert alert-primary text-center" id="logInLink" role="alert">

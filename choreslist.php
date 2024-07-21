@@ -1,5 +1,3 @@
-<?php require("API/db.php"); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
