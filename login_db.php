@@ -1,32 +1,18 @@
 <?php
 session_start();
-require_once('db.php'); // connect to database
+require_once 'db.php'; // connect to database
 
 $response = array();
 $email_entered = $_POST['email'];
 $password_entered = $_POST['password'];
 
-// Handle cookies if exists
-if (!isset($_SESSION['userLoggedIn']) && isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
-    $email_entered = $_COOKIE['email'];
-    $password_entered = $_COOKIE['password'];
-
-    $_SESSION['userLoggedIn'] = true;
-    $_SESSION['email'] = $email_entered;
-    // $response['success'] = true;
-
-    header("Location: index.php");
-    exit;
-}
-
-// login authentication 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($email_entered) || empty($password_entered)) {
+if (empty($email_entered) || empty($password_entered)) {
+    $response = ['success' => 0];
         $response['message'] = 'All fields are required';
     } else {
-        // Use prepared statements to prevent SQL injection
         $stmt = $conn->prepare("SELECT email, password FROM users WHERE email = ?");
         if (!$stmt) {
+            $response = ['success' => 0];
             $response['message'] = 'Failed to prepare statement.';
         } else {
             $stmt->bind_param("s", $email_entered);
@@ -47,26 +33,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if (isset($_POST['rememberMe'])) {
                         setcookie('email', $email_entered, time() + (86400 * 14), "/");
                         setcookie('password', $hash, time() + (86400 * 14), "/");
+
                     }
-                    // $response = ['success' => 1];
-                    header("Location: index.php");
-                    exit;
+                    $response = ['success' => 1];
+                    $response['message'] = '';
+
+                    // header("Location: index.php");
+                    // exit;
 
                 } else {
+                    $response = ['success' => 0];
                     $response['message'] = 'Incorrect password. Please try again';
-                    header("Location: loginscreen.php"); // Redirect back to the login page
+                    //  header("Location: loginscreen.php"); // Redirect back to the login page
 
                 }
             } else {
+                $response = ['success' => 0];
                 $response['message'] = 'User not found. Please check your details';
-                header("Location: loginscreen.php"); // Redirect back to the login page
+                //  header("Location: loginscreen.php"); // Redirect back to the login page
 
             }
-        }
         $stmt->close();
+        }
     }
-}
-
 $conn->close();
-// echo json_encode($response);
 
+echo json_encode($response);
+exit;

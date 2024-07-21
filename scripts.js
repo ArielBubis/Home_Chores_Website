@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     $('#signUpForm').submit(function(e) {
         e.preventDefault(); // Prevent default form submission
         var formData = $(this).serialize(); // Serialize form data
@@ -36,6 +35,34 @@ $(document).ready(function() {
         });
     });
 
+    $('#signInForm').submit(function(e) {
+        e.preventDefault(); // Prevent default form submission
+        var loginFormData = $(this).serialize(); // Serialize form data
+        
+        $.ajax({
+            url: 'login_db.php',
+            type: 'POST',
+            data: loginFormData,
+            dataType: 'json',
+            success: function(response) {
+                if(response.success == '0') {
+                    // Login failed, display error message
+                    console.log(response.message);
+                    alert('Login failed. Please check your credentials and try again.');
+                    $('#loginError').text(response.message).removeAttr('hidden').show();
+                } else {
+                    alert('Login successful!');
+                    // Login successful
+                    window.location.href = 'index.php';
+
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", status, error);
+                console.log(xhr.responseText, error);
+            }
+        });
+    });
     // $('#loginForm').submit(function(e) {
     //     e.preventDefault(); // Prevent default form submission
     //     var loginFormData = $(this).serialize(); // Serialize form data
@@ -52,7 +79,12 @@ $(document).ready(function() {
     //             else {
     //                 alert(response.message);
     //             }
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error("AJAX error:", status, error);
+    //             console.log(xhr.responseText, error);
     //         }
+
     //     });
     // });
 

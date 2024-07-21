@@ -21,12 +21,11 @@
 
   <div class="container all_style" style="max-width: 500px; max-height: min-content;">
     <h2 class="text-center company_title w-100">Chores Inc.</h2>
-    <form action="login_db.php" method="post" id="signInForm" class="form-signin w-100">
-      <div class="text-center mb-4">
-        <img src="img/logo.png" class="logo img-fluid mx-auto d-block mb-4" alt="Logo">
-      </div>
-      <h2 class="mb-4 text-center">Sign in to our site</h2>
+    <img src="img/logo.png" class="logo img-fluid mx-auto d-block mb-2 d-none d-sm-block" alt="Logo">
+    <h2 class="mb-4 text-center">Sign in to our site</h2>
+    <form action="login_db.php" method="post" id="signInForm" class="w-100">
       <div class="form-group mb-3">
+      <div hidden class="alert alert-danger text-center" id="loginError" role="alert" >Incorrect password</div>
         <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
       </div>
       <div class="form-group mb-3">
