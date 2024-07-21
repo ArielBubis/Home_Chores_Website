@@ -71,17 +71,18 @@
                 <tr>
                   <td>
                     <div class="ms-6 text-center">
-                      <p class="fw-bold mb-1"><?= $row['chore_title']; ?></p>
+                      <p class="fw-bold mb-1"><?= htmlspecialchars($row['chore_title']); ?></p>
                     </div>
                   </td>
                   <td class="text-center">
-                    <p class="text-break"><?= $row['date_added']; ?></p>
+                    <p class="text-break"><?= htmlspecialchars($row['date_added']); ?></p>
                   </td>
                   <td class="text-center">
                     <div class="d-flex flex-column align-items-center justify-content-center">
                       <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
                       <div>
-                      <p class="mb-1"><?= $row['first_name'] . " " . $row['last_name']; ?></p>                      </div>
+                        <p class="mb-1"><?= htmlspecialchars($row['first_name']) . " " . htmlspecialchars($row['last_name']); ?></p>
+                      </div>
                     </div>
                   </td>
                   <?php if ($row['finished'] == 1) : ?>
@@ -101,15 +102,6 @@
   <!-- import footer from footer.php -->
   <?php require_once('footer.php'); ?>
 
-  <!-- <footer class="bg-light bg-gradient d-flex flex-wrap justify-content-between align-items-center">
-    <p class="col-md-4 mb-0 text-body-secondary">© 2024 Ariel & Narkis, Chores Inc</p>
-    <ul class="nav col-md-4 justify-content-end">
-      <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">Home</a></li>
-      <li class="nav-item"><a href="signupscreen.html" class="nav-link px-2 text-body-secondary">Sign Up</a></li>
-      <li class="nav-item"><a href="http://www.google.com" class="nav-link px-2 text-body-secondary">Google</a></li>
-      <li class="nav-item"><a href="http://www.facebook.com" class="nav-link px-2 text-body-secondary">Facebook</a></li>
-    </ul>
-  </footer> -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>

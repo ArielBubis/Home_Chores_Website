@@ -1,5 +1,5 @@
 <?php
-session_start(); 
+session_start();
 $current_page = basename($_SERVER['PHP_SELF']); // Save current page
 ?>
 
@@ -24,11 +24,20 @@ $current_page = basename($_SERVER['PHP_SELF']); // Save current page
                 <h3 class="company_title mb-1"><a class="nav-link" href="index.php">Chores Inc.</a></h3>
                 <div class="nav nav-underline">
                     <a id="homepage" class="nav-link text-black <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
-                    
-                    <?php if (isset($_SESSION['userLoggedIn'])): ?>
-                        <!-- <span class="nav-link text-black">Welcome!</span> -->
-                        <a action="logout.php" id="logoutPage" class="nav-link text-black" href="logout.php">Logout</a>
-                    <?php else: ?>
+
+                    <?php if (isset($_SESSION['userLoggedIn'])) : ?>
+                        <?php
+                        // Use prepared statements to prevent SQL injection
+                        $sql = "SELECT first_name FROM users WHERE email = ?";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("s", $_SESSION['email']); 
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        $row = $result->fetch_assoc();
+                        ?>
+                        <span class="navbar-text text-black">Welcome, <?= htmlspecialchars($row['first_name']) ?>!</span>
+                        <a id="logoutPage" class="nav-link text-black" href="logout.php">Logout</a>
+                    <?php else : ?>
                         <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'loginscreen.php') ? 'active' : ''; ?>" href="loginscreen.php">Login</a>
                         <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'signupscreen.php') ? 'active' : ''; ?>" href="signupscreen.php">Sign up</a>
                     <?php endif; ?>

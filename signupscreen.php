@@ -32,7 +32,6 @@
                 <div hidden class="alert alert-primary text-center" id="logInLink" role="alert">
                     <a href="loginscreen.php">Already have an account? Log in</a>
                 </div>
-
                 <div class="col">
                     <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
                 </div>
