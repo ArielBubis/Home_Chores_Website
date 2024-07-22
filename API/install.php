@@ -51,7 +51,7 @@
     $sql = "INSERT INTO Chores_List(list_title, due_date, status)
     VALUES
         ('House chores', '2024-06-07', 0),
-        ('Shopping' ,'2024-06-08', 1)";
+        ('Shopping' ,'2024-06-08', 0)";
     if($conn->query($sql)) {
         echo "2 Chores lists added successfully<br>";
     }

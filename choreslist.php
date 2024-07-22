@@ -51,16 +51,18 @@
             </thead>
             <tbody>
               <?php
-              $sql = "SELECT Users.first_name, Users.last_name, Responsible_For_List.list_id, Chores_List.list_id, Chores.chore_title, Chores.date_added, Chores.finished, Chores.chore_num 
-                FROM Users 
-                INNER JOIN Responsible_For_List ON Users.user_id = Responsible_For_List.user_id 
-                INNER JOIN Chores_List ON Responsible_For_List.list_id = Chores_List.list_id
-                INNER JOIN Chores ON Chores_List.list_id = Chores.list_id
-                WHERE Chores.list_id = $list_id;
-                ";
+              $sql = "SELECT 
+                  Users.user_id, Users.first_name, Users.last_name, Chores_List.list_id, Chores.chore_title, Chores.date_added, Chores.finished, Chores.chore_num
+                  FROM 
+                      Users
+                  INNER JOIN Chores ON Users.user_id = Chores.user_id
+                  INNER JOIN Chores_List ON Chores.list_id = Chores_List.list_id
+                  WHERE Chores.list_id = $list_id;";
               $result = $conn->query($sql);
               ?>
-              <?php while ($row = $result->fetch_assoc()) : ?>
+              <?php while ($row = $result->fetch_assoc()) :
+              ?>
+
                 <tr>
                   <td>
                     <div class="ms-6 text-center">
@@ -102,7 +104,7 @@
         </div>
         <div class="modal-body">
           <form id="newChoreForm" action="API/add_chore.php" method="POST">
-            <div class="mb-3" style="">
+            <div class="mb-3">
               <input type="" class="form-control" id="listId" name="listId" value="<?= $_SESSION['list_id']; ?>">
             </div>
             <div class="mb-3">
@@ -124,7 +126,7 @@
             </div>
             <div class="mb-3">
               <label for="choreDate" class="form-label">Date Added</label>
-              <input type="text" class="form-control" id="choreDate" name="choreDate" value="<?= date('d/m/Y') ?>" readonly style="background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; cursor: not-allowed;">
+              <input type="text" class="form-control" id="choreDate" name="choreDate" value="<?= date('Y-m-d') ?>" readonly style="background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; cursor: not-allowed;">
             </div>
 
         </div>

@@ -80,7 +80,7 @@ $(document).ready(function () {
             success: function (response) {
                 console.log('AJAX success response:', response);
                 var res = JSON.parse(response);
-                alert(res.message);
+                // alert(res.message);
             },
             error: function (xhr, status, error) {
                 console.error('AJAX error:', status, error);
@@ -129,22 +129,23 @@ $(document).ready(function () {
             dataType: 'json',
             success: function(response) {
                 if(response.success == 1) {
+                    console.log(response);
                     // Add the new chore to the table dynamically
                     var newRow = `
                         <tr>
                         <td>
                             <div class="ms-6 text-center">
-                                <p class="fw-bold mb-1">${response.chore_title}</p>
+                                <p class="fw-bold mb-1">${response.choreTitle}</p>
                             </div>
                         </td>
                         <td class="text-center">
-                            <p class="text-break">${response.date_added}</p>
+                            <p class="text-break">${response.dateAdded}</p>
                         </td>
                         <td class="text-center">
                             <div class="d-flex flex-column align-items-center justify-content-center">
                                 <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
                                 <div>
-                                    <p class="mb-1">${response.user_name}</p>
+                                    <p class="mb-1">${response.choreUserName}</p>
                                 </div>
                             </div>
                         </td>
