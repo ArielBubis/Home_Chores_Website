@@ -31,7 +31,6 @@
         <h3 class="company_title mb-2">To do list:</h3>
       </div>
 
-
     </div>
     <div class="row">
       <div class="col-12">
@@ -47,7 +46,7 @@
             </thead>
             <tbody>
               <?php
-              $sql = "SELECT Users.first_name, Users.last_name, Responsible_For_List.list_id, Chores.chore_title, Chores.date_added, Chores.finished, Chores.chore_num 
+              $sql = "SELECT Users.first_name, Users.last_name, Responsible_For_List.list_id, Chores_List.list_id, Chores.chore_title, Chores.date_added, Chores.finished, Chores.chore_num 
                 FROM Users 
                 INNER JOIN Responsible_For_List ON Users.user_id = Responsible_For_List.user_id 
                 INNER JOIN Chores_List ON Responsible_For_List.list_id = Chores_List.list_id
@@ -57,6 +56,10 @@
               ?>
               <?php while ($row = $result->fetch_assoc()) : ?>
                 <tr>
+                  <!-- <td style="display: none;"> -->
+                  <td>
+                  <input type="" name="list_id" value="<?= htmlspecialchars($row['list_id']); ?>">
+                  </td>
                   <td>
                     <div class="ms-6 text-center">
                       <p class="fw-bold mb-1"><?= htmlspecialchars($row['chore_title']); ?></p>
@@ -96,7 +99,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form action="API/add_chore.php" method="POST">
             <div class="mb-3">
               <label for="choreTitle" class="form-label">Chore Title</label>
               <input type="text" class="form-control" id="choreTitle" required>
@@ -104,8 +107,8 @@
             <div class="mb-3">
               <label for="choreUser" class="form-label">Assign User</label>
               <select class="form-select" id="choreUser" required>
-                <option value="">Select a user</option>
-                <!-- import users from database and sort the list --> 
+                <option>Select a user</option>
+                <!-- import users from database and sort the list -->
                 <?php
                 $userSql = "SELECT user_id, first_name, last_name FROM Users ORDER BY first_name ASC";
                 $userResult = $conn->query($userSql);
@@ -115,9 +118,9 @@
               </select>
             </div>
             <div class="mb-3">
-            <label for="choreDate" class="form-label">Date Added</label>
-            <input type="text" class="form-control" id="choreDate" value="<?= date('d/m/Y'); ?>" readonly style="background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; cursor: not-allowed;">
-          </div>
+              <label for="choreDate" class="form-label">Date Added</label>
+              <input type="text" class="form-control" id="choreDate" value="<?= date('d/m/Y'); ?>" readonly style="background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; cursor: not-allowed;">
+            </div>
           </form>
         </div>
         <div class="modal-footer">

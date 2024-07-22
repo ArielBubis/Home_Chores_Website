@@ -74,9 +74,9 @@
         (1, 'Organize the closet' ,'2024-06-07', 1, 0),
         (1, 'Washing dishes', '2024-06-07', 1, 0),
         (1, 'Paint the wall', '2024-06-09', 1, 0),
-        (1, 'Buy milk', '2024-06-08', 1, 0),
-        (1, 'Buy wall paint' ,'2024-06-09', 1, 0),
-        (1, 'Buy paintbrush', '2024-06-09', 1, 0)";
+        (2, 'Buy milk', '2024-06-08', 1, 0),
+        (2, 'Buy wall paint' ,'2024-06-09', 1, 0),
+        (2, 'Buy paintbrush', '2024-06-09', 1, 0)";
 
     if($conn->query($sql)) {
         echo "Chores added successefully to chores lists";
