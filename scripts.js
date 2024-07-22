@@ -57,7 +57,29 @@ $(document).ready(function() {
         });
     });
 
-
+    $('.status').change(function() {
+        var choreNum = $(this).attr('id');
+        var finished = $(this).is(':checked') ? 1 : 0;
+        console.log('Chore number: ' + choreNum + ', Finished: ' + finished);
+  
+        $.ajax({
+          url: 'API/update_chore.php',
+          type: 'POST',
+          data: {
+            chore_num: choreNum,
+            finished: finished
+          },
+          success: function(response) {
+            console.log('AJAX success response:', response);
+            var res = JSON.parse(response);
+            alert(res.message);
+          },
+          error: function(xhr, status, error) {
+            console.error('AJAX error:', status, error);
+            alert('Error updating chore status.');
+          }
+        });
+      });
 
 
 
@@ -74,34 +96,4 @@ $(document).ready(function() {
         var signUpModal = new bootstrap.Modal(document.getElementById('signUpModal'), {});
         signUpModal.show();
     }
-});
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    // Add event listener to all checkboxes with class 'status'
-    document.querySelectorAll('input.status').forEach((checkbox) => {
-        checkbox.addEventListener('change', function() {
-            window.location.href = 'log_in.php?sign_up=true';
-
-            // console.log('Checkbox changed');
-            // // Get the ID of the checkbox
-            // const choreId = this.id;
-            // // Determine if the checkbox is checked
-            // const isChecked = this.checked;
-
-            // // Send AJAX request to update the database
-            // const xhr = new XMLHttpRequest();
-            // xhr.open('POST', 'update_chore.php', true);
-            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            // xhr.onload = function() {
-            //     if (xhr.status >= 200 && xhr.status < 300) {
-            //         console.log('Chore updated successfully');
-            //     } else {
-            //         console.error('Error updating chore');
-            //     }
-            // };
-
-            // xhr.send(`chore_id=${encodeURIComponent(choreId)}&finished=${encodeURIComponent(isChecked ? 1 : 0)}`);
-        });
-    });
 });
