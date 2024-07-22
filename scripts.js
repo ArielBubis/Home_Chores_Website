@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    
     $('#signUpForm').submit(function(e) {
         e.preventDefault(); // Prevent default form submission
         var formData = $(this).serialize(); // Serialize form data
@@ -19,7 +20,7 @@ $(document).ready(function() {
                     }
                 } else {
                     // Redirect to login screen with sign_up parameter
-                    window.location.href = 'loginscreen.php?sign_up=true';
+                    window.location.href = 'log_in.php?sign_up=true';
                 }
             }, 
             error: function(xhr, status, error) {
@@ -56,6 +57,10 @@ $(document).ready(function() {
         });
     });
 
+
+
+
+
     // Check if the logged_out parameter is set in the URL and show the logout modal
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('logged_out') && urlParams.get('logged_out') == 'true') {
@@ -71,28 +76,32 @@ $(document).ready(function() {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Attach change event listener to checkboxes
-    document.querySelectorAll('.status').forEach(function(checkbox) {
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Add event listener to all checkboxes with class 'status'
+    document.querySelectorAll('input.status').forEach((checkbox) => {
         checkbox.addEventListener('change', function() {
-            const choreId = this.getAttribute('data-id');
-            const finished = this.checked ? 1 : 0; // 1 if checked, 0 if not
+            window.location.href = 'log_in.php?sign_up=true';
 
-            // Prepare data to send
-            const formData = new FormData();
-            formData.append('chore_num', choreId);
-            formData.append('finished', finished);
+            // console.log('Checkbox changed');
+            // // Get the ID of the checkbox
+            // const choreId = this.id;
+            // // Determine if the checkbox is checked
+            // const isChecked = this.checked;
 
-            // Send AJAX request to update.php
-            fetch('update.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.message); // Log success message
-            })
-            .catch(error => console.error('Error:', error));
+            // // Send AJAX request to update the database
+            // const xhr = new XMLHttpRequest();
+            // xhr.open('POST', 'update_chore.php', true);
+            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // xhr.onload = function() {
+            //     if (xhr.status >= 200 && xhr.status < 300) {
+            //         console.log('Chore updated successfully');
+            //     } else {
+            //         console.error('Error updating chore');
+            //     }
+            // };
+
+            // xhr.send(`chore_id=${encodeURIComponent(choreId)}&finished=${encodeURIComponent(isChecked ? 1 : 0)}`);
         });
     });
 });

@@ -39,7 +39,7 @@ require "API/db.php";
                         <span class="navbar-text text-black">Welcome, <?= htmlspecialchars($row['first_name']) ?>!</span>
                         <a id="logoutPage" class="nav-link text-black" href="API/logout.php">Logout</a>
                     <?php else : ?>
-                        <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'loginscreen.php') ? 'active' : ''; ?>" href="loginscreen.php">Login</a>
+                        <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'log_in.php') ? 'active' : ''; ?>" href="log_in.php">Login</a>
                         <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'signupscreen.php') ? 'active' : ''; ?>" href="signupscreen.php">Sign up</a>
                     <?php endif; ?>
 

@@ -18,7 +18,7 @@
     // Check if "logged_out=true" is not in the query string
     if (!isset($_GET['logged_out']) && $_GET['logged_out'] !== 'true'){ 
         // Redirect to login page only if "logged_out=true" is not present
-        header("Location: ../loginscreen.php?logged_out=true");    
+        header("Location: ../log_in.php?logged_out=true");    
         exit;
     }    
 

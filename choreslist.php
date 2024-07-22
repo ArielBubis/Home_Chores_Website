@@ -72,9 +72,9 @@
                     </div>
                   </td>
                   <?php if ($row['finished'] == 1) : ?>
-                    <td><input type="checkbox" name="chore-checkbox-<?= $row['chore_num']; ?>" class="form-check-input status" data-id="<?= $row['chore_num']; ?>" checked></td>
+                    <td><input type="checkbox" name="chore-checkbox-<?= $row['chore_num']; ?>" class="form-check-input status" id="<?= $row['chore_num']; ?>" checked></td>
                   <?php else : ?>
-                    <td><input type="checkbox" name="chore-checkbox-<?= $row['chore_num']; ?>" class="form-check-input status" data-id="<?= $row['chore_num']; ?>"></td>
+                    <td><input type="checkbox" name="chore-checkbox-<?= $row['chore_num']; ?>" class="form-check-input status" id="<?= $row['chore_num']; ?>"></td>
                   <?php endif; ?>
                 </tr>
               <?php endwhile; ?>
