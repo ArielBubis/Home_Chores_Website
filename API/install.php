@@ -34,14 +34,18 @@
     // ---- Insert values to tables ----
 
     // Add test yser record 
-    $sql = "INSERT INTO Users(email, first_name, last_name, password)
-    VALUES('test@test.com', 'test', 'user', 'test123')";
+    $password = 'test123';
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    
+    $sql = "INSERT INTO Users(email, first_name, last_name, password) VALUES('test@test.com', 'test', 'user', '$passwordHash')"; 
+    
     if($conn->query($sql)) {
         echo "Test user added successfully<br>";
     }
     else {
         echo "Error: " . $sql . " " . $conn->error . "<br>";
     }
+    
 
     // Add chores lists records
     $sql = "INSERT INTO Chores_List(list_title, due_date, status)
