@@ -7,7 +7,7 @@
   <title>Chores Inc | list</title>
   <link rel="icon" type="image/x-icon" href="img/logo.png">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -24,7 +24,8 @@
   <div class="container all_style">
     <div class="row align-items-center">
       <div class="col=auto">
-        <button class="btn btn-outline-secondary mb-2 mr-3" onclick="window.history.back();">Back</button>
+        <button class="btn btn-outline-secondary mb-2 mr-3" onclick="window.history.back();">➥ Back</button>
+        <button type="button" class="btn btn-primary float-end mb-2 mr-3" data-bs-toggle="modal" data-bs-target="#newChoreModal">+ Add new chore</button>
       </div>
       <div class="col">
         <h3 class="company_title mb-2">To do list:</h3>
@@ -86,9 +87,52 @@
     </div>
   </div>
 
+  <!-- Add New Chore Modal -->
+  <div class="modal fade" id="newChoreModal" tabindex="-1" aria-labelledby="newChoreModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newChoreModalLabel">Add New Chore</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="choreTitle" class="form-label">Chore Title</label>
+              <input type="text" class="form-control" id="choreTitle" required>
+            </div>
+            <div class="mb-3">
+              <label for="choreUser" class="form-label">Assign User</label>
+              <select class="form-select" id="choreUser" required>
+                <option value="">Select a user</option>
+                <!-- import users from database and sort the list --> 
+                <?php
+                $userSql = "SELECT user_id, first_name, last_name FROM Users ORDER BY first_name ASC";
+                $userResult = $conn->query($userSql);
+                while ($user = $userResult->fetch_assoc()) : ?>
+                  <option value="<?= htmlspecialchars($user['user_id']); ?>"><?= htmlspecialchars($user['first_name']) . " " . htmlspecialchars($user['last_name']); ?></option>
+                <?php endwhile; ?>
+              </select>
+            </div>
+            <div class="mb-3">
+            <label for="choreDate" class="form-label">Date Added</label>
+            <input type="text" class="form-control" id="choreDate" value="<?= date('d/m/Y'); ?>" readonly style="background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; cursor: not-allowed;">
+          </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save Chore</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- import footer from footer.php -->
   <?php require_once('components/footer.php'); ?>
 
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="scripts.js"></script>
 
