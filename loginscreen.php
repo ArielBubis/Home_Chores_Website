@@ -18,19 +18,22 @@
 <body>
   <!-- import navbar from header.php -->
   <?php require_once('components/header.php');
-  if (isset($_GET['logged_out']) && $_GET['logged_out'] == 'true') : 
-    require_once('API/logout.php');
-    require_once('components/logOutModal.php'); ?>
-  <?php endif; ?>
+  require_once('components/logInModals.php'); ?>
+  
+
   <div class="container all_style" style="max-width: 500px; max-height: min-content;">
     <h2 class="text-center company_title w-100">Chores Inc.</h2>
     <img src="img/logo.png" class="logo img-fluid mx-auto d-block mb-2 d-none d-sm-block" alt="Logo">
     <h2 class="mb-4 text-center">Sign in to our site</h2>
     <?php if (isset($_SESSION['userLoggedIn']) && $_SESSION['userLoggedIn']) : ?>
+
       <div class="alert alert-warning text-center" role="alert">You are already logged in!
         <p>Press here to <a href="API/logout.php">Log Out</a></p>
       </div>
+
     <?php else : ?>
+
+
       <form action="API/login_db.php" method="post" id="signInForm" class="w-100">
         <div class="form-group mb-3">
           <div hidden class="alert alert-danger text-center" id="loginError" role="alert">Incorrect password</div>
