@@ -96,4 +96,10 @@ $(document).ready(function() {
         var signUpModal = new bootstrap.Modal(document.getElementById('signUpModal'), {});
         signUpModal.show();
     }
+
+    if (urlParams.has('redirect')) {
+        var welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'), {});
+        welcomeModal.show();
+    }
+
 });
