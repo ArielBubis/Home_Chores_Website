@@ -118,6 +118,52 @@ $(document).ready(function () {
         });
     });
 
+    $('#newChoreForm').submit(function(e) {
+        e.preventDefault(); // Prevent default form submission
+        var formData = $(this).serialize(); // Serialize form data
+    
+        $.ajax({
+            url: 'API/add_chore.php',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                if(response.success == 1) {
+                    // Add the new chore to the table dynamically
+                    var newRow = `
+                        <tr>
+                        <td>
+                            <div class="ms-6 text-center">
+                                <p class="fw-bold mb-1">${response.chore_title}</p>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-break">${response.date_added}</p>
+                        </td>
+                        <td class="text-center">
+                            <div class="d-flex flex-column align-items-center justify-content-center">
+                                <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                                <div>
+                                    <p class="mb-1">${response.user_name}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td><input type="checkbox" class="form-check-input status" id="chore-${response.chore_num}"></td>
+                    </tr>
+                `;
+                    $('table tbody').append(newRow);
+                    $('#newChoreModal').modal('hide'); // Hide the modal
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", status, error);
+                alert('Error adding chore.');
+            }
+        });
+    });
+    
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('message') === 'not_signed_in') {
