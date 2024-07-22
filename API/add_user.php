@@ -19,6 +19,8 @@ function registerUser($conn, $email, $firstName, $lastName, $password) {
 	$stmt->bind_param('ssss', $email, $firstName, $lastName, $passwordHash);
 	$stmt->execute();
 	if ($stmt->affected_rows > 0) {
+        session_start();
+        // $_SESSION['signedUp'] = 'true';
 		return ['success' => 1, 'message' => 'User registered successfully.'];
 	}
 	return ['success' => 0, 'message' => 'Failed to register user.'];

@@ -37,42 +37,27 @@ require "API/db.php";
                         $row = $result->fetch_assoc();
                         ?>
                         <span class="navbar-text text-black">Welcome, <?= htmlspecialchars($row['first_name']) ?>!</span>
-                        <a id="logoutPage" class="nav-link text-black" href="API/logout.php">Logout</a>
+                        <a id="logoutNav" class="nav-link text-black" href="API/logout.php">Logout</a>
                     <?php else : ?>
                         <?php
 
                         $current_page = basename($_SERVER['PHP_SELF']);
                         $excluded_pages = ['log_in.php', 'signupscreen.php'];
-
-                        if (!isset($_SESSION['userLoggedIn']) && !in_array($current_page, $excluded_pages)) {
-                            header("Location: log_in.php?redirect=" . $current_page);
+                        if (!isset($_SESSION['userLoggedIn'])  && !in_array($current_page, $excluded_pages)) {
+                            header("Location: log_in.php?message=not_signed_in");
                             exit;
                         }
                         ?>
                         <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'log_in.php') ? 'active' : ''; ?>" href="log_in.php">Login</a>
                         <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'signupscreen.php') ? 'active' : ''; ?>" href="signupscreen.php">Sign up</a>
                     <?php endif; ?>
-                    <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="welcomeModalLabel">Welcome to Chores Inc.</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Welcome to our website! We're glad to have you here. plz sign in
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
                 </div>
             </div>
         </nav>
     </header>
 </body>
+<?php require_once('components/LogInModals.php'); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="scripts.js"></script>
 
 </html>
