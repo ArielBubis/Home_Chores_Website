@@ -41,7 +41,7 @@
             </thead>
             <tbody>
               <?php
-              $sql = "SELECT Users.first_name, Users.last_name, Responsible_For_List.user_id, Chores_List.list_title, Chores_List.due_date, Chores_List.status 
+              $sql = "SELECT Users.first_name, Users.last_name, Responsible_For_List.user_id, Chores_List.list_id, Chores_List.list_title, Chores_List.due_date, Chores_List.status 
                 FROM Users
                 INNER JOIN Responsible_For_List ON Users.user_id = Responsible_For_List.user_id 
                 INNER JOIN Chores_List ON Chores_List.list_id = Responsible_For_List.list_id;
@@ -51,7 +51,11 @@
               <?php while ($row = $results->fetch_assoc()) : ?>
                 <tr>
                   <td>
-                    <p class="fw-bold mb-1"><a href="choreslist.php"><?= $row['list_title']; ?></a></p>
+                    <p class="fw-bold mb-1">
+                      <a href="choreslist.php?list_id=<?= $row['list_id']; ?>">
+                        <?= $row['list_title']; ?>
+                      </a>
+                    </p>
                   </td>
                   <td class="text-center">
                     <p class="text-break mb-1"><?= $row['due_date']; ?></p>
