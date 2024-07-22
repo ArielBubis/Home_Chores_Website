@@ -22,7 +22,7 @@
         $sql = "CREATE TABLE Chores_List(
             list_id INT AUTO_INCREMENT PRIMARY KEY,
             list_title VARCHAR(255) NOT NULL,
-            due_date DATE, # Defult format: YYYY-MM-DD 
+            due_date DATE,
             status BOOLEAN NOT NULL DEFAULT 0
         );";
         if($conn->query($sql)) {

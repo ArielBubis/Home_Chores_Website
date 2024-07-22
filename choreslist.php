@@ -29,7 +29,7 @@
   <div class="container all_style">
     <div class="row align-items-center">
       <div class="col=auto">
-        <button class="btn btn-outline-secondary mb-2 mr-3" onclick="window.history.back();">➥ Back</button>
+        <button class="btn btn-outline-secondary mb-2 mr-3" onclick="window.location.href ='index.php '">➥ Back</button>
         <button type="button" class="btn btn-primary float-end mb-2 mr-3" data-bs-toggle="modal" data-bs-target="#newChoreModal">+ Add new chore</button>
       </div>
       <div class="col">
@@ -143,7 +143,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="scripts.js"></script>
+  <!-- <script src="scripts.js"></script> -->
 
 </body>
 
