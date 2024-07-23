@@ -24,12 +24,13 @@
         <h2 class="text-center company_title w-100">Chores Inc.</h2>
         <img src="img/logo.png" class="logo img-fluid mx-auto d-block mb-2 d-none d-sm-block" alt="Logo">
         <h2 class="mb-4 text-center">Register to our site</h2>
-        <?php if (isset($_SESSION['userLoggedIn']) && $_SESSION['userLoggedIn']) : ?>
+        <?php if (isset($_SESSION['userLoggedIn']) && $_SESSION['userLoggedIn']) : // Check if the user is already logged in and display a message
+            ?>
             <div class="alert alert-warning text-center" role="alert">You are already registered in!
                 <p>Press here to <a id="logoutPage" href="API/logout.php">Log Out</a></p>
             </div>
-        <?php else : ?>
-
+        <?php else : // If the user is not logged in, display the signup form
+            ?>
             <form action="API/add_user.php" method="post" id="signUpForm" class="form-signin w-100">
                 <div class="row mb-3">
                     <div hidden class="alert alert-danger text-center" id="signUpError" role="alert">Email already exists. Please use a different email</div>

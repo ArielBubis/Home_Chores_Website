@@ -34,7 +34,7 @@
   <div class="container all_style">
     <div class="row align-items-center">
       <div class="col=auto">
-        <button class="btn btn-outline-secondary mb-2 mr-3" value =<?=$_SESSION['list_id']?> id="choresBackButton">➥ Back</button>
+        <button class="btn btn-outline-secondary mb-2 mr-3" value=<?= $_SESSION['list_id'] ?> id="choresBackButton">➥ Back</button>
         <button type="button" class="btn btn-primary float-end mb-2 mr-3" data-bs-toggle="modal" data-bs-target="#newChoreModal">+ Add new chore</button>
       </div>
       <div class="col">
@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col-12">
         <div class="table-responsive bg-light">
-          <table class="table text-center align-middle mb-0" id = "choresContainer" style="border-radius: 10px;">
+          <table class="table text-center align-middle mb-0" id="choresContainer" style="border-radius: 10px;">
             <thead class="bg-light">
               <tr>
                 <th class="text-center">Chore title</th>
@@ -56,6 +56,7 @@
             </thead>
             <tbody>
               <?php
+              // Get the chores from the database for the selected list 
               $sql = "SELECT 
                   Users.user_id, Users.first_name, Users.last_name, Users.avatar_color, Chores_List.list_id, Chores.chore_title, Chores.date_added, Chores.finished, Chores.chore_num
                   FROM 
@@ -65,10 +66,7 @@
                   WHERE Chores.list_id = $list_id;";
               $result = $conn->query($sql);
               ?>
-              <?php while ($row = $result->fetch_assoc()) :
-                //print_r($row);
-                // echo "<br>";
-              ?>
+              <?php while ($row = $result->fetch_assoc()) : //loop through the chores and display them in a table row?>
                 <tr>
                   <td>
                     <div class="ms-6 text-center">
@@ -80,7 +78,7 @@
                   </td>
                   <td class="text-center">
                     <div class="d-flex flex-column align-items-center justify-content-center">
-                      <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= ($row['avatar_color']) ?>&seed= <?= rand()?>" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                      <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= ($row['avatar_color']) ?>&seed= <?= rand() ?>" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
                       <div>
                         <p class="mb-1"><?= htmlspecialchars($row['first_name']) . " " . htmlspecialchars($row['last_name']); ?></p>
                       </div>
@@ -124,8 +122,8 @@
               <label for="choreUser" class="form-label">Assign User</label>
               <select class="form-select" id="choreUser" name="choreUser" required>
                 <option value="">Select a user</option>
-                <!-- import users from database and sort the list -->
                 <?php
+                // Get the users from the database and display them in a dropdown
                 $userSql = "SELECT user_id, first_name, last_name FROM Users ORDER BY first_name ASC";
                 $userResult = $conn->query($userSql);
                 while ($user = $userResult->fetch_assoc()) : ?>

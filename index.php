@@ -41,6 +41,7 @@
             </thead>
             <tbody>
               <?php
+              // Get the chores from the database for the selected list 
               $sql = "SELECT Users.first_name, Users.last_name,Users.avatar_color, Responsible_For_List.user_id, Chores_List.list_id, Chores_List.list_title, Chores_List.due_date, Chores_List.status 
                 FROM Users
                 INNER JOIN Responsible_For_List ON Users.user_id = Responsible_For_List.user_id 

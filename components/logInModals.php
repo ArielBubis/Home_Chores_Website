@@ -1,6 +1,5 @@
   <!-- Generic Modal Structure -->
-   <!-- Used from the script.js functions to show diffrent modals -->
-
+  <!-- The modal is hidden by default and is shown by the script.js functions -->
   <div class="modal fade" id="genericModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="genericModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

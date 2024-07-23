@@ -29,6 +29,7 @@ require "API/db.php";
                     <a id="homepage" class="nav-link text-black <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
                     <?php if (isset($_SESSION['userLoggedIn']) || ((isset($_COOKIE['email'])) && (isset($_COOKIE['password'])))) : ?>
                         <?php
+                        // Check if the user is logged in using cookies and set the session variables
                         if (isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
                             $_SESSION['email'] = $_COOKIE['email'];
                             $_SESSION['userLoggedIn'] = true;
@@ -43,10 +44,10 @@ require "API/db.php";
                         $row = $result->fetch_assoc();
                         ?>
                         <span class="navbar-text text-black">Welcome, <?= htmlspecialchars($row['first_name']) ?>!</span>
-                        <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= ($row['avatar_color']) ?>&seed= <?= rand()?>" alt="" style="width: 35px; height: 35px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                        <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= ($row['avatar_color']) ?>&seed= <?= rand() ?>" alt="" style="width: 35px; height: 35px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
                         <a id="logoutNav" class="nav-link text-black" href="API/logout.php">Logout</a>
                     <?php else : ?>
-                        <?php
+                        <?php // If the user is not logged in, display the login and signup links
                         $current_page = basename($_SERVER['PHP_SELF']);
                         $excluded_pages = ['log_in.php', 'signupscreen.php'];
                         if (!isset($_SESSION['userLoggedIn'])  && !in_array($current_page, $excluded_pages)) {
