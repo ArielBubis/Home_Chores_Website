@@ -37,7 +37,7 @@
     $password = 'test123';
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
     
-    $sql = "INSERT INTO Users(email, first_name, last_name, avatar_color, password) VALUES('test@test.com', 'test', 'user','43a047', '$passwordHash')"; 
+    $sql = "INSERT INTO Users(email, first_name, last_name, avatar_color, password) VALUES('test@test.com', 'John', 'Doe','43a047', '$passwordHash')"; 
     
     if($conn->query($sql)) {
         echo "Test user added successfully<br>";
