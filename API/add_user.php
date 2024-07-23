@@ -1,22 +1,23 @@
 <?php
 require_once 'db.php';
-
+// var_dump($_POST);
 // signup form variables
 $email = $_POST['email'] ?? '';
 $firstName = $_POST['first_name'] ?? '';
 $lastName = $_POST['last_name'] ?? '';
 $password = $_POST['password'] ?? '';
+$avatarColor = $_POST['avatar_color'] ?? '';
 $passwordConfirm = $_POST['password_confirm'] ?? '';
 
 
-function registerUser($conn, $email, $firstName, $lastName, $password) {
+function registerUser($conn, $email, $firstName, $lastName, $avatarColor, $password) {
 	$passwordHash = password_hash($password, PASSWORD_DEFAULT);
-	$sql = "INSERT INTO Users(email, first_name, last_name, password) VALUES(?, ?, ?, ?)";
+	$sql = "INSERT INTO Users(email, first_name, last_name, avatar_color, password) VALUES(?, ?, ?, ?, ?)";
 	$stmt = $conn->prepare($sql);
 	if (!$stmt) {
 		return ['success' => 0, 'message' => 'Failed to prepare statement.'];
 	}
-	$stmt->bind_param('ssss', $email, $firstName, $lastName, $passwordHash);
+	$stmt->bind_param('sssss', $email, $firstName, $lastName, $avatarColor, $passwordHash);
 	$stmt->execute();
 	if ($stmt->affected_rows > 0) {
         session_start();
@@ -29,7 +30,7 @@ function registerUser($conn, $email, $firstName, $lastName, $password) {
 $response = ['success' => 0];
 
 // check if all fields are provided
-if (empty($email) || empty($firstName) || empty($lastName) || empty($password) || empty($passwordConfirm)) {
+if (empty($email) || empty($firstName) || empty($lastName) || empty($avatarColor) || empty($password) || empty($passwordConfirm)) {
     $response['message'] = 'All fields are required.';
 } else {
     // check if the email already exists
@@ -48,7 +49,7 @@ if (empty($email) || empty($firstName) || empty($lastName) || empty($password) |
                 $response['message'] = 'Passwords do not match.';
             } else {
                 // If all checks pass, register the user
-                $response = registerUser($conn, $email, $firstName, $lastName, $password);
+                $response = registerUser($conn, $email, $firstName, $lastName, $avatarColor, $password);
             }
         }
         $stmt->close();

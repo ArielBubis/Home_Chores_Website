@@ -41,7 +41,7 @@
             </thead>
             <tbody>
               <?php
-              $sql = "SELECT Users.first_name, Users.last_name, Responsible_For_List.user_id, Chores_List.list_id, Chores_List.list_title, Chores_List.due_date, Chores_List.status 
+              $sql = "SELECT Users.first_name, Users.last_name,Users.avatar_color, Responsible_For_List.user_id, Chores_List.list_id, Chores_List.list_title, Chores_List.due_date, Chores_List.status 
                 FROM Users
                 INNER JOIN Responsible_For_List ON Users.user_id = Responsible_For_List.user_id 
                 INNER JOIN Chores_List ON Chores_List.list_id = Responsible_For_List.list_id;
@@ -62,7 +62,7 @@
                   </td>
                   <td class="text-center">
                     <div class="d-flex flex-column align-items-center justify-content-center">
-                      <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                      <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= $row['avatar_color'] ?>" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
                       <p class="mb-1"><?= $row['first_name'] . " " . $row['last_name']; ?></p>
                     </div>
                   </td>

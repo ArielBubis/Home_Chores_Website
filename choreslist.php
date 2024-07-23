@@ -21,9 +21,14 @@
   <?php require_once('components/header.php');
   // Get the list_id from URL query parameters
   $list_id = isset($_GET['list_id']) ? intval($_GET['list_id']) : 0;
-
-  // Store the list_id in session
-  $_SESSION['list_id'] = $list_id; ?>
+  $_SESSION['list_id'] = $list_id; // Store the list_id in session
+  // Get the list name from the database
+  $listNameSql = "SELECT list_title FROM Chores_List WHERE list_id = $list_id";
+  $listNameResult = $conn->query($listNameSql);
+  $listName = $listNameResult->fetch_assoc()['list_title'];
+  // Store the list name in session
+  $_SESSION['list_title'] = $listName;
+  ?>
 
 
   <div class="container all_style">
@@ -52,7 +57,7 @@
             <tbody>
               <?php
               $sql = "SELECT 
-                  Users.user_id, Users.first_name, Users.last_name, Chores_List.list_id, Chores.chore_title, Chores.date_added, Chores.finished, Chores.chore_num
+                  Users.user_id, Users.first_name, Users.last_name, Users.avatar_color, Chores_List.list_id, Chores.chore_title, Chores.date_added, Chores.finished, Chores.chore_num
                   FROM 
                       Users
                   INNER JOIN Chores ON Users.user_id = Chores.user_id
@@ -61,8 +66,9 @@
               $result = $conn->query($sql);
               ?>
               <?php while ($row = $result->fetch_assoc()) :
+                //print_r($row);
+                // echo "<br>";
               ?>
-
                 <tr>
                   <td>
                     <div class="ms-6 text-center">
@@ -74,7 +80,7 @@
                   </td>
                   <td class="text-center">
                     <div class="d-flex flex-column align-items-center justify-content-center">
-                      <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                      <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= ($row['avatar_color']) ?>" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
                       <div>
                         <p class="mb-1"><?= htmlspecialchars($row['first_name']) . " " . htmlspecialchars($row['last_name']); ?></p>
                       </div>
@@ -105,7 +111,10 @@
         <div class="modal-body">
           <form id="newChoreForm" action="API/add_chore.php" method="POST">
             <div class="mb-3">
-              <input type="" class="form-control" id="listId" name="listId" value="<?= $_SESSION['list_id']; ?>">
+              <input hidden type="" class="form-control" id="listId" name="listId" value="<?= $_SESSION['list_id']; ?>">
+              <p> List title: <br>
+              <h3><?= $_SESSION['list_title']; ?></h3>
+              </p>
             </div>
             <div class="mb-3">
               <label for="choreTitle" class="form-label">Chore Title</label>

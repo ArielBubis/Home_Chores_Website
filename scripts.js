@@ -1,8 +1,12 @@
+// Ensure the DOM is fully loaded before executing any scripts
 $(document).ready(function () {
 
+    // Attach a submit event handler to the sign-up form
     $('#signUpForm').submit(function (e) {
         e.preventDefault(); // Prevent default form submission
         var formData = $(this).serialize(); // Serialize form data
+
+        // Initially hide the login link and sign-up error message
         $('#logInLink').attr('hidden', 'hidden').hide();
         $('#signUpError').attr('hidden', 'hidden').hide();
 
@@ -19,10 +23,11 @@ $(document).ready(function () {
                         $('#logInLink').removeAttr('hidden').show();
                     }
                 } else {
-                    // Redirect to login screen with sign_up parameter
+                    // On successful sign-up, show a modal indicating success
                     showModal('Sign Up Successful', 'You successfully signed up to the website, please log in to continue.');
+                    // Set up a click event handler for the modal's close button
                     document.getElementById('closeButton').onclick = function () {
-                        // Redirect after the button is clicked
+                        // Redirect the user to the login page upon clicking the close button
                         window.location.href = 'log_in.php';
                     }
                 }
@@ -34,6 +39,8 @@ $(document).ready(function () {
         });
     });
 
+
+    // Attach a submit event handler to the sign-in form
     $('#signInForm').submit(function (e) {
         e.preventDefault(); // Prevent default form submission
         var loginFormData = $(this).serialize(); // Serialize form data
@@ -88,7 +95,7 @@ $(document).ready(function () {
             }
         });
     });
-    
+
     // Using jQuery to handle logout
     $('#logoutNav, #logoutPage').on('click', function (e) {
         e.preventDefault(); // Prevent default link behavior
@@ -118,53 +125,52 @@ $(document).ready(function () {
         });
     });
 
-    $('#newChoreForm').submit(function(e) {
+    $('#newChoreForm').submit(function (e) {
         e.preventDefault(); // Prevent default form submission
         var formData = $(this).serialize(); // Serialize form data
-    
+
         $.ajax({
             url: 'API/add_chore.php',
             type: 'POST',
             data: formData,
             dataType: 'json',
-            success: function(response) {
-                if(response.success == 1) {
+            success: function (response) {
+                if (response.success == 1) {
                     console.log(response);
                     // Add the new chore to the table dynamically
                     var newRow = `
-                        <tr>
-                        <td>
-                            <div class="ms-6 text-center">
-                                <p class="fw-bold mb-1">${response.choreTitle}</p>
+                    <tr>
+                    <td>
+                        <div class="ms-6 text-center">
+                            <p class="fw-bold mb-1">${response.choreTitle}</p>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-break">${response.dateAdded}</p>
+                    </td>
+                    <td class="text-center">
+                        <div class="d-flex flex-column align-items-center justify-content-center">
+                            <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=${response.avatar_color}" alt="" style="width: 45px; height: 45px; object-fit: cover;" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                            <div>
+                                <p class="mb-1">${response.choreUserName}</p>
                             </div>
-                        </td>
-                        <td class="text-center">
-                            <p class="text-break">${response.dateAdded}</p>
-                        </td>
-                        <td class="text-center">
-                            <div class="d-flex flex-column align-items-center justify-content-center">
-                                <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
-                                <div>
-                                    <p class="mb-1">${response.choreUserName}</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td><input type="checkbox" class="form-check-input status" id="chore-${response.chore_num}"></td>
-                    </tr>
-                `;
-                    $('table tbody').append(newRow);
+                        </div>
+                    </td>
+                    <td><input type="checkbox" class="form-check-input status" id="chore-${response.chore_num}"></td>
+                </tr>
+            `; $('table tbody').append(newRow);
                     $('#newChoreModal').modal('hide'); // Hide the modal
                 } else {
                     alert(response.message);
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("AJAX error:", status, error);
                 alert('Error adding chore.');
             }
         });
     });
-    
+
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('message') === 'not_signed_in') {
@@ -192,4 +198,18 @@ $(document).ready(function () {
         modal.show();
     }
 
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var avatarColorPicker = document.getElementById('avatarColorPicker');
+        if (avatarColorPicker) {
+            avatarColorPicker.addEventListener('change', function() {
+                var color = this.value.substring(1); // Remove the '#' from the color value
+                var avatarImage = document.getElementById('avatarImage');
+                if (avatarImage) {
+                    avatarImage.src = 'https://api.dicebear.com/9.x/bottts/svg?baseColor=' + color;
+                }
+            });
+        }
+    });
+    
 });

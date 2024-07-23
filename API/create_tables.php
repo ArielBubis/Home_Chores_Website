@@ -7,6 +7,7 @@
             email VARCHAR(255),
             first_name VARCHAR(255) NOT NULL,
             last_name VARCHAR(255) NOT NULL,
+            avatar_color VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL
         );";
         if($conn->query($sql)) {

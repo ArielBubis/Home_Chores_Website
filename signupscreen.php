@@ -26,13 +26,19 @@
         <h2 class="mb-4 text-center">Register to our site</h2>
         <form action="API/add_user.php" method="post" id="signUpForm" class="form-signin w-100">
             <div class="row mb-3">
-                <div hidden class="alert alert-danger text-center" id="signUpError" role="alert" >Email already exists. Please use a different email</div>
+                <div hidden class="alert alert-danger text-center" id="signUpError" role="alert">Email already exists. Please use a different email</div>
                 <div hidden class="alert alert-primary text-center" id="logInLink" role="alert">
                     <a href="loginscreen.php">Already have an account? Log in</a>
                 </div>
                 <div class="col">
                     <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
                 </div>
+            </div>
+            <div class="col-auto d-flex flex-column align-items-center">
+                <img id="avatarImage" src="https://api.dicebear.com/9.x/bottts/svg?baseColor=00acc1" alt="avatar" class="img-fluid" style="width: 124px; height: 124px;" />
+                <p class="text-center">Choose your avatar color: <br>
+                    <input type="color" id="avatarColorPicker" class="form-control mt-2" name="avatar_color" title="Choose avatar color" value="#00acc1">
+                </p>
             </div>
             <div class="row mb-3">
                 <div class="col">
