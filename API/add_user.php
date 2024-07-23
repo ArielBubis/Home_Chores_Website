@@ -6,7 +6,7 @@ $email = $_POST['email'] ?? '';
 $firstName = $_POST['first_name'] ?? '';
 $lastName = $_POST['last_name'] ?? '';
 $password = $_POST['password'] ?? '';
-$avatarColor = $_POST['avatar_color'] ?? '';
+$avatarColor = ltrim($_POST['avatar_color'] ?? '', '#');
 $passwordConfirm = $_POST['password_confirm'] ?? '';
 
 

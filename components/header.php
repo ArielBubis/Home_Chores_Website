@@ -27,8 +27,13 @@ require "API/db.php";
                 <h3 class="company_title mb-1"><a class="nav-link" href="index.php">Chores Inc.</a></h3>
                 <div class="nav nav-underline">
                     <a id="homepage" class="nav-link text-black <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
-                    <?php if (isset($_SESSION['userLoggedIn'])) : ?>
+                    <?php if (isset($_SESSION['userLoggedIn']) || ((isset($_COOKIE['email'])) && (isset($_COOKIE['password']) ))): ?>
                         <?php
+                        if(isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
+                            $_SESSION['email'] = $_COOKIE['email'];
+                            $_SESSION['userLoggedIn'] = true;
+                        }
+                        
                         // Use prepared statements to prevent SQL injection
                         $sql = "SELECT first_name FROM users WHERE email = ?";
                         $stmt = $conn->prepare($sql);

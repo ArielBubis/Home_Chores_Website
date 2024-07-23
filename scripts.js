@@ -199,17 +199,9 @@ $(document).ready(function () {
     }
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var avatarColorPicker = document.getElementById('avatarColorPicker');
-        if (avatarColorPicker) {
-            avatarColorPicker.addEventListener('change', function() {
-                var color = this.value.substring(1); // Remove the '#' from the color value
-                var avatarImage = document.getElementById('avatarImage');
-                if (avatarImage) {
-                    avatarImage.src = 'https://api.dicebear.com/9.x/bottts/svg?baseColor=' + color;
-                }
-            });
-        }
+    document.getElementById('avatarColorPicker').addEventListener('change', function() {
+        var color = this.value.substring(1); // Remove the '#' from the color value
+        document.getElementById('avatarImage').src = 'https://api.dicebear.com/9.x/bottts/svg?baseColor=' + color;
     });
-    
+        
 });
