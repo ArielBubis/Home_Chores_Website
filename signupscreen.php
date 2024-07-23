@@ -25,7 +25,7 @@
         <img src="img/logo.png" class="logo img-fluid mx-auto d-block mb-2 d-none d-sm-block" alt="Logo">
         <h2 class="mb-4 text-center">Register to our site</h2>
         <?php if (isset($_SESSION['userLoggedIn']) && $_SESSION['userLoggedIn']) : ?>
-            <div class="alert alert-warning text-center" role="alert">You are already logged in!
+            <div class="alert alert-warning text-center" role="alert">You are already registered in!
                 <p>Press here to <a id="logoutPage" href="API/logout.php">Log Out</a></p>
             </div>
         <?php else : ?>

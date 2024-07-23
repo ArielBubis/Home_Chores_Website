@@ -43,7 +43,7 @@ require "API/db.php";
                         $row = $result->fetch_assoc();
                         ?>
                         <span class="navbar-text text-black">Welcome, <?= htmlspecialchars($row['first_name']) ?>!</span>
-                        <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= ($row['avatar_color']) ?>" alt="" style="width: 35px; height: 35px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                        <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= ($row['avatar_color']) ?>&seed= <?= rand()?>" alt="" style="width: 35px; height: 35px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
                         <a id="logoutNav" class="nav-link text-black" href="API/logout.php">Logout</a>
                     <?php else : ?>
                         <?php
