@@ -54,7 +54,7 @@ $(document).ready(function () {
                 if (response.success == '0') {
                     // Login failed, display error message
                     console.log(response.message);
-                    alert('Login failed. Please check your credentials and try again.');
+                    // alert('Login failed. Please check your credentials and try again.');
                     $('#loginError').text(response.message).removeAttr('hidden').show();
                 } else {
                     // Login successful, redirect to index page
@@ -68,30 +68,6 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 console.error("AJAX error:", status, error);
                 console.log(xhr.responseText, error);
-            }
-        });
-    });
-
-    $('.status').change(function () {
-        var choreNum = $(this).attr('id');
-        var finished = $(this).is(':checked') ? 1 : 0;
-        console.log('Chore number: ' + choreNum + ', Finished: ' + finished);
-
-        $.ajax({
-            url: 'API/update_chore.php',
-            type: 'POST',
-            data: {
-                chore_num: choreNum,
-                finished: finished
-            },
-            success: function (response) {
-                console.log('AJAX success response:', response);
-                var res = JSON.parse(response);
-                // alert(res.message);
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX error:', status, error);
-                alert('Error updating chore status.');
             }
         });
     });
@@ -125,6 +101,7 @@ $(document).ready(function () {
         });
     });
 
+    // Attach a submit event handler to the new chore form to add a new chore to the table dynamically
     $('#newChoreForm').submit(function (e) {
         e.preventDefault(); // Prevent default form submission
         var formData = $(this).serialize(); // Serialize form data
@@ -156,7 +133,7 @@ $(document).ready(function () {
                             </div>
                         </div>
                     </td>
-                    <td><input type="checkbox" class="form-check-input status" id="chore-${response.chore_num}"></td>
+                    <td><input type="checkbox" class="form-check-input status" id="${response.chore_num}"></td>
                 </tr>
             `; $('table tbody').append(newRow);
                     $('#newChoreModal').modal('hide'); // Hide the modal
@@ -172,17 +149,73 @@ $(document).ready(function () {
     });
 
 
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('message') === 'not_signed_in') {
-        showModal('Not Signed In', 'You must be signed in to view that page. Please sign in.');
-        document.getElementById('closeButton').onclick = function () {
-            // Redirect after the button is clicked
-            window.location.href = 'log_in.php';
-        }
-
+    // Attach a submit event handler to the to the back button in the chores page to update the status of the list
+    var choresBackButton = document.getElementById('choresBackButton');
+    if (choresBackButton) {
+        choresBackButton.addEventListener('click', function () {
+            console.log(choresBackButton);
+            var listId = choresBackButton.value;
+            console.log('List ID: ' + listId);
+            $.ajax({
+                type: "POST",
+                url: 'API/check_status.php', 
+                dataType: 'json',
+                data: {
+                    action: 'updateChoreListStatus', 
+                    listId: listId
+                },
+                success: function (response) {
+                    if (!('error' in response)) {
+                        console.log(response.message); // Handle success
+                        window.location.href = 'index.php';
+                    } else {
+                        console.log(response.error); // Handle error
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX error: ", status, error); // Handle AJAX error
+                }
+            });
+        });
     }
 
 
+
+
+    // Assuming 'choresContainer' is the ID of the parent container for all chores
+    var choresContainer = document.getElementById('choresContainer');
+    if (choresContainer) {
+        // Use event delegation for dynamically added .status elements
+        $(choresContainer).on('change', '.status', function () {
+            var choreNum = $(this).attr('id');
+            var finished = $(this).is(':checked') ? 1 : 0;
+            console.log('Chore number: ' + choreNum + ', Finished: ' + finished);
+            $.ajax({
+                url: 'API/update_chore.php',
+                type: 'POST',
+                data: {
+                    chore_num: choreNum,
+                    finished: finished
+                },
+                success: function (response) {
+                    console.log('AJAX success response:', response);
+                    var res = JSON.parse(response);
+                    // alert(res.message);
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error:', status, error);
+                    alert('Error updating chore status.');
+                }
+            });
+        });
+    }
+    // Check if the URL contains a message parameter with the value 'not_signed_in' and redirect to the login page
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('message') === 'not_signed_in') {
+        showModal('Not Signed In', 'You must be signed in to view that page. Please sign in.');
+    }
+
+    // Function to show a modal with the given title, body, and footer buttons
     function showModal(title, body, footerButtonsHtml = '<button type="button" class="btn btn-success" data-bs-dismiss="modal" id = "closeButton">Close</button>') {
         // Update the title
         document.getElementById('genericModalLabel').innerText = title;
@@ -199,9 +232,17 @@ $(document).ready(function () {
     }
 
 
-    document.getElementById('avatarColorPicker').addEventListener('change', function() {
-        var color = this.value.substring(1); // Remove the '#' from the color value
-        document.getElementById('avatarImage').src = 'https://api.dicebear.com/9.x/bottts/svg?baseColor=' + color;
-    });
-        
+    // Get the avatar color picker element in the signupscreen
+    var avatarColorPicker = document.getElementById('avatarColorPicker');
+    if (avatarColorPicker) {
+        avatarColorPicker.addEventListener('change', function () {
+            var color = this.value.substring(1); // Remove the '#' from the color value
+            var avatarImage = document.getElementById('avatarImage');
+            if (avatarImage) {
+                avatarImage.src = 'https://api.dicebear.com/9.x/bottts/svg?baseColor=' + color;
+            }
+        });
+    }
+
+
 });

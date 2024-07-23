@@ -47,7 +47,6 @@ require "API/db.php";
                         <a id="logoutNav" class="nav-link text-black" href="API/logout.php">Logout</a>
                     <?php else : ?>
                         <?php
-
                         $current_page = basename($_SERVER['PHP_SELF']);
                         $excluded_pages = ['log_in.php', 'signupscreen.php'];
                         if (!isset($_SESSION['userLoggedIn'])  && !in_array($current_page, $excluded_pages)) {

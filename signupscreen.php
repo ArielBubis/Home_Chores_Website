@@ -24,44 +24,52 @@
         <h2 class="text-center company_title w-100">Chores Inc.</h2>
         <img src="img/logo.png" class="logo img-fluid mx-auto d-block mb-2 d-none d-sm-block" alt="Logo">
         <h2 class="mb-4 text-center">Register to our site</h2>
-        <form action="API/add_user.php" method="post" id="signUpForm" class="form-signin w-100">
-            <div class="row mb-3">
-                <div hidden class="alert alert-danger text-center" id="signUpError" role="alert">Email already exists. Please use a different email</div>
-                <div hidden class="alert alert-primary text-center" id="logInLink" role="alert">
-                    <a href="loginscreen.php">Already have an account? Log in</a>
-                </div>
-                <div class="col">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-                </div>
+        <?php if (isset($_SESSION['userLoggedIn']) && $_SESSION['userLoggedIn']) : ?>
+            <div class="alert alert-warning text-center" role="alert">You are already logged in!
+                <p>Press here to <a id="logoutPage" href="API/logout.php">Log Out</a></p>
             </div>
-            <div class="col-auto d-flex flex-column align-items-center">
-                <img id="avatarImage" src="https://api.dicebear.com/9.x/bottts/svg?baseColor=00acc1" alt="avatar" class="img-fluid" style="width: 124px; height: 124px;" />
-                <p class="text-center">Choose your avatar color: <br>
-                    <input type="color" id="avatarColorPicker" class="form-control mt-2" name="avatar_color" title="Choose avatar color" value="#00acc1">
-                </p>
-            </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <input type="text" class="form-control" name="first_name" id="first-name" placeholder="First name" required>
+        <?php else : ?>
+
+            <form action="API/add_user.php" method="post" id="signUpForm" class="form-signin w-100">
+                <div class="row mb-3">
+                    <div hidden class="alert alert-danger text-center" id="signUpError" role="alert">Email already exists. Please use a different email</div>
+                    <div hidden class="alert alert-primary text-center" id="logInLink" role="alert">
+                        <a href="loginscreen.php">Already have an account? Log in</a>
+                    </div>
+                    <div class="col">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                    </div>
                 </div>
-                <div class="col">
-                    <input type="text" class="form-control" name="last_name" id="last-name" placeholder="Last name" required>
+                <div class="col-auto d-flex flex-column align-items-center">
+                    <img id="avatarImage" src="https://api.dicebear.com/9.x/bottts/svg?baseColor=00acc1" alt="avatar" class="img-fluid" style="width: 124px; height: 124px;" />
+                    <p class="text-center">Choose your avatar color: <br>
+                        <input type="color" id="avatarColorPicker" class="form-control mt-2" name="avatar_color" title="Choose avatar color" value="#00acc1">
+                    </p>
                 </div>
-            </div>
-            <div class="row mb-4">
-                <div class="col-12 col-md-6 mb-3 mb-md-0">
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                <div class="row mb-3">
+                    <div class="col">
+                        <input type="text" class="form-control" name="first_name" id="first-name" placeholder="First name" required>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name="last_name" id="last-name" placeholder="Last name" required>
+                    </div>
                 </div>
-                <div class="col-12 col-md-6">
-                    <input type="password" class="form-control" name="password_confirm" id="password_confirm" placeholder="Confirm Password" required>
+                <div class="row mb-4">
+                    <div class="col-12 col-md-6 mb-3 mb-md-0">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <input type="password" class="form-control" name="password_confirm" id="password_confirm" placeholder="Confirm Password" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col d-flex justify-content-center">
-                    <button type="submit" class="btn btn-success btn-lg" id="signUpBtn">Sign Up</button>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success btn-lg" id="signUpBtn">Sign Up</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        <?php endif; ?>
+
     </div>
 
     <!-- import footer from footer.php -->

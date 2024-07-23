@@ -34,7 +34,7 @@
   <div class="container all_style">
     <div class="row align-items-center">
       <div class="col=auto">
-        <button class="btn btn-outline-secondary mb-2 mr-3" onclick="window.location.href ='index.php '">➥ Back</button>
+        <button class="btn btn-outline-secondary mb-2 mr-3" value =<?=$_SESSION['list_id']?> id="choresBackButton">➥ Back</button>
         <button type="button" class="btn btn-primary float-end mb-2 mr-3" data-bs-toggle="modal" data-bs-target="#newChoreModal">+ Add new chore</button>
       </div>
       <div class="col">
@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col-12">
         <div class="table-responsive bg-light">
-          <table class="table text-center align-middle mb-0" style="border-radius: 10px;">
+          <table class="table text-center align-middle mb-0" id = "choresContainer" style="border-radius: 10px;">
             <thead class="bg-light">
               <tr>
                 <th class="text-center">Chore title</th>
