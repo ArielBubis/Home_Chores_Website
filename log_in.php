@@ -32,7 +32,7 @@
       </div>
     <?php else : // If the user is not logged in, display the login form
       ?>
-      <form action="API/login_db.php" method="post" id="signInForm" class="w-100">
+      <form action="API/check_login.php" method="post" id="signInForm" class="w-100">
         <div class="form-group mb-3">
           <div hidden class="alert alert-danger text-center" id="loginError" role="alert">Incorrect password</div>
           <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
@@ -48,7 +48,7 @@
           <button type="submit" id="login-btn" class="btn btn-success btn-lg">Log In</button>
         </div>
         <div class="signup-section">
-          <p>New here? <a href="signupscreen.php">Sign up here</a></p>
+          <p>New here? <a href="sign_up.php">Sign up here</a></p>
         </div>
       </form>
     <?php endif; ?>

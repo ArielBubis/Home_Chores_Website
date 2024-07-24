@@ -35,7 +35,7 @@
                 <div class="row mb-3">
                     <div hidden class="alert alert-danger text-center" id="signUpError" role="alert">Email already exists. Please use a different email</div>
                     <div hidden class="alert alert-primary text-center" id="logInLink" role="alert">
-                        <a href="loginscreen.php">Already have an account? Log in</a>
+                        <a href="log_in.php">Already have an account? Log in</a>
                     </div>
                     <div class="col">
                         <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>

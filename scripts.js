@@ -46,7 +46,7 @@ $(document).ready(function () {
         var loginFormData = $(this).serialize(); // Serialize form data
 
         $.ajax({
-            url: 'API/login_db.php',
+            url: 'API/check_login.php',
             type: 'POST',
             data: loginFormData,
             dataType: 'json',

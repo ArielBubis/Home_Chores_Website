@@ -1,6 +1,5 @@
 <?php
 require_once 'db.php';
-// var_dump($_POST);
 // signup form variables
 $email = $_POST['email'] ?? '';
 $firstName = $_POST['first_name'] ?? '';
@@ -9,7 +8,7 @@ $password = $_POST['password'] ?? '';
 $avatarColor = ltrim($_POST['avatar_color'] ?? '', '#');
 $passwordConfirm = $_POST['password_confirm'] ?? '';
 
-
+// function to add a user to the database 
 function registerUser($conn, $email, $firstName, $lastName, $avatarColor, $password) {
 	$passwordHash = password_hash($password, PASSWORD_DEFAULT);
 	$sql = "INSERT INTO Users(email, first_name, last_name, avatar_color, password) VALUES(?, ?, ?, ?, ?)";

@@ -53,7 +53,7 @@
                 <tr>
                   <td>
                     <p class="fw-bold mb-1">
-                      <a href="choreslist.php?list_id=<?= $row['list_id']; ?>">
+                      <a href="chores.php?list_id=<?= $row['list_id']; ?>">
                         <?= $row['list_title']; ?>
                       </a>
                     </p>

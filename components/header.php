@@ -49,14 +49,14 @@ require "API/db.php";
                     <?php else : ?>
                         <?php // If the user is not logged in, display the login and signup links
                         $current_page = basename($_SERVER['PHP_SELF']);
-                        $excluded_pages = ['log_in.php', 'signupscreen.php'];
+                        $excluded_pages = ['log_in.php', 'sign_up.php'];
                         if (!isset($_SESSION['userLoggedIn'])  && !in_array($current_page, $excluded_pages)) {
                             header("Location: log_in.php?message=not_signed_in");
                             exit;
                         }
                         ?>
                         <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'log_in.php') ? 'active' : ''; ?>" href="log_in.php">Login</a>
-                        <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'signupscreen.php') ? 'active' : ''; ?>" href="signupscreen.php">Sign up</a>
+                        <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'sign_up.php') ? 'active' : ''; ?>" href="sign_up.php">Sign up</a>
                     <?php endif; ?>
                 </div>
             </div>
