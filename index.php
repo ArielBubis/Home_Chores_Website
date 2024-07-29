@@ -35,17 +35,32 @@
               <tr>
                 <th class="text-center">List title</th>
                 <th class="text-center">Due date</th>
-                <th class="text-center">User assigned</th>
+                <th class="text-center">Responsible user</th>
                 <th class="text-center">Status</th>
               </tr>
             </thead>
             <tbody>
               <?php
               // Get the chores from the database for the selected list 
-              $sql = "SELECT Users.first_name, Users.last_name,Users.avatar_color, Responsible_For_List.user_id, Chores_List.list_id, Chores_List.list_title, Chores_List.due_date, Chores_List.status 
-                FROM Users
-                INNER JOIN Responsible_For_List ON Users.user_id = Responsible_For_List.user_id 
-                INNER JOIN Chores_List ON Chores_List.list_id = Responsible_For_List.list_id;
+              $email = "example@example.com";
+              $sql = "SELECT user_id FROM Users WHERE email = '" . $_SESSION['email'] . "'";
+              $result = $conn->query($sql);
+              $row = $result->fetch_assoc();
+              $user_id = $row['user_id'];
+
+              $sql = "SELECT 
+                  cl.list_title, 
+                  cl.due_date, 
+                  cl.list_id,
+                  cl.status
+              FROM 
+                  Chores_List cl
+              JOIN 
+                  Household h ON cl.house_id = h.house_id
+              JOIN 
+                  Users_partOf_Household uph ON h.house_id = uph.house_id
+              WHERE 
+                  uph.user_id = $user_id;
                 ";
               $results = $conn->query($sql);
               ?>
@@ -63,8 +78,27 @@
                   </td>
                   <td class="text-center">
                     <div class="d-flex flex-column align-items-center justify-content-center">
-                      <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= $row['avatar_color'] ?>&seed= <?= rand()?>" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
-                      <p class="mb-1"><?= $row['first_name'] . " " . $row['last_name']; ?></p>
+                      <?php
+                      // Get the user's avatar color and name
+                      $sql = "SELECT 
+                      u.first_name, 
+                      u.last_name, 
+                      u.avatar_color 
+                  FROM 
+                      Users u
+                  JOIN 
+                      Chores_List cl ON u.user_id = cl.responsible_user_id
+                  WHERE 
+                      cl.list_id = " . $row['list_id'] . ";";
+                      $user_Responsible = $conn->query($sql);
+                      if ($user_Responsible && $user_Responsible->num_rows > 0) {
+                        $user = $user_Responsible->fetch_assoc();
+                      } else {
+                        $user = ['first_name' => 'N/A', 'last_name' => 'N/A', 'avatar_color' => 'gray'];
+                      }
+                      ?>
+                      <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= $user['avatar_color'] ?>&seed= <?= rand() ?>" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                      <p class="mb-1"><?= $user['first_name'] . " " . $user['last_name']; ?></p>
                     </div>
                   </td>
                   <td class="text-center">

@@ -22,9 +22,10 @@ if ($conn->query($sql)) {
 
     require_once('create_tables.php');
     create_users_table($conn);
+    create_household_table($conn);
+    users_partof_household($conn);
     create_chores_list_table($conn);
     create_chrores_table($conn);
-    create_responsible_for_list_table($conn);
 } else {
     echo "Error creating data base:" . $conn->error . "<br>";
     die();
@@ -36,7 +37,11 @@ if ($conn->query($sql)) {
 $password = 'test123';
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-$sql = "INSERT INTO Users(email, first_name, last_name, avatar_color, password) VALUES('test@test.com', 'John', 'Doe','43a047', '$passwordHash')";
+$sql = "INSERT INTO Users(email, first_name, last_name, avatar_color, password) 
+    VALUES
+    ('test@test.com', 'John', 'Doe','43a047', '$passwordHash'),
+    ('test1@test.com', 'Jane', 'Doe','e303fc', '$passwordHash')
+    ";
 
 if ($conn->query($sql)) {
     echo "Test user added successfully<br>";
@@ -46,23 +51,38 @@ if ($conn->query($sql)) {
 
 
 // Add chores lists records
-$sql = "INSERT INTO Chores_List(list_title, due_date, status)
+$sql = "INSERT INTO Household(responsible_user_id)
     VALUES
-        ('House chores', '2024-06-07', 0),
-        ('Shopping' ,'2024-06-08', 0)";
+        (1),
+        (2)";
 if ($conn->query($sql)) {
-    echo "2 Chores lists added successfully<br>";
+    echo "2 households added successfully<br>";
 } else {
     echo "Error: " . $sql . " " . $conn->error . "<br>";
 }
 
-// Add reponsible users to chores list
-$sql = "INSERT INTO Responsible_For_List(user_id, list_id)
+// Add chores lists records
+$sql = "INSERT INTO Users_partOf_Household(user_id, house_id)
     VALUES
-        (1, 1),
-        (1, 2)";
+        (1,1),
+        (2,2),
+        (1,2)
+        ";
 if ($conn->query($sql)) {
-    echo "Reponsible users assigned successfully<br>";
+    echo "users added as part of households successfully<br>";
+} else {
+    echo "Error: " . $sql . " " . $conn->error . "<br>";
+}
+
+// Add chores lists records
+$sql = "INSERT INTO Chores_List(house_id, responsible_user_id ,list_title, due_date, status)
+    VALUES
+        (1,1,'House chores', '2024-06-07', 0),
+        (1,1,'Shopping' ,'2024-06-08', 0),
+        (2,2,'Motel chores', '2024-06-07', 0)"
+        ;
+if ($conn->query($sql)) {
+    echo "2 Chores lists added successfully<br>";
 } else {
     echo "Error: " . $sql . " " . $conn->error . "<br>";
 }
@@ -74,9 +94,12 @@ $sql = "INSERT INTO Chores(list_id, chore_title, date_added, user_id, finished)
         (1, 'Organize the closet' ,'2024-06-07', 1, 0),
         (1, 'Washing dishes', '2024-06-07', 1, 0),
         (1, 'Paint the wall', '2024-06-09', 1, 0),
-        (2, 'Buy milk', '2024-06-08', 1, 0),
-        (2, 'Buy wall paint' ,'2024-06-09', 1, 0),
-        (2, 'Buy paintbrush', '2024-06-09', 1, 0)";
+        (2, 'Buy milk', '2024-06-08', 2, 0),
+        (2, 'Buy wall paint' ,'2024-06-09', 2, 0),
+        (2, 'Buy paintbrush', '2024-06-09', 2, 0),
+        (3, 'Organize the closet' ,'2024-06-07', 2, 0),
+        (3, 'Washing dishes', '2024-06-07', 2, 0),
+        (3, 'Paint the wall', '2024-06-09', 1, 0)";
 
 if ($conn->query($sql)) {
     echo "Chores added successefully to chores lists";
