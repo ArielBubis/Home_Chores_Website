@@ -38,7 +38,7 @@
                         <a href="log_in.php">Already have an account? Log in</a>
                     </div>
                     <div class="col">
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                        <input type="email" class="form-control" name="email" id="signUpemail" placeholder="Email" required>
                     </div>
                 </div>
                 <div class="col-auto d-flex flex-column align-items-center">

@@ -38,6 +38,27 @@ $(document).ready(function () {
             }
         });
     });
+    
+    $('#signUpemail').on('blur', function () {
+        var email = $(this).val();
+        if (email) {
+            $.ajax({
+                url: 'API/check_email_exist.php',
+                method: 'POST',
+                data: { email: email },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.exists) {
+                        $('#signUpError').text(response.message).removeAttr('hidden').show();
+                        $('#logInLink').removeAttr('hidden').show();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error checking email:', error);
+                }
+            });
+        }
+    });
 
 
     // Attach a submit event handler to the sign-in form
@@ -158,10 +179,10 @@ $(document).ready(function () {
             console.log('List ID: ' + listId);
             $.ajax({
                 type: "POST",
-                url: 'API/check_status.php', 
+                url: 'API/check_status.php',
                 dataType: 'json',
                 data: {
-                    action: 'updateChoreListStatus', 
+                    action: 'updateChoreListStatus',
                     listId: listId
                 },
                 success: function (response) {
@@ -243,6 +264,31 @@ $(document).ready(function () {
             }
         });
     }
+
+
+    // Fetch emails from the server
+    var emailInput = document.getElementById('emailInput');
+    if (emailInput) {
+        $.ajax({
+            url: 'API/fetch_emails.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Initialize autocomplete with fetched emails
+                $('#emailInput').autocomplete({
+                    appendTo: "#suggesstion-box",
+                    source: data
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching emails:', error);
+            }
+        });
+    }
+    // Attach a submit event handler to the password reset form
+    $('#newUserModal').on('hidden.bs.modal', function () {
+        $('#emailInput').val('');
+    });
 
 
 });
