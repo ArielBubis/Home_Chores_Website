@@ -169,6 +169,37 @@ $(document).ready(function () {
         });
     });
 
+    // Attach a submit event handler to the index page to add a new user to the Household
+    $('#newUserForm').submit(function (e) {
+        e.preventDefault(); // Prevent default form submission
+        var formData = $(this).serialize(); // Serialize form data
+        $.ajax({
+            url: 'API/add_user_to_household.php',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function (response) {
+                if (response.success == 1) {
+                    console.log(response);
+                    alert('User added successfully!');
+                    
+                    // Optionally, close the modal
+                    $('#newUserModal').modal('hide');
+                    
+                    // Clear the form fields
+                    $('#newUserForm')[0].reset();
+                } else {
+                    alert(response.message);
+                    console.log(response);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX error:", status, error);
+
+                alert('Error adding user to household.');
+            }
+        });
+    });    
 
     // Attach a submit event handler to the to the back button in the chores page to update the status of the list
     var choresBackButton = document.getElementById('choresBackButton');

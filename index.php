@@ -1,5 +1,3 @@
-<?php require "API/db.php"; ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +17,23 @@
 
 <body>
   <!-- import navbar from header.php -->
-  <?php require_once('components/header.php'); ?>
+  <?php require_once('components/header.php');
+  $user_id = $_SESSION['user_id'];
+  // Query to find the user by email
+  $sql = "SELECT house_id FROM household WHERE responsible_user_id = ?;";
+  $stmt = $conn->prepare($sql);
+  $stmt = $conn->prepare($sql);
+  if ($stmt === false) {
+    die("Prepare failed: " . $conn->error);
+  }
+
+  $stmt->bind_param("i", $user_id);
+  $stmt->execute();
+  $stmt->bind_result($house_id);
+  $stmt->fetch();
+  $stmt->close();
+
+  ?>
 
   <div class="container all_style">
     <div class="row">
@@ -41,28 +55,34 @@
             </thead>
             <tbody>
               <?php
-              // Get the chores from the database for the selected list 
-              $email = "example@example.com";
-              $sql = "SELECT user_id FROM Users WHERE email = '" . $_SESSION['email'] . "'";
-              $result = $conn->query($sql);
-              $row = $result->fetch_assoc();
-              $user_id = $row['user_id'];
-
               $sql = "SELECT 
-                  cl.list_title, 
-                  cl.due_date, 
-                  cl.list_id,
-                  cl.status
+              cl.list_title, 
+              cl.due_date, 
+              cl.list_id,
+              cl.status
               FROM 
-                  Chores_List cl
+              Chores_List cl
               JOIN 
-                  Household h ON cl.house_id = h.house_id
+              Household h ON cl.house_id = h.house_id
               JOIN 
-                  Users_partOf_Household uph ON h.house_id = uph.house_id
+              Users_partOf_Household uph ON h.house_id = uph.house_id
               WHERE 
-                  uph.user_id = $user_id;
-                ";
-              $results = $conn->query($sql);
+              uph.user_id = ?";
+              $stmt = $conn->prepare($sql);
+              if ($stmt === false) {
+                die("Prepare failed: " . $conn->error);
+              }
+
+              // Bind parameters
+              $stmt->bind_param("i", $user_id);
+
+              // Execute the statement
+              $stmt->execute();
+
+              // Get the result
+              $results = $stmt->get_result();
+              $stmt->close();
+
               ?>
               <?php while ($row = $results->fetch_assoc()) : ?>
                 <tr>
@@ -79,7 +99,7 @@
                   <td class="text-center">
                     <div class="d-flex flex-column align-items-center justify-content-center">
                       <?php
-                      // Get the user's avatar color and name
+                      // Get the user's avatar color and name from the database
                       $sql = "SELECT 
                       u.first_name, 
                       u.last_name, 
@@ -136,10 +156,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body all_style">
-          <form id="newUserForm">
+          <form id="newUserForm" action="API/add_user_to_household.php" method="post">
             <div class="mb-3">
+              <input name="house_id" id="house_id" class="form-control" value="<?= $house_id ?>" hidden>
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="emailInput" required>
+              <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
               <div id="suggesstion-box"></div>
             </div>
             <div class="modal-footer">

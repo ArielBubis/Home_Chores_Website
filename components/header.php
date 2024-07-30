@@ -33,15 +33,15 @@ require "API/db.php";
                         if (isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
                             $_SESSION['email'] = $_COOKIE['email'];
                             $_SESSION['userLoggedIn'] = true;
-                        }
 
-                        // Use prepared statements to prevent SQL injection
-                        $sql = "SELECT first_name, avatar_color FROM users WHERE email = ?";
+                        }
+                        $sql = "SELECT user_id,first_name, avatar_color FROM users WHERE email = ?";
                         $stmt = $conn->prepare($sql);
                         $stmt->bind_param("s", $_SESSION['email']);
                         $stmt->execute();
                         $result = $stmt->get_result();
                         $row = $result->fetch_assoc();
+                        $_SESSION['user_id'] = $row['user_id'];
                         ?>
                         <span class="navbar-text text-black">Welcome, <?= htmlspecialchars($row['first_name']) ?>!</span>
                         <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= ($row['avatar_color']) ?>&seed= <?= rand() ?>" alt="" style="width: 35px; height: 35px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />

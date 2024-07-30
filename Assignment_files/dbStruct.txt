@@ -1,0 +1,46 @@
+CREATE TABLE Users(
+            user_id INT PRIMARY KEY, 
+            email VARCHAR(255),
+            first_name VARCHAR(255) NOT NULL,
+            last_name VARCHAR(255) NOT NULL,
+            avatar_color VARCHAR(255) NOT NULL,
+            password VARCHAR(255) NOT NULL
+        );
+        
+CREATE TABLE Household(
+                house_id INT PRIMARY KEY,
+                responsible_user_id INT,
+                FOREIGN KEY (responsible_user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+            );
+            
+            
+CREATE TABLE Chores_List(
+            list_id INT PRIMARY KEY,
+            house_id INT,
+    		responsible_user INT,
+            list_title VARCHAR(255) NOT NULL,
+            due_date DATE,
+            status BOOLEAN NOT NULL,
+            FOREIGN KEY (house_id) REFERENCES Household(house_id) ON DELETE CASCADE,
+			FOREIGN KEY (responsible_user) REFERENCES Users(user_id) ON DELETE CASCADE        
+		);     
+
+CREATE TABLE Users_partOf_Household(
+                user_id INT,
+                house_id INT,
+                FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+                FOREIGN KEY (house_id) REFERENCES Household(house_id) ON DELETE CASCADE,
+                PRIMARY KEY (user_id, house_id)
+                    );
+                    
+CREATE TABLE Chores(
+            chore_num INT , /* distinguish attribute */
+            list_id INT,
+            chore_title VARCHAR(255) NOT NULL,
+            date_added DATE NOT NULL,
+            user_id INT, 
+            finished BOOLEAN NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES Users(user_id),
+            FOREIGN KEY (list_id) REFERENCES Chores_List(list_id) ON DELETE CASCADE,
+            PRIMARY KEY (chore_num, list_id)
+        );        
