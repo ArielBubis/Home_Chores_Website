@@ -26,7 +26,15 @@ $(document).ready(function () {
                     // On successful sign-up, show a modal indicating success
                     showModal('Sign Up Successful', 'You successfully signed up to the website, please log in to continue.');
                     // Set up a click event handler for the modal's close button
-                    document.getElementById('closeButton').onclick = function () {
+                    
+                    confirmButton = document.getElementById('confirmButton');
+                    confirmButton.setAttribute('hidden' , 'hidden');
+
+                    okButton = document.getElementById('closeButton');
+                    okButton.textContent = 'OK';
+                    okButton.classList.add('btn-success');
+
+                    okButton.onclick = function () {
                         // Redirect the user to the login page upon clicking the close button
                         window.location.href = 'log_in.php';
                     }
@@ -80,7 +88,14 @@ $(document).ready(function () {
                 } else {
                     // Login successful, redirect to index page
                     showModal('Sign in Successful', 'You successfully logged in to the website');
-                    document.getElementById('closeButton').onclick = function () {
+                    confirmButton = document.getElementById('confirmButton');
+                    confirmButton.setAttribute('hidden' , 'hidden');
+
+                    okButton = document.getElementById('closeButton');
+                    okButton.textContent = 'OK';
+                    okButton.classList.add('btn-success');
+
+                    okButton.onclick = function () {
                         // Redirect after the button is clicked
                         window.location.href = 'index.php';
                     }
@@ -96,6 +111,14 @@ $(document).ready(function () {
     // Using jQuery to handle logout
     $('#logoutNav, #logoutPage').on('click', function (e) {
         e.preventDefault(); // Prevent default link behavior
+        showModal('Log out', 'Are you sure you want to log out?');
+        var closeButton = document.getElementById('closeButton');
+        closeButton.removeAttribute('hidden');
+        closeButton.textContent = 'Cancel';
+        document.getElementById('confirmButton').textContent = 'Confirm';
+
+        // Handle the confirmation button click
+        document.getElementById('confirmButton').onclick = function () {
         $.ajax({
             url: 'API/logout.php', // Your server's logout endpoint
             type: 'POST',
@@ -105,11 +128,17 @@ $(document).ready(function () {
                 if (response.logged_out) {
                     // Show the logout modal
                     showModal('Logged Out', 'You successfully logged out from the website.');
+                    confirmButton = document.getElementById('confirmButton');
+                    confirmButton.setAttribute('hidden' , 'hidden');
 
+                    okButton = document.getElementById('closeButton');
+                    okButton.textContent = 'OK';
+                    okButton.classList.add('btn-success');
+            
                     // Optionally, clear the session storage item
                     sessionStorage.removeItem('logged_out');
 
-                    document.getElementById('closeButton').onclick = function () {
+                    okButton.onclick = function () {
                         // Redirect after the button is clicked
                         window.location.href = 'log_in.php';
                     };
@@ -120,6 +149,7 @@ $(document).ready(function () {
                 console.error("Logout failed:", status, error);
             }
         });
+    }
     });
 
     // Attach a submit event handler to the new chore form to add a new chore to the table dynamically
@@ -137,7 +167,7 @@ $(document).ready(function () {
                     console.log(response);
                     // Add the new chore to the table dynamically
                     var newRow = `
-                    <tr>
+                <tr class = "chore-item">
                     <td>
                         <div class="ms-6 text-center">
                             <p class="fw-bold mb-1">${response.choreTitle}</p>
@@ -155,6 +185,9 @@ $(document).ready(function () {
                         </div>
                     </td>
                     <td><input type="checkbox" class="form-check-input status" id="${response.chore_num}"></td>
+                                      <td>
+                    <button class="btn btn-danger delete-chore" value="${response.chore_num}">Delete</button>
+                  </td>
                 </tr>
             `; $('table tbody').append(newRow);
                     $('#newChoreModal').modal('hide'); // Hide the modal
@@ -169,6 +202,52 @@ $(document).ready(function () {
         });
     });
 
+    
+    if(document.getElementById('choresContainer')) {
+        document.getElementById('choresContainer').addEventListener('click', function (event) {
+            if (event.target && event.target.classList.contains('delete-chore')) {
+              const choreId = event.target.value;
+              const deleteButton = event.target;
+          
+              // Show the modal
+              showModal('Confirm Deletion', 'Are you sure you want to delete this chore?');
+              var closeButton = document.getElementById('closeButton');
+              closeButton.removeAttribute('hidden');
+              closeButton.textContent = 'Delete';
+              document.getElementById('confirmButton').textContent = 'Cancel';
+
+              // Handle the confirmation button click
+              document.getElementById('confirmButton').onclick = function () {
+                const formData = JSON.stringify({ choreId: choreId });
+          
+                $.ajax({
+                  url: 'API/delete_chore.php',
+                  type: 'POST',
+                  contentType: 'application/json',
+                  data: formData,
+                  dataType: 'json',
+                  success: function(response) {
+                    if (response.success) {
+                    // Ensure the closest method finds the correct ancestor
+                      const choreItem = deleteButton.closest('.chore-item');
+                      if (choreItem) {
+                        choreItem.remove();
+                      } else {
+                        console.error('Chore item not found');
+                      }
+                    } else {
+                      alert('Error deleting chore: ' + response.error);
+                    }
+                  },
+                  error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                  }
+                });
+              };
+            }
+          });
+        }
+    
     // Attach a submit event handler to the index page to add a new user to the Household
     $('#newUserForm').submit(function (e) {
         e.preventDefault(); // Prevent default form submission
@@ -232,8 +311,6 @@ $(document).ready(function () {
     }
 
 
-
-
     // Assuming 'choresContainer' is the ID of the parent container for all chores
     var choresContainer = document.getElementById('choresContainer');
     if (choresContainer) {
@@ -265,10 +342,14 @@ $(document).ready(function () {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('message') === 'not_signed_in') {
         showModal('Not Signed In', 'You must be signed in to view that page. Please sign in.');
+        document.getElementById('confirmButton').setAttribute('hidden', 'hidden');
+        document.getElementById('closeButton').textContent = 'OK';
+        document.getElementById('closeButton').classList.add('btn-success');
+
     }
 
     // Function to show a modal with the given title, body, and footer buttons
-    function showModal(title, body, footerButtonsHtml = '<button type="button" class="btn btn-success" data-bs-dismiss="modal" id = "closeButton">Close</button>') {
+    function showModal(title, body, footerButtonsHtml = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id = "closeButton">Cancel</button> <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmButton">Confirm</button>') {
         // Update the title
         document.getElementById('genericModalLabel').innerText = title;
 

@@ -28,6 +28,21 @@
   $listName = $listNameResult->fetch_assoc()['list_title'];
   // Store the list name in session
   $_SESSION['list_title'] = $listName;
+
+  $user_id = $_SESSION['user_id'];
+  // Query to find the user by email
+  $sql = "SELECT house_id FROM household WHERE responsible_user_id = ?;";
+  $stmt = $conn->prepare($sql);
+  $stmt = $conn->prepare($sql);
+  if ($stmt === false) {
+    die("Prepare failed: " . $conn->error);
+  }
+
+  $stmt->bind_param("i", $user_id);
+  $stmt->execute();
+  $stmt->bind_result($house_id);
+  $stmt->fetch();
+  $stmt->close();
   ?>
 
 
@@ -45,16 +60,17 @@
     <div class="row">
       <div class="col-12">
         <div class="table-responsive bg-light">
-          <table class="table text-center align-middle mb-0" id="choresContainer" style="border-radius: 10px;">
+          <table class="table text-center align-middle mb-0"  style="border-radius: 10px;">
             <thead class="bg-light">
               <tr>
                 <th class="text-center">Chore title</th>
                 <th class="text-center">Date added</th>
                 <th class="text-center">User assigned</th>
                 <th class="text-center">Finished?</th>
+                <th class="text-center">Delete Chore</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="choresContainer">
               <?php
               // Get the chores from the database for the selected list 
               $sql = "SELECT 
@@ -67,9 +83,10 @@
               $result = $conn->query($sql);
               ?>
               <?php while ($row = $result->fetch_assoc()) : //loop through the chores and display them in a table row?>
-                <tr>
+                <tr class = "chore-item">
                   <td>
                     <div class="ms-6 text-center">
+                    <input name="house_id" id="house_id" class="form-control" value="<?= $house_id ?>" hidden>
                       <p class="fw-bold mb-1"><?= htmlspecialchars($row['chore_title']); ?></p>
                     </div>
                   </td>
@@ -89,6 +106,9 @@
                   <?php else : ?>
                     <td><input type="checkbox" name="chore-checkbox-<?= $row['chore_num']; ?>" class="form-check-input status" id="<?= $row['chore_num']; ?>"></td>
                   <?php endif; ?>
+                  <td>
+                    <button class="btn btn-danger delete-chore" value="<?= $row['chore_num']; ?>">Delete</button>
+                  </td>
                 </tr>
               <?php endwhile; ?>
             </tbody>
@@ -98,55 +118,62 @@
     </div>
   </div>
 
-  <!-- Add New Chore Modal -->
-  <div class="modal fade" id="newChoreModal" tabindex="-1" aria-labelledby="newChoreModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newChoreModalLabel">Add New Chore</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="newChoreForm" action="API/add_chore.php" method="POST">
-            <div class="mb-3">
-              <input hidden type="" class="form-control" id="listId" name="listId" value="<?= $_SESSION['list_id']; ?>">
-              <p> List title: <br>
-              <h3><?= $_SESSION['list_title']; ?></h3>
-              </p>
-            </div>
-            <div class="mb-3">
-              <label for="choreTitle" class="form-label">Chore Title</label>
-              <input type="text" class="form-control" id="choreTitle" name="choreTitle" required>
-            </div>
-            <div class="mb-3">
-              <label for="choreUser" class="form-label">Assign User</label>
-              <select class="form-select" id="choreUser" name="choreUser" required>
-                <option value="">Select a user</option>
-                <?php
-                // Get the users from the database and display them in a dropdown
-                $userSql = "SELECT user_id, first_name, last_name FROM Users ORDER BY first_name ASC";
-                $userResult = $conn->query($userSql);
-                while ($user = $userResult->fetch_assoc()) : ?>
-                  <option value="<?= htmlspecialchars($user['user_id']); ?>"><?= htmlspecialchars($user['first_name']) . " " . htmlspecialchars($user['last_name']); ?></option>
-                <?php endwhile; ?>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="choreDate" class="form-label">Date Added</label>
-              <input type="text" class="form-control" id="choreDate" name="choreDate" value="<?= date('Y-m-d') ?>" readonly style="background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; cursor: not-allowed;">
-            </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="submit" id="addChore" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        </div>
+<!-- Add New Chore Modal -->
+<div class="modal fade" id="newChoreModal" tabindex="-1" aria-labelledby="newChoreModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newChoreModalLabel">Add New Chore</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="newChoreForm" action="API/add_chore.php" method="POST">
+          <div class="mb-3">
+            <input hidden type="text" class="form-control" id="listId" name="listId" value="<?= htmlspecialchars($_SESSION['list_id']); ?>">
+            <p> List title: <br>
+            <h3><?= htmlspecialchars($_SESSION['list_title']); ?></h3>
+            </p>
+          </div>
+          <div class="mb-3">
+            <label for="choreTitle" class="form-label">Chore Title</label>
+            <input type="text" class="form-control" id="choreTitle" name="choreTitle" required>
+          </div>
+          <div class="mb-3">
+            <label for="choreUser" class="form-label">Assign User</label>
+            <select class="form-select" id="choreUser" name="choreUser" required>
+              <option value="">Select a user</option>
+              <?php
+              // Get the users from the database and display them in a dropdown
+              echo $_SESSION['user_id'];
+              $userSql = "SELECT u.user_id, u.first_name, u.last_name 
+                          FROM Users u 
+                          JOIN Users_partOf_Household uph ON u.user_id = uph.user_id
+                          WHERE uph.house_id = " . intval($_SESSION['user_id']) . "
+                          ORDER BY first_name ASC";
+              $userResult = $conn->query($userSql);
+              if (!$userResult) {
+                echo "Error: " . htmlspecialchars($conn->error);
+              }
+              while ($user = $userResult->fetch_assoc()) : ?>
+                <option value="<?= htmlspecialchars($user['user_id']); ?>"><?= htmlspecialchars($user['first_name']) . " " . htmlspecialchars($user['last_name']); ?></option>
+              <?php endwhile; ?>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="choreDate" class="form-label">Date Added</label>
+            <input type="text" class="form-control" id="choreDate" name="choreDate" value="<?= date('Y-m-d') ?>" readonly style="background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; cursor: not-allowed;">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" id="addChore" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
       </div>
       </form>
     </div>
   </div>
+</div>
 
-  <!-- import footer from footer.php -->
+<!-- import footer from footer.php -->
   <?php require_once('components/footer.php'); ?>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
