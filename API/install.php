@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 // Create database
-$dbName = "hw2_205735749_208019729";
+$dbName = "hw3_205735749_208019729";
 $sql = "CREATE DATABASE IF NOT EXISTS $dbName";
 if ($conn->query($sql)) {
     echo "Database created successfully <br>";

@@ -1,8 +1,7 @@
 <?php
 session_start();
 $current_page = basename($_SERVER['PHP_SELF']); // Save current page
-require "API/db.php";
-
+require_once('API/db.php');
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +17,7 @@ require "API/db.php";
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -26,7 +26,9 @@ require "API/db.php";
             <div class="container-fluid">
                 <h3 class="company_title mb-1"><a class="nav-link" href="index.php">Chores Inc.</a></h3>
                 <div class="nav nav-underline">
-                    <a id="homepage" class="nav-link text-black <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
+                    <a id="homepage" class="nav-link text-black <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">
+                    <i class="fa-solid fa-house"></i> Home
+                    </a>
                     <?php if (isset($_SESSION['userLoggedIn']) || ((isset($_COOKIE['email'])) && (isset($_COOKIE['password'])))) : ?>
                         <?php
                         // Check if the user is logged in using cookies and set the session variables
@@ -45,7 +47,9 @@ require "API/db.php";
                         ?>
                         <span class="navbar-text text-black">Welcome, <?= htmlspecialchars($row['first_name']) ?>!</span>
                         <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=<?= ($row['avatar_color']) ?>&seed= <?= rand() ?>" alt="" style="width: 35px; height: 35px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
-                        <a id="logoutNav" class="nav-link text-black" href="API/logout.php">Logout</a>
+                        <a id="logoutNav" class="nav-link text-black" href="API/logout.php">
+                        Logout <i class="fa-solid fa-right-from-bracket"></i>
+                    </a>
                     <?php else : ?>
                         <?php // If the user is not logged in, display the login and signup links
                         $current_page = basename($_SERVER['PHP_SELF']);
@@ -55,8 +59,11 @@ require "API/db.php";
                             exit;
                         }
                         ?>
-                        <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'log_in.php') ? 'active' : ''; ?>" href="log_in.php">Login</a>
-                        <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'sign_up.php') ? 'active' : ''; ?>" href="sign_up.php">Sign up</a>
+                        <a id="signinPage" class="nav-link text-black <?php echo ($current_page == 'log_in.php') ? 'active' : ''; ?>" href="log_in.php">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </a>
+                        <a id="signupPage" class="nav-link text-black <?php echo ($current_page == 'sign_up.php') ? 'active' : ''; ?>" href="sign_up.php">
+                        <i class="fa-solid fa-address-card"></i> Sign up</a>
                     <?php endif; ?>
                 </div>
             </div>

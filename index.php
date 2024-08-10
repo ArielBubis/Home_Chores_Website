@@ -12,12 +12,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" type="text/css" href="style/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" type="text/css" href="style/style.css">
 </head>
 
 <body>
   <!-- import navbar from header.php -->
-  <?php require_once('components/header.php');
+  <?php
+  require_once('components/header.php');
   $user_id = $_SESSION['user_id'];
   // Query to find the user by email
   $sql = "SELECT house_id FROM household WHERE responsible_user_id = ?;";
@@ -142,11 +143,15 @@
       </div>
     </div>
     <div class="text-center">
-      <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#newUserModal">
-        Add New User
+      <button type="button" class="btn btn-info mt-4" data-bs-toggle="modal" data-bs-target="#newUserModal">
+      <i class="fas fa-user-plus"></i> Add user
+      </button>
+      <button type="button" class="btn btn-info mt-4" data-bs-toggle="modal" data-bs-target="#newChoresListModal">
+      <i class="fas fa-list"></i> Add list
       </button>
     </div>
 
+    <!-- Add user to household modal -->
   </div>
   <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
@@ -158,14 +163,79 @@
         <div class="modal-body all_style">
           <form id="newUserForm" action="API/add_user_to_household.php" method="post">
             <div class="mb-3">
+            <label for="house_id" class="form-label" hidden></label>
               <input name="house_id" id="house_id" class="form-control" value="<?= $house_id ?>" hidden>
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+              <label for="emailInput" class="form-label">Email address</label>
+              <input type="email" name="email" id="emailInput" class="form-control" placeholder="Email address" autocomplete="email" required autofocus>
               <div id="suggesstion-box"></div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-success">Add user</button>
+            </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add new chores list modal -->
+  <div class="modal fade" id="newChoresListModal" tabindex="-1" aria-labelledby="newChoresListModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newChoresListModalLabel">New chores list</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body all_style">
+          <form id="newChoresListForm" action="API/add_chores_list.php" method="post">
+            <div class="mb-3">
+               <!-- Hidden Fields -->
+               <input type="hidden" name="chores_list_id" id="chores_list_id">
+                    <input type="hidden" name="cl_house_id" id="cl_house_id" value="<?= $house_id ?>">
+                    
+                    <!-- Responsible User Dropdown -->
+                    <div class="mb-3">
+                    <label for="choreListUser" class="form-label">Assign User</label>
+                      <select class="form-select" id="choreListUser" name="choreListUser" required>
+                        <option value="">Select a user</option>
+                        <?php
+                        // Get the users from the database and display them in a dropdown
+                        $userSql = "SELECT u.user_id, u.first_name, u.last_name 
+                                    FROM users u 
+                                    JOIN users_partof_household uph ON u.user_id = uph.user_id
+                                    WHERE uph.house_id = " . intval($_SESSION['house_id']) . "
+                                    ORDER BY first_name ASC";
+                        $userResult = $conn->query($userSql);
+                        if (!$userResult) {
+                          echo "Error: " . htmlspecialchars($conn->error);
+                        }
+                        while ($user = $userResult->fetch_assoc()) : ?>
+                          <option value="<?= htmlspecialchars($user['user_id']); ?>"><?= htmlspecialchars($user['first_name']) . " " . htmlspecialchars($user['last_name']); ?></option>
+                        <?php endwhile; ?>
+                      </select>
+                    </div>
+
+                     <!-- List Title -->
+                     <div class="mb-3">
+                        <label for="list_title" class="form-label">List Title</label>
+                        <input type="text" name="list_title" id="list_title" class="form-control" placeholder="Enter list title" required>
+                    </div>
+                    
+                    <!-- Due Date -->
+                    <div class="mb-3">
+                        <label for="due_date" class="form-label">Due Date</label>
+                        <input type="date" name="due_date" id="due_date" class="form-control" required>
+                    </div>
+                    
+                    <!-- Status (Hidden, default to "not finished") -->
+                    <input type="hidden" name="status" value="not finished">
+                    
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Add list</button>
             </div>
         </div>
         </form>

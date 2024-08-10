@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,14 +12,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 
 <body>
   <!-- import navbar from header.php -->
-  <?php require_once('components/header.php');
+  <?php 
+  require_once('components/header.php');
   // Get the list_id from URL query parameters
   $list_id = isset($_GET['list_id']) ? intval($_GET['list_id']) : 0;
   $_SESSION['list_id'] = $list_id; // Store the list_id in session
@@ -49,8 +51,11 @@
   <div class="container all_style">
     <div class="row align-items-center">
       <div class="col=auto">
-        <button class="btn btn-outline-secondary mb-2 mr-3" value=<?= $_SESSION['list_id'] ?> id="choresBackButton">➥ Back</button>
-        <button type="button" class="btn btn-primary float-end mb-2 mr-3" data-bs-toggle="modal" data-bs-target="#newChoreModal">+ Add new chore</button>
+        <button class="btn btn-outline-secondary mb-2 mr-3" value=<?= $_SESSION['list_id'] ?> id="choresBackButton">
+        <i class="fa-solid fa-arrow-left"></i> Back
+      </button>
+        <button type="button" class="btn btn-primary float-end mb-2 mr-3" data-bs-toggle="modal" data-bs-target="#newChoreModal">
+        <i class="fa-solid fa-square-plus"></i> Add chore</button>
       </div>
       <div class="col">
         <h3 class="company_title mb-2">To do list:</h3>

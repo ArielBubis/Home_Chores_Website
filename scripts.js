@@ -191,6 +191,7 @@ $(document).ready(function () {
                 </tr>
             `; $('table tbody').append(newRow);
                     $('#newChoreModal').modal('hide'); // Hide the modal
+                    $('#newChoreForm').trigger("reset"); // Clear form afer closing
                 } else {
                     alert(response.message);
                 }
@@ -213,8 +214,8 @@ $(document).ready(function () {
               showModal('Confirm Deletion', 'Are you sure you want to delete this chore?');
               var closeButton = document.getElementById('closeButton');
               closeButton.removeAttribute('hidden');
-              closeButton.textContent = 'Delete';
-              document.getElementById('confirmButton').textContent = 'Cancel';
+              closeButton.textContent = 'Cancel';
+              document.getElementById('confirmButton').textContent = 'Delete';
 
               // Handle the confirmation button click
               document.getElementById('confirmButton').onclick = function () {

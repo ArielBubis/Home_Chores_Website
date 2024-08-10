@@ -45,7 +45,8 @@
           <label class="form-check-label" for="rememberMe">Remember me</label>
         </div>
         <div class="col d-flex justify-content-center">
-          <button type="submit" id="login-btn" class="btn btn-success btn-lg">Log In</button>
+          <button type="submit" id="login-btn" class="btn btn-success btn-lg">
+          <i class="fa-solid fa-right-to-bracket"></i> Log In</button>
         </div>
         <div class="signup-section">
           <p>New here? <a href="sign_up.php">Sign up here</a></p>
