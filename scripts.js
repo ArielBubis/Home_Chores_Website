@@ -218,7 +218,7 @@ $(document).ready(function () {
                     console.log(response);
                     // Add the new chores list to the table dynamically
                     var newRow = `
-                         <tr>
+                        <tr style="background-color: white;">
                             <td>
                                 <p class="fw-bold mb-1">
                                     <a href=${response.list_id}">
@@ -232,7 +232,7 @@ $(document).ready(function () {
                             <td class="text-center">
                                 <div class="d-flex flex-column align-items-center justify-content-center">
                                     <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=${response.avatar_color}&seed=${response.random_seed}" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
-                                    <p class="mb-1">${response.responsible_user_name}</p>
+                                    <p class="mb-1">${response.listUserName}</p>
                                 </div>
                             </td>
                             <td class="text-center">
@@ -243,6 +243,7 @@ $(document).ready(function () {
                         </tr>
                     `;
                     $('#chores_list_table').append(newRow);
+                    $('#chores_list_table').find('tr:last').hide().show(0); // Force reflow
                     $('#newChoresListModal').modal('hide'); // Hide the modal
                     $('#newChoresListForm').trigger("reset"); // Clear form after closing
                 } else {

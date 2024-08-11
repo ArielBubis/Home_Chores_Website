@@ -34,6 +34,11 @@
   $stmt->fetch();
   $stmt->close();
 
+
+  // Check if user is assigned to a household
+  if (!$house_id) {
+    require_once('API/add_household.php');
+  }
   ?>
 
   <div class="container all_style">
