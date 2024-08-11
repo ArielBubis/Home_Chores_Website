@@ -203,6 +203,58 @@ $(document).ready(function () {
         });
     });
 
+    // Attach a submit event handler to the new chores list form
+    $('#newChoresListForm').submit(function (e) {
+        e.preventDefault(); // Prevent default form submission
+        var formData = $(this).serialize(); // Serialize form data
+
+        $.ajax({
+            url: 'API/add_chores_list.php', // Update with the correct URL to your PHP script
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function (response) {
+                if (response.success == 1) {
+                    console.log(response);
+                    // Add the new chores list to the table dynamically
+                    var newRow = `
+                         <tr>
+                            <td>
+                                <p class="fw-bold mb-1">
+                                    <a href=${response.list_id}">
+                                        ${response.list_title}
+                                    </a>
+                                </p>
+                            </td>
+                            <td class="text-center">
+                                <p class="text-break mb-1">${response.due_date}</p>
+                            </td>
+                            <td class="text-center">
+                                <div class="d-flex flex-column align-items-center justify-content-center">
+                                    <img src="https://api.dicebear.com/9.x/bottts/svg?baseColor=${response.avatar_color}&seed=${response.random_seed}" alt="" style="width: 45px; height: 45px" class="img-fluid rounded-circle mb-2 d-none d-sm-block" />
+                                    <p class="mb-1">${response.responsible_user_name}</p>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge text-wrap ${response.status == 'Finished' ? 'text-bg-success' : 'text-bg-danger'}" style="height: 20px;">
+                                    <p class="d-none d-sm-block">${response.status}</p>
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                    $('#chores_list_table').append(newRow);
+                    $('#newChoresListModal').modal('hide'); // Hide the modal
+                    $('#newChoresListForm').trigger("reset"); // Clear form after closing
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX error:", status, error);
+                alert('Error adding chores list.');
+            }
+        });
+    });
     
     if(document.getElementById('choresContainer')) {
         document.getElementById('choresContainer').addEventListener('click', function (event) {
@@ -279,7 +331,9 @@ $(document).ready(function () {
                 alert('Error adding user to household.');
             }
         });
-    });    
+    });
+    
+    
 
     // Attach a submit event handler to the to the back button in the chores page to update the status of the list
     var choresBackButton = document.getElementById('choresBackButton');

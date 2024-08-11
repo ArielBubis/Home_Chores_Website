@@ -2,54 +2,56 @@
 require_once 'db.php';
 
 // Retrieve form data
-$list_id = $_POST['listId'];
-$choreTitle = $_POST['choreTitle'] ?? '';
-$choreUser = $_POST['choreUser'] ?? '';
-$dateAdded = $_POST['choreDate'] ?? '';
-// $formattedDate = date('d/m/Y');
+$res_user_id = $_POST['res_user_id'];
+$house_id = $_POST['cl_house_id'];
+$list_title = $_POST['list_title'] ?? '';
+$due_date = $_POST['due_date'] ?? '';
+$status = $_POST['status'] ?? 'not finished';
 
-
-// Define a function to add a chore to the database
-function addChore($conn, $list_id, $choreTitle, $choreUser, $dateAdded) {
-    $sql = "INSERT INTO Chores (list_id, chore_title, date_added, user_id, finished) VALUES (?, ?, ?, ?, 0)";
+// Define a function to add a chores list to the database
+function addChoresList($conn, $house_id, $res_user_id, $list_title, $due_date, $list_status) {
+    $sql = "INSERT INTO chores_list (house_id, responsible_user_id, list_title, due_date, status) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
         return ['success' => 0, 'message' => 'Failed to prepare statement.'];
     }
-    $stmt->bind_param('issi', $list_id, $choreTitle, $dateAdded, $choreUser);
+    $stmt->bind_param('iisss', $house_id, $res_user_id, $list_title, $due_date, $list_status);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
-        $userInfo = getUserInfo($conn, $choreUser);
-        $response = [
+        $list_id = $stmt->insert_id; // Get the ID of the newly inserted list
+        $list_userInfo = getUserInfo($conn, $res_user_id);
+
+        $response=  [
             'success' => 1,
-            'message' => 'Chore added successfully.',
-            'choreUserName' => $userInfo['first_name'] . ' ' . $userInfo['last_name'],
-            'avatar_color' => $userInfo['avatar_color'],
-            'dateAdded' => $dateAdded,
-            'choreTitle' => $choreTitle,
-            'chore_num' => $stmt->insert_id
+            'message' => 'Chores list added successfully.',
+            'listUserName' => $list_userInfo['first_name'] . ' ' . $list_userInfo['last_name'],
+            'avatar_color' => $list_userInfo['avatar_color'],
+            'list_id' => $list_id,
+            'list_title' => $list_title,
+            'due_date' => $due_date,
+            'status' => $list_status
         ];
         return $response;
     }
-    return ['success' => 0, 'message' => 'Failed to add chore.'];
+    // $stmt->close();
+    return ['success' => 0, 'message' => 'Failed to add chores list.'];
 }
-
 
 // Prepare the response array
 $response = ['success' => 0];
 
 // Validate form data
-if (empty($choreTitle) || empty($choreUser) || empty($dateAdded)) {
-    $response['message'] = 'All fields are required.';
+if (empty($list_title) || empty($due_date)) {
+    $response['message'] = 'List title and due date are required.';
 } else {
-    // Add the chore to the database
-    $response = addChore($conn, $list_id, $choreTitle, $choreUser, $dateAdded);
+    // Add the chores list to the database
+    $response = addChoresList($conn, $house_id, $res_user_id, $list_title, $due_date, $status);
 }
 
+// Close the connection and output the response
 $conn->close();
 echo json_encode($response);
-
 
 // Define a function to get the user's first name, last name, and image path by user id
 function getUserInfo($conn, $userId) {
@@ -80,3 +82,5 @@ function getUserInfo($conn, $userId) {
 
 // Get the user's first name and last name
 ?>
+
+

@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col-12">
         <div class="table-responsive bg-light">
-          <table class="table text-center align-middle mb-0" style="border-radius: 10px;">
+          <table class="table text-center align-middle mb-0" id="chores_list_table" style="border-radius: 10px;">
             <thead class="bg-light">
               <tr>
                 <th class="text-center">List title</th>
@@ -56,19 +56,11 @@
             </thead>
             <tbody>
               <?php
-              $sql = "SELECT 
-              cl.list_title, 
-              cl.due_date, 
-              cl.list_id,
-              cl.status
-              FROM 
-              Chores_List cl
-              JOIN 
-              Household h ON cl.house_id = h.house_id
-              JOIN 
-              Users_partOf_Household uph ON h.house_id = uph.house_id
-              WHERE 
-              uph.user_id = ?";
+              $sql = "SELECT cl.list_title, cl.due_date, cl.list_id, cl.status
+              FROM Chores_List cl
+              JOIN Household h ON cl.house_id = h.house_id
+              JOIN Users_partOf_Household uph ON h.house_id = uph.house_id
+              WHERE uph.user_id = ?";
               $stmt = $conn->prepare($sql);
               if ($stmt === false) {
                 die("Prepare failed: " . $conn->error);
@@ -101,16 +93,10 @@
                     <div class="d-flex flex-column align-items-center justify-content-center">
                       <?php
                       // Get the user's avatar color and name from the database
-                      $sql = "SELECT 
-                      u.first_name, 
-                      u.last_name, 
-                      u.avatar_color 
-                  FROM 
-                      Users u
-                  JOIN 
-                      Chores_List cl ON u.user_id = cl.responsible_user_id
-                  WHERE 
-                      cl.list_id = " . $row['list_id'] . ";";
+                      $sql = "SELECT u.first_name, u.last_name, u.avatar_color 
+                      FROM users u
+                      JOIN chores_List cl ON u.user_id = cl.responsible_user_id
+                      WHERE cl.list_id = " . $row['list_id'] . ";";
                       $user_Responsible = $conn->query($sql);
                       if ($user_Responsible && $user_Responsible->num_rows > 0) {
                         $user = $user_Responsible->fetch_assoc();
@@ -188,31 +174,58 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body all_style">
-          <form id="newChoresListForm" action="API/add_chores_list.php" method="post">
+          <form id="newChoresListForm" action="API/add_chores_list.php" method="POST">
             <div class="mb-3">
                <!-- Hidden Fields -->
-               <input type="hidden" name="chores_list_id" id="chores_list_id">
-                    <input type="hidden" name="cl_house_id" id="cl_house_id" value="<?= $house_id ?>">
+               <input type="hidden" name="res_user_id" id="res_user_id" value="<?= $user_id ?>">
+                <input type="hidden" name="cl_house_id" id="cl_house_id" value="<?= $house_id ?>">
                     
                     <!-- Responsible User Dropdown -->
                     <div class="mb-3">
                     <label for="choreListUser" class="form-label">Assign User</label>
                       <select class="form-select" id="choreListUser" name="choreListUser" required>
-                        <option value="">Select a user</option>
+                        <option>Select a user</option>
                         <?php
-                        // Get the users from the database and display them in a dropdown
-                        $userSql = "SELECT u.user_id, u.first_name, u.last_name 
-                                    FROM users u 
-                                    JOIN users_partof_household uph ON u.user_id = uph.user_id
-                                    WHERE uph.house_id = " . intval($_SESSION['house_id']) . "
-                                    ORDER BY first_name ASC";
-                        $userResult = $conn->query($userSql);
-                        if (!$userResult) {
-                          echo "Error: " . htmlspecialchars($conn->error);
-                        }
-                        while ($user = $userResult->fetch_assoc()) : ?>
-                          <option value="<?= htmlspecialchars($user['user_id']); ?>"><?= htmlspecialchars($user['first_name']) . " " . htmlspecialchars($user['last_name']); ?></option>
-                        <?php endwhile; ?>
+                          // Fetch current user's details
+                          $current_user_sql = "SELECT first_name, last_name FROM users WHERE user_id = ?";
+                          $stmt = $conn->prepare($current_user_sql);
+                          if ($stmt === false) {
+                              die("Prepare failed: " . $conn->error);
+                          }
+                          $stmt->bind_param("i", $user_id);
+                          $stmt->execute();
+                          $stmt->bind_result($current_user_first_name, $current_user_last_name);
+                          $stmt->fetch();
+                          $stmt->close();
+                           // Query to get the first and last names of all users in the same household
+                          // Query to get the first and last names of all users in the same household except the current user
+                          $sql = "SELECT u.user_id, u.first_name, u.last_name 
+                          FROM users u
+                          JOIN users_partof_household uph ON u.user_id = uph.user_id
+                          WHERE uph.house_id = ? AND u.user_id != ?;";
+                          $stmt = $conn->prepare($sql);
+                          if ($stmt === false) {
+                              die("Prepare failed: " . $conn->error);
+                          }
+                          $stmt->bind_param("ii", $house_id, $user_id);
+                          $stmt->execute();
+                          $result = $stmt->get_result();
+                          $users = [];
+                          while ($row = $result->fetch_assoc()) {
+                              $users[] = $row;
+                          }
+                          $stmt->close();
+
+                          // Check if other users are found
+                          if (count($users) > 0) {
+                              foreach ($users as $user) {
+                                  echo '<option value="' . htmlspecialchars($user['user_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($user['first_name'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($user['last_name'], ENT_QUOTES, 'UTF-8') . '</option>';
+                              }
+                          } else {
+                              echo '<option value="' . $user_id . '">' . $current_user_first_name . ' ' . $current_user_last_name . '</option>';                           
+                          }
+                           ?>                            
+                  
                       </select>
                     </div>
 
