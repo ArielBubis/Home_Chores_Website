@@ -221,8 +221,8 @@ $(document).ready(function () {
                         <tr style="background-color: white;">
                             <td>
                                 <p class="fw-bold mb-1">
-                                    <a href=${response.list_id}">
-                                        ${response.list_title}
+                                    <a href="chores.php?list_id=${response.list_id}">
+                                    ${response.list_title}
                                     </a>
                                 </p>
                             </td>
@@ -458,5 +458,8 @@ $(document).ready(function () {
         $('#emailInput').val('');
     });
 
-
+     // Set the minimum date for the due_date input field to today's date
+     var today = new Date().toISOString().split('T')[0];
+     $('#due_date').attr('min', today);
+     
 });
