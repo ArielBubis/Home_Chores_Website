@@ -142,6 +142,7 @@
       </button>
     </div>
 
+  </div>
     <!-- Add user to household modal -->
   </div>
   <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">

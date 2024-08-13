@@ -367,6 +367,33 @@ $(document).ready(function () {
     }
 
 
+    // Make sure the modals inputs are empty when opened, and focuses on the first input
+    if (document.getElementById('newChoreModal')) {
+        document.getElementById('newChoreModal').addEventListener('shown.bs.modal', function () {
+            var choreTitleElement = document.getElementById('choreTitle');
+            choreTitleElement.focus();
+            choreTitleElement.value = '';
+        });
+    }
+
+
+    // Make sure the modals inputs are empty when opened, and focuses on the first input
+    if (document.getElementById('newUserModalLabel')) {
+    document.getElementById('newUserModal').addEventListener('shown.bs.modal', function () {
+        var choreTitleElement = document.getElementById('emailInput');
+        choreTitleElement.focus();
+        choreTitleElement.value = '';
+    });
+    }
+
+        // Make sure the modals inputs are empty when opened, and focuses on the first input
+        if (document.getElementById('newChoresListModal')) {
+            document.getElementById('newChoresListModal').addEventListener('shown.bs.modal', function () {
+                var choreTitleElement = document.getElementById('list_title');
+                choreTitleElement.value = '';
+            });
+            }
+
     // Assuming 'choresContainer' is the ID of the parent container for all chores
     var choresContainer = document.getElementById('choresContainer');
     if (choresContainer) {
