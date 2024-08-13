@@ -315,8 +315,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success == 1) {
                     console.log(response);
-                    alert('User added successfully!');
-
+                    // alert('User added successfully!');
                     // Optionally, close the modal
                     $('#newUserModal').modal('hide');
 
@@ -335,7 +334,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error("AJAX error:", status, error);
-                alert('Error adding user to household.');
+                // alert('Error adding user to household.');
             }
         });
     });

@@ -167,7 +167,8 @@
             echo '<ul id="userList">';
             while ($user = $userResult->fetch_assoc()) : ?>
               <li><?= htmlspecialchars($user['first_name']) . " " . htmlspecialchars($user['last_name']); ?></li>
-          <?php endwhile;
+          <?php endwhile;?>
+          <?php
             echo '</ul>';
           }
           ?>
