@@ -1,8 +1,9 @@
-<?php 
+<?php
 require 'db.php'; // Include the database connection file
 // Function to update the status of a chore list based on the status of its chores
 //When all the chores on the list are done it will update the status of the list to 1 (finished)
-function updateChoreListStatus($conn, $listId) {
+function updateChoreListStatus($conn, $listId)
+{
     // Check the count of unfinished chores in the same list
     $stmt = $conn->prepare("SELECT COUNT(*) FROM Chores WHERE list_id = ? AND finished = '0'");
     $stmt->bind_param("i", $listId);
@@ -35,4 +36,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 }
-?>

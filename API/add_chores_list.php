@@ -12,6 +12,13 @@ $status = $_POST['status'] ?? 'not finished';
 /**
  * Adds a chores list to the database.
  *
+ * @param mysqli $conn The database connection object.
+ * @param int $house_id The ID of the house.
+ * @param int $res_user_id The ID of the responsible user.
+ * @param string $list_title The title of the chores list.
+ * @param string $due_date The due date of the chores list.
+ * @param string $list_status The status of the chores list.
+ * @return array The response array indicating success or failure.
  */
 function addChoresList($conn, $house_id, $res_user_id, $list_title, $due_date, $list_status) {
     // Prepare the SQL statement to insert a new chores list
@@ -65,6 +72,10 @@ echo json_encode($response);
 // Define a function to get the user's first name, last name, and image path by user id
 /**
  * Retrieves user information from the database.
+ *
+ * @param mysqli $conn The database connection object.
+ * @param int $userId The ID of the user.
+ * @return array The user information including first name, last name, and avatar color.
  */
 function getUserInfo($conn, $userId) {
     $firstName = '';

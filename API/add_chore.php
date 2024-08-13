@@ -11,6 +11,12 @@ $dateAdded = $_POST['choreDate'] ?? '';
 /**
  * Adds a chore to the database.
  *
+ * @param mysqli $conn The database connection object.
+ * @param int $list_id The ID of the list to which the chore belongs.
+ * @param string $choreTitle The title of the chore.
+ * @param int $choreUser The ID of the user assigned to the chore.
+ * @param string $dateAdded The date the chore was added.
+ * @return array The response array indicating success or failure.
  */
 function addChore($conn, $list_id, $choreTitle, $choreUser, $dateAdded) {
     // Prepare the SQL statement to insert a new chore
@@ -62,6 +68,10 @@ echo json_encode($response);
 // Define a function to get the user's first name, last name, and image path by user id
 /**
  * Retrieves user information from the database.
+ *
+ * @param mysqli $conn The database connection object.
+ * @param int $userId The ID of the user.
+ * @return array The user information including first name, last name, and avatar color.
  */
 function getUserInfo($conn, $userId) {
     $firstName = '';

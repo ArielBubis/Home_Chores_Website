@@ -144,7 +144,7 @@
     <div class="text-center">
       <p class="d-inline-flex mt-3">
         <a class="btn btn-info mt-4" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-          Show users in house hold
+          Show users in my house hold:
         </a>
       </p>
     </div>
@@ -152,7 +152,8 @@
     <div id="collapseExample" class="container collapse all_style ">
       <div class="row">
         <div class="col-12">
-          <h3 class="company_title">Users in house hold:</h3>
+          <h3 class="company_title">Users in house hold</h3>
+<p>(A user can belong to my household, but it doesn’t necessarily mean that I belong to theirs. As a result, there might be task lists from users who don’t belong to my household, but I belong to theirs)</p>
           <?php
           // Get the users that are part of the household from the database and display them in a list
           $userSql = "SELECT u.user_id, u.first_name, u.last_name 
@@ -167,7 +168,7 @@
             echo '<ul id="userList">';
             while ($user = $userResult->fetch_assoc()) : ?>
               <li><?= htmlspecialchars($user['first_name']) . " " . htmlspecialchars($user['last_name']); ?></li>
-          <?php endwhile;?>
+            <?php endwhile; ?>
           <?php
             echo '</ul>';
           }
@@ -223,50 +224,17 @@
 
               <!-- Responsible User Dropdown -->
               <div class="mb-3">
-                <label for="choreListUser" class="form-label">Assign User</label>
-                <select class="form-select" id="choreListUser" name="choreListUser" required>
-                  <option>Select a user</option>
-                  <?php
-                  // Fetch current user's details
-                  $current_user_sql = "SELECT first_name, last_name FROM users WHERE user_id = ?";
-                  $stmt = $conn->prepare($current_user_sql);
-                  if ($stmt === false) {
-                    die("Prepare failed: " . $conn->error);
-                  }
-                  $stmt->bind_param("i", $user_id);
-                  $stmt->execute();
-                  $stmt->bind_result($current_user_first_name, $current_user_last_name);
-                  $stmt->fetch();
-                  $stmt->close();
-                  // Query to get the first and last names of all users in the same household except the current user
-                  $sql = "SELECT u.user_id, u.first_name, u.last_name 
-                          FROM users u
-                          JOIN users_partof_household uph ON u.user_id = uph.user_id
-                          WHERE uph.house_id = ? AND u.user_id != ?;";
-                  $stmt = $conn->prepare($sql);
-                  if ($stmt === false) {
-                    die("Prepare failed: " . $conn->error);
-                  }
-                  $stmt->bind_param("ii", $house_id, $user_id);
-                  $stmt->execute();
-                  $result = $stmt->get_result();
-                  $users = [];
-                  while ($row = $result->fetch_assoc()) {
-                    $users[] = $row;
-                  }
-                  $stmt->close();
-
-                  // Check if other users are found
-                  if (count($users) > 0) {
-                    foreach ($users as $user) {
-                      echo '<option value="' . htmlspecialchars($user['user_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($user['first_name'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($user['last_name'], ENT_QUOTES, 'UTF-8') . '</option>';
-                    }
-                  } else {
-                    echo '<option value="' . $user_id . '">' . $current_user_first_name . ' ' . $current_user_last_name . '</option>';
-                  }
-                  ?>
-
-                </select>
+                <label for="choreListUser" class="form-label">Assigned User</label>
+                <?php
+                $sql = "SELECT first_name, last_name FROM users WHERE email = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("s", $_SESSION['email']);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+                ?>
+                <span class="form-control" style="background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; cursor: not-allowed;"><?= htmlspecialchars($row['first_name']) ?> <?= htmlspecialchars($row['last_name']) ?></span>
+                <!-- <input type="text" class="form-control" id="choreDate" name="choreDate" value="<?= date('Y-m-d') ?>" readonly style="background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; cursor: not-allowed;"> -->
               </div>
 
               <!-- List Title -->
