@@ -1,5 +1,5 @@
 <?php 
-require 'db.php'; // Your database connection file
+require 'db.php'; // Include the database connection file
 // Function to update the status of a chore list based on the status of its chores
 //When all the chores on the list are done it will update the status of the list to 1 (finished)
 function updateChoreListStatus($conn, $listId) {

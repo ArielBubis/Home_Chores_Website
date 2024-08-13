@@ -148,7 +148,7 @@
             <select class="form-select" id="choreUser" name="choreUser" required>
               <option value="">Select a user</option>
               <?php
-              // Get the users from the database and display them in a dropdown
+              // Get the users that are part of the house from the database and display them in a dropdown
               echo $_SESSION['user_id'];
               $userSql = "SELECT u.user_id, u.first_name, u.last_name 
                           FROM Users u 

@@ -135,15 +135,48 @@
     </div>
     <div class="text-center">
       <button type="button" class="btn btn-info mt-4" data-bs-toggle="modal" data-bs-target="#newUserModal">
-      <i class="fas fa-user-plus"></i> Add user
+        <i class="fas fa-user-plus"></i> Add user
       </button>
       <button type="button" class="btn btn-info mt-4" data-bs-toggle="modal" data-bs-target="#newChoresListModal">
-      <i class="fas fa-list"></i> Add list
+        <i class="fas fa-list"></i> Add list
       </button>
+    </div>
+    <div class="text-center">
+      <p class="d-inline-flex mt-3">
+        <a class="btn btn-info mt-4" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+          Show users in house hold
+        </a>
+      </p>
+    </div>
+
+    <div id="collapseExample" class="container collapse all_style ">
+      <div class="row">
+        <div class="col-12">
+          <h3 class="company_title">Users in house hold:</h3>
+          <?php
+          // Get the users that are part of the household from the database and display them in a list
+          $userSql = "SELECT u.user_id, u.first_name, u.last_name 
+            FROM Users u 
+            JOIN Users_partOf_Household uph ON u.user_id = uph.user_id
+            WHERE uph.house_id = " . intval($_SESSION['user_id']) . "
+            ORDER BY first_name ASC";
+          $userResult = $conn->query($userSql);
+          if (!$userResult) {
+            echo "Error: " . htmlspecialchars($conn->error);
+          } else {
+            echo '<ul id="userList">';
+            while ($user = $userResult->fetch_assoc()) : ?>
+              <li><?= htmlspecialchars($user['first_name']) . " " . htmlspecialchars($user['last_name']); ?></li>
+          <?php endwhile;
+            echo '</ul>';
+          }
+          ?>
+        </div>
+      </div>
     </div>
 
   </div>
-    <!-- Add user to household modal -->
+  <!-- Add user to household modal -->
   </div>
   <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
@@ -155,8 +188,9 @@
         <div class="modal-body all_style">
           <form id="newUserForm" action="API/add_user_to_household.php" method="post">
             <div class="mb-3">
-            <label for="house_id" class="form-label" hidden></label>
+              <label for="house_id" class="form-label" hidden></label>
               <input name="house_id" id="house_id" class="form-control" value="<?= $house_id ?>" hidden>
+              <div hidden class="alert alert-danger text-center" id="addUserError" role="alert">User already in the household</div>
               <label for="emailInput" class="form-label">Email address</label>
               <input type="email" name="email" id="emailInput" class="form-control" placeholder="Email address" autocomplete="email" required autofocus>
               <div id="suggesstion-box"></div>
@@ -173,7 +207,7 @@
 
   <!-- Add new chores list modal -->
   <div class="modal fade" id="newChoresListModal" tabindex="-1" aria-labelledby="newChoresListModalLabel" aria-hidden="true">
-  <div class="modal-dialog ">
+    <div class="modal-dialog ">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="newChoresListModalLabel">New chores list</h5>
@@ -182,75 +216,74 @@
         <div class="modal-body all_style">
           <form id="newChoresListForm" action="API/add_chores_list.php" method="POST">
             <div class="mb-3">
-               <!-- Hidden Fields -->
-               <input type="hidden" name="res_user_id" id="res_user_id" value="<?= $user_id ?>">
-                <input type="hidden" name="cl_house_id" id="cl_house_id" value="<?= $house_id ?>">
-                    
-                    <!-- Responsible User Dropdown -->
-                    <div class="mb-3">
-                    <label for="choreListUser" class="form-label">Assign User</label>
-                      <select class="form-select" id="choreListUser" name="choreListUser" required>
-                        <option>Select a user</option>
-                        <?php
-                          // Fetch current user's details
-                          $current_user_sql = "SELECT first_name, last_name FROM users WHERE user_id = ?";
-                          $stmt = $conn->prepare($current_user_sql);
-                          if ($stmt === false) {
-                              die("Prepare failed: " . $conn->error);
-                          }
-                          $stmt->bind_param("i", $user_id);
-                          $stmt->execute();
-                          $stmt->bind_result($current_user_first_name, $current_user_last_name);
-                          $stmt->fetch();
-                          $stmt->close();
-                           // Query to get the first and last names of all users in the same household
-                          // Query to get the first and last names of all users in the same household except the current user
-                          $sql = "SELECT u.user_id, u.first_name, u.last_name 
+              <!-- Hidden Fields -->
+              <input type="hidden" name="res_user_id" id="res_user_id" value="<?= $user_id ?>">
+              <input type="hidden" name="cl_house_id" id="cl_house_id" value="<?= $house_id ?>">
+
+              <!-- Responsible User Dropdown -->
+              <div class="mb-3">
+                <label for="choreListUser" class="form-label">Assign User</label>
+                <select class="form-select" id="choreListUser" name="choreListUser" required>
+                  <option>Select a user</option>
+                  <?php
+                  // Fetch current user's details
+                  $current_user_sql = "SELECT first_name, last_name FROM users WHERE user_id = ?";
+                  $stmt = $conn->prepare($current_user_sql);
+                  if ($stmt === false) {
+                    die("Prepare failed: " . $conn->error);
+                  }
+                  $stmt->bind_param("i", $user_id);
+                  $stmt->execute();
+                  $stmt->bind_result($current_user_first_name, $current_user_last_name);
+                  $stmt->fetch();
+                  $stmt->close();
+                  // Query to get the first and last names of all users in the same household except the current user
+                  $sql = "SELECT u.user_id, u.first_name, u.last_name 
                           FROM users u
                           JOIN users_partof_household uph ON u.user_id = uph.user_id
                           WHERE uph.house_id = ? AND u.user_id != ?;";
-                          $stmt = $conn->prepare($sql);
-                          if ($stmt === false) {
-                              die("Prepare failed: " . $conn->error);
-                          }
-                          $stmt->bind_param("ii", $house_id, $user_id);
-                          $stmt->execute();
-                          $result = $stmt->get_result();
-                          $users = [];
-                          while ($row = $result->fetch_assoc()) {
-                              $users[] = $row;
-                          }
-                          $stmt->close();
+                  $stmt = $conn->prepare($sql);
+                  if ($stmt === false) {
+                    die("Prepare failed: " . $conn->error);
+                  }
+                  $stmt->bind_param("ii", $house_id, $user_id);
+                  $stmt->execute();
+                  $result = $stmt->get_result();
+                  $users = [];
+                  while ($row = $result->fetch_assoc()) {
+                    $users[] = $row;
+                  }
+                  $stmt->close();
 
-                          // Check if other users are found
-                          if (count($users) > 0) {
-                              foreach ($users as $user) {
-                                  echo '<option value="' . htmlspecialchars($user['user_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($user['first_name'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($user['last_name'], ENT_QUOTES, 'UTF-8') . '</option>';
-                              }
-                          } else {
-                              echo '<option value="' . $user_id . '">' . $current_user_first_name . ' ' . $current_user_last_name . '</option>';                           
-                          }
-                           ?>                            
-                  
-                      </select>
-                    </div>
+                  // Check if other users are found
+                  if (count($users) > 0) {
+                    foreach ($users as $user) {
+                      echo '<option value="' . htmlspecialchars($user['user_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($user['first_name'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($user['last_name'], ENT_QUOTES, 'UTF-8') . '</option>';
+                    }
+                  } else {
+                    echo '<option value="' . $user_id . '">' . $current_user_first_name . ' ' . $current_user_last_name . '</option>';
+                  }
+                  ?>
 
-                     <!-- List Title -->
-                     <div class="mb-3">
-                        <label for="list_title" class="form-label">List Title</label>
-                        <input type="text" name="list_title" id="list_title" class="form-control" placeholder="Enter list title" required>
-                    </div>
-                    
-                    <!-- Due Date -->
-                    <div class="mb-3">
-                        <label for="due_date" class="form-label">Due Date</label>
-                        <input type="date" name="due_date" id="due_date" class="form-control" required>
-                    </div>
-                    
-                    <!-- Status (Hidden, default to "not finished") -->
-                    <input type="hidden" name="status" value="not finished">
-                    
-              
+                </select>
+              </div>
+
+              <!-- List Title -->
+              <div class="mb-3">
+                <label for="list_title" class="form-label">List Title</label>
+                <input type="text" name="list_title" id="list_title" class="form-control" placeholder="Enter list title" required>
+              </div>
+
+              <!-- Due Date -->
+              <div class="mb-3">
+                <label for="due_date" class="form-label">Due Date</label>
+                <input type="date" name="due_date" id="due_date" class="form-control" required>
+              </div>
+
+              <!-- Status (Hidden, default to "not finished") -->
+              <input type="hidden" name="status" value="not finished">
+
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

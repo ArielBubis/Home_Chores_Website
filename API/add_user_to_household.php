@@ -47,7 +47,26 @@ if (!$stmt) {
 $stmt->bind_param('ii', $user_id, $house_id);
 $stmt->execute();
 if ($stmt->affected_rows > 0) {
-    echo json_encode(['success' => 1, 'message' => 'User added to household successfully.']);
+    // Retrieve the user's details
+    $sql = "SELECT first_name, last_name FROM Users WHERE user_id = ?";
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        echo json_encode(['success' => 0, 'message' => 'Failed to prepare statement.']);
+        exit;
+    }
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $stmt->bind_result($firstName, $lastName);
+    $stmt->fetch();
+    $stmt->close();
+
+    echo json_encode([
+        'success' => 1,
+        'message' => 'User registered successfully.',
+        'user_id' => $user_id,
+        'first_name' => $firstName,
+        'last_name' => $lastName
+    ]);
     exit;
 }
 echo json_encode(['success' => 0, 'message' => 'Failed to add user to household.']);

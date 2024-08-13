@@ -26,9 +26,9 @@ $(document).ready(function () {
                     // On successful sign-up, show a modal indicating success
                     showModal('Sign Up Successful', 'You successfully signed up to the website, please log in to continue.');
                     // Set up a click event handler for the modal's close button
-                    
+
                     confirmButton = document.getElementById('confirmButton');
-                    confirmButton.setAttribute('hidden' , 'hidden');
+                    confirmButton.setAttribute('hidden', 'hidden');
 
                     okButton = document.getElementById('closeButton');
                     okButton.textContent = 'OK';
@@ -46,7 +46,7 @@ $(document).ready(function () {
             }
         });
     });
-    
+
     $('#signUpemail').on('blur', function () {
         var email = $(this).val();
         if (email) {
@@ -89,7 +89,7 @@ $(document).ready(function () {
                     // Login successful, redirect to index page
                     showModal('Sign in Successful', 'You successfully logged in to the website');
                     confirmButton = document.getElementById('confirmButton');
-                    confirmButton.setAttribute('hidden' , 'hidden');
+                    confirmButton.setAttribute('hidden', 'hidden');
 
                     okButton = document.getElementById('closeButton');
                     okButton.textContent = 'OK';
@@ -119,37 +119,37 @@ $(document).ready(function () {
 
         // Handle the confirmation button click
         document.getElementById('confirmButton').onclick = function () {
-        $.ajax({
-            url: 'API/logout.php', // Your server's logout endpoint
-            type: 'POST',
-            dataType: 'json', // Ensure the response is treated as JSON
-            success: function (response) {
-                // Now `response` is a JSON object
-                if (response.logged_out) {
-                    // Show the logout modal
-                    showModal('Logged Out', 'You successfully logged out from the website.');
-                    confirmButton = document.getElementById('confirmButton');
-                    confirmButton.setAttribute('hidden' , 'hidden');
+            $.ajax({
+                url: 'API/logout.php', // Your server's logout endpoint
+                type: 'POST',
+                dataType: 'json', // Ensure the response is treated as JSON
+                success: function (response) {
+                    // Now `response` is a JSON object
+                    if (response.logged_out) {
+                        // Show the logout modal
+                        showModal('Logged Out', 'You successfully logged out from the website.');
+                        confirmButton = document.getElementById('confirmButton');
+                        confirmButton.setAttribute('hidden', 'hidden');
 
-                    okButton = document.getElementById('closeButton');
-                    okButton.textContent = 'OK';
-                    okButton.classList.add('btn-success');
-            
-                    // Optionally, clear the session storage item
-                    sessionStorage.removeItem('logged_out');
+                        okButton = document.getElementById('closeButton');
+                        okButton.textContent = 'OK';
+                        okButton.classList.add('btn-success');
 
-                    okButton.onclick = function () {
-                        // Redirect after the button is clicked
-                        window.location.href = 'log_in.php';
-                    };
+                        // Optionally, clear the session storage item
+                        sessionStorage.removeItem('logged_out');
+
+                        okButton.onclick = function () {
+                            // Redirect after the button is clicked
+                            window.location.href = 'log_in.php';
+                        };
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors
+                    console.error("Logout failed:", status, error);
                 }
-            },
-            error: function (xhr, status, error) {
-                // Handle any errors
-                console.error("Logout failed:", status, error);
-            }
-        });
-    }
+            });
+        }
     });
 
     // Attach a submit event handler to the new chore form to add a new chore to the table dynamically
@@ -256,54 +256,55 @@ $(document).ready(function () {
             }
         });
     });
-    
-    if(document.getElementById('choresContainer')) {
+
+    if (document.getElementById('choresContainer')) {
         document.getElementById('choresContainer').addEventListener('click', function (event) {
             if (event.target && event.target.classList.contains('delete-chore')) {
-              const choreId = event.target.value;
-              const deleteButton = event.target;
-          
-              // Show the modal
-              showModal('Confirm Deletion', 'Are you sure you want to delete this chore?');
-              var closeButton = document.getElementById('closeButton');
-              closeButton.removeAttribute('hidden');
-              closeButton.textContent = 'Cancel';
-              document.getElementById('confirmButton').textContent = 'Delete';
+                const choreId = event.target.value;
+                const deleteButton = event.target;
 
-              // Handle the confirmation button click
-              document.getElementById('confirmButton').onclick = function () {
-                const formData = JSON.stringify({ choreId: choreId });
-          
-                $.ajax({
-                  url: 'API/delete_chore.php',
-                  type: 'POST',
-                  contentType: 'application/json',
-                  data: formData,
-                  dataType: 'json',
-                  success: function(response) {
-                    if (response.success) {
-                    // Ensure the closest method finds the correct ancestor
-                      const choreItem = deleteButton.closest('.chore-item');
-                      if (choreItem) {
-                        choreItem.remove();
-                      } else {
-                        console.error('Chore item not found');
-                      }
-                    } else {
-                      alert('Error deleting chore: ' + response.error);
-                    }
-                  },
-                  error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                  }
-                });
-              };
+                // Show the modal
+                showModal('Confirm Deletion', 'Are you sure you want to delete this chore?');
+                var closeButton = document.getElementById('closeButton');
+                closeButton.removeAttribute('hidden');
+                closeButton.textContent = 'Cancel';
+                document.getElementById('confirmButton').textContent = 'Delete';
+
+                // Handle the confirmation button click
+                document.getElementById('confirmButton').onclick = function () {
+                    const formData = JSON.stringify({ choreId: choreId });
+
+                    $.ajax({
+                        url: 'API/delete_chore.php',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: formData,
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.success) {
+                                // Ensure the closest method finds the correct ancestor
+                                const choreItem = deleteButton.closest('.chore-item');
+                                if (choreItem) {
+                                    choreItem.remove();
+                                } else {
+                                    console.error('Chore item not found');
+                                }
+                            } else {
+                                alert('Error deleting chore: ' + response.error);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                };
             }
-          });
-        }
-    
+        });
+    }
+
     // Attach a submit event handler to the index page to add a new user to the Household
     $('#newUserForm').submit(function (e) {
+        $('#addUserError').attr('hidden', 'hidden').hide();
         e.preventDefault(); // Prevent default form submission
         var formData = $(this).serialize(); // Serialize form data
         $.ajax({
@@ -315,26 +316,31 @@ $(document).ready(function () {
                 if (response.success == 1) {
                     console.log(response);
                     alert('User added successfully!');
-                    
+
                     // Optionally, close the modal
                     $('#newUserModal').modal('hide');
-                    
+
                     // Clear the form fields
                     $('#newUserForm')[0].reset();
+
+                    // Append the new user to the list
+                    var newUser = $('<li>').text(response.first_name + " " + response.last_name);
+                    $('#userList').append(newUser);
+                    
                 } else {
-                    alert(response.message);
+                    // alert(response.message);
+                    $('#addUserError').text(response.message).removeAttr('hidden').show();
                     console.log(response);
                 }
             },
             error: function (xhr, status, error) {
                 console.error("AJAX error:", status, error);
-
                 alert('Error adding user to household.');
             }
         });
     });
-    
-    
+
+
 
     // Attach a submit event handler to the to the back button in the chores page to update the status of the list
     var choresBackButton = document.getElementById('choresBackButton');
@@ -379,20 +385,21 @@ $(document).ready(function () {
 
     // Make sure the modals inputs are empty when opened, and focuses on the first input
     if (document.getElementById('newUserModalLabel')) {
-    document.getElementById('newUserModal').addEventListener('shown.bs.modal', function () {
-        var choreTitleElement = document.getElementById('emailInput');
-        choreTitleElement.focus();
-        choreTitleElement.value = '';
-    });
+        document.getElementById('newUserModal').addEventListener('shown.bs.modal', function () {
+            var choreTitleElement = document.getElementById('emailInput');
+            $('#addUserError').attr('hidden', 'hidden').hide();
+            choreTitleElement.focus();
+            choreTitleElement.value = '';
+        });
     }
 
-        // Make sure the modals inputs are empty when opened, and focuses on the first input
-        if (document.getElementById('newChoresListModal')) {
-            document.getElementById('newChoresListModal').addEventListener('shown.bs.modal', function () {
-                var choreTitleElement = document.getElementById('list_title');
-                choreTitleElement.value = '';
-            });
-            }
+    // Make sure the modals inputs are empty when opened, and focuses on the first input
+    if (document.getElementById('newChoresListModal')) {
+        document.getElementById('newChoresListModal').addEventListener('shown.bs.modal', function () {
+            var choreTitleElement = document.getElementById('list_title');
+            choreTitleElement.value = '';
+        });
+    }
 
     // Assuming 'choresContainer' is the ID of the parent container for all chores
     var choresContainer = document.getElementById('choresContainer');
@@ -485,8 +492,8 @@ $(document).ready(function () {
         $('#emailInput').val('');
     });
 
-     // Set the minimum date for the due_date input field to today's date
-     var today = new Date().toISOString().split('T')[0];
-     $('#due_date').attr('min', today);
-     
+    // Set the minimum date for the due_date input field to today's date
+    var today = new Date().toISOString().split('T')[0];
+    $('#due_date').attr('min', today);
+
 });
