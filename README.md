@@ -9,6 +9,11 @@ This repository contains the source code for a Home Chores Management Website de
 * **Chore Categories:** Each chore belongs to a specific category (e.g., Cleaning, Grocery Shopping).
 * **Household Management:** Users can invite others to join their household or accept invitations from others.
 * **Chore Lists:** View and manage lists of chores for a specific household.
+* ![LOGIN](https://github.com/user-attachments/assets/0cae14ac-ae19-4fb9-be61-942a3678d6ee)
+![Signup](https://github.com/user-attachments/assets/e6db06ee-da2f-4aea-933b-f9ea49457411)
+![Index](https://github.com/user-attachments/assets/3a7cea2d-917a-45d1-b487-0537997d39c7)
+
+
 
 ## Technologies Used
 
